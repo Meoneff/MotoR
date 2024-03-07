@@ -1,0 +1,38 @@
+#layout-container {
+  max-height: 100%;
+  max-width: 100%;
+  #layout-content-top {
+    position: relative;
+  }
+
+  .image-content {
+    position: relative;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .image-blur {
+    filter: blur(1.7px);
+  }
+  .content {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    font-size: 2rem;
+    white-space: nowrap;
+    z-index: 1;
+    text-shadow: 2px 2px 4px #000000;
+  }
+  #navbar-layout-container {
+    position: fixed;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 1000;
+  }
+}

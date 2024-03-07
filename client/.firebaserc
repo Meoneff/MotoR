@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "motor-844f4": {
+      "hosting": {
+        "client": [
+          "motor-844f4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "motor-844f4"
+  }
+}
