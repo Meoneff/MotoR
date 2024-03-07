@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+tui-dropdown-host {
+  tui-dropdown {
+    border: 1px solid var(--tui-base-03) !important;
+    padding: 5px;
+  }
+}
+
+.drawer {
+  overflow-y: auto;
+  overflow-x: auto;
+  height: 100%;
+  min-width: 300px;
+}
+
+:root {
+  --tui-heading-font: "Noto Sans", sans-serif;
+  --tui-text-font: "Noto Sans", sans-serif;
+
+  --tui-primary: #262626;
+  --tui-primary-hover: #515151;
+  --tui-primary-active: #000000;
+  --tui-secondary: #e3e3e3;
+  --tui-accent: #a7373a;
+  --tui-accent-hover: #b85e61;
+  --tui-accent-active: #852c2e;
+}
