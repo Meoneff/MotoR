@@ -12,9 +12,10 @@
   img {
     width: 100%;
     height: auto;
+    filter: grayscale(30%);
   }
   .image-blur {
-    filter: blur(1.7px);
+    filter: blur(1.8px);
   }
   .content {
     position: absolute;
@@ -34,5 +35,16 @@
     width: 100%;
     background-color: #ffffff;
     z-index: 1000;
+  }
+  #layout-content-center {
+    .layout-center {
+      padding: 5rem 10rem;
+      height: 50%;
+      display: flex;
+      justify-content: space-between;
+      .ime {
+        border-radius: 1rem;
+      }
+    }
   }
 }
