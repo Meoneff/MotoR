@@ -1,38 +1,101 @@
-<div id="login_container">
-    <div id="background_box">
-        <h2>Welcome to Car Rentals!</h2>
+<div id="login-container">
+    <div id="background-login">
+
     </div>
-    <div id="login_box">
+    <div id="box-login">
         <div id="login">
-            <div class="login">
-                <h2>Sign In</h2>
-                <!-- <div [formGroup]="accountForm"> -->
-                <div>
+            <div class="top-box">
+                <img class="image-login" src="../../../assets/images/motor-high-resolution-logo-transparent.png"
+                    alt="logo">
+            </div>
+            <div id="all-input">
+                <div class="input-box">
                     <div class="input">
-                        <input type="text" class="input1" placeholder="Email" required formControlName="email">
-                        <i class="fa-solid fa-envelope"></i>
+                        <tui-input formControlName="email" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            Gmail
+                            <input autocomplete="email" placeholder="example@gmail.com" tuiTextfield type="email" />
+                        </tui-input>
                     </div>
                     <div class="input">
-                        <input type="password" class="input1" placeholder="Password" required
-                            formControlName="password">
-                        <i class="fa-solid fa-lock"></i>
+                        <tui-input formControlName="password" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            Password
+                            <input autocomplete="current-password" placeholder="********" tuiTextfield
+                                type="password" />
+                        </tui-input>
                     </div>
                 </div>
-
-                <div class="btn_login">
-                    <!-- <button class="button-4" role="button" (click)="loginWithAccount()">Login</button> -->
-                    <button class="button-4" role="button">Login</button>
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
                 </div>
-                <div class="btn_login">
-                    <!-- <button class="button-4" role="button" (click)="register()">Register</button> -->
-                    <button class="button-4" role="button">Register</button>
-                </div>
+                <div class="SigIn">
 
-                <div class="btn_login">
-                    <!-- <button class="button-4" role="button" (click)="loginWithGoogle()">Login with Google</button> -->
-                    <button class="button-4" role="button">Login with Google</button>
+                    <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
+                        Sign in
+                    </button>
+                </div>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">or</span>
+                    <span class="divider-line"></span>
+                </div>
+                <div class="google">
+                    <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
+                        style="width: 296px; margin: 0">
+                        <img style="height: 20px; width: 20px; margin-right: 1rem"
+                            src="../../../assets/images/google1.png" alt="" />
+                        Sign in with Google
+                    </button>
+                </div>
+                <div class="create">
+                    <span>Are you new?</span>
+                    <a href="#" id="create-account-link">Create an Account</a>
                 </div>
             </div>
+
+
+            <div id="register-form" style="display: none;">
+                <h2>Register</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">Date of Birth:</label>
+                        <input type="date" id="birthdate" name="birthdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+
         </div>
+
     </div>
 </div>

@@ -1,150 +1,101 @@
-#login_container {
-  display: flex;
-  flex-direction: row;
-
+#login-container {
   height: 100%;
   width: 100%;
-  background-color: #e30808e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-image: url("../../../assets/images/bg_login.jpg");
-  background-size: 100%;
+  background-size: cover;
+}
 
-  #background_box {
-    height: 100%;
-    width: 72%;
+#box-login {
+  border: 2px solid #ccc;
+  padding: 50px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(100%);
+  position: relative;
+}
 
-    //background-color: #E9E9E9;
-    h2 {
-      margin-top: 10rem;
-      font-size: 3rem;
+#login {
+  height: 100%;
+  width: 100%;
+
+  .top-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .image-login {
+      // margin-left: 100px;
+      height: 10rem;
+      margin-bottom: 20px;
+      display: flex;
       text-align: center;
-      font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-        sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      justify-content: center;
+      align-items: center;
     }
   }
-
-  #login_box {
-    height: 100%;
-    width: 28%;
-    //background-color: #E9E9E9;
+  #all-input {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    #login {
-      //background-color: #F5F6FA;
-      height: 96%;
-      width: 95%;
-      border-radius: 1.25rem;
-      backdrop-filter: blur(20px);
-      //border: 1px solid #846060;
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-
-      h2 {
-        font-size: 2rem;
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-
-      .login {
-        margin: 2rem;
-        display: flex;
-        flex-direction: column;
-        //justify-content: center;
-
-        .input {
-          position: relative;
-          width: 100%;
-          height: 30px;
-          margin-bottom: 2rem;
-          display: flex;
-
-          .icon {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            display: flex;
-            justify-content: center;
-          }
-
-          .input1 {
-            font-size: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: transparent;
-            border: none;
-            outline: none;
-            border-bottom: 2px solid #000000;
-            color: #000000;
-            width: 100%;
-            height: 100%;
-          }
-
-          ::placeholder {
-            color: #000000;
-            font-size: 18px;
-          }
-        }
-
-        .btn_login {
-          margin: 10px 0;
-          display: flex;
-          justify-content: center;
-        }
-
-        /* CSS */
-        .button-4 {
-          appearance: none;
-          background-color: #fafbfc;
-          border: 1px solid rgba(27, 31, 35, 0.15);
-          border-radius: 6px;
-          box-shadow:
-            rgba(27, 31, 35, 0.04) 0 1px 0,
-            rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-          box-sizing: border-box;
-          color: #24292e;
-          cursor: pointer;
-          display: inline-block;
-          font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-            sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 20px;
-          list-style: none;
-          padding: 6px 16px;
-        }
-
-        .button-4:hover {
-          background-color: #f3f4f6;
-          text-decoration: none;
-          transition-duration: 0.1s;
-        }
-
-        .button-4:disabled {
-          background-color: #fafbfc;
-          border-color: rgba(27, 31, 35, 0.15);
-          color: #959da5;
-          cursor: default;
-        }
-
-        .button-4:active {
-          background-color: #edeff2;
-          box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-          transition: none 0s;
-        }
-
-        .button-4:focus {
-          outline: 1px transparent;
-        }
-
-        .button-4:before {
-          display: none;
-        }
-
-        .button-4:-webkit-details-marker {
-          display: none;
-        }
-      }
-    }
+    flex-direction: column;
+    width: 100%;
   }
+  .input-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.google {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.SigIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5 rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.divider-line {
+  flex-grow: 1;
+  height: 1px;
+  // background-color: #ccc;
+  background-color: rgb(130, 130, 130);
+}
+
+.divider-text {
+  margin: 0 10px;
+  color: #888;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.forgot-password {
+  align-self: flex-end; // Align forgot password to the end
 }

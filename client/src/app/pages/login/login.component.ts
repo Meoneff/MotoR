@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { TaigaModule } from '../../shared/taiga.module';
 import { NgOptimizedImage } from '@angular/common';
 import {
@@ -7,6 +7,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { TUI_IS_E2E } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,11 @@ import {
   imports: [TaigaModule, NgOptimizedImage],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  constructor(@Inject(TUI_IS_E2E) readonly isE2E: boolean) {}
+
   // isLoginWithGoogle = false;
   // user$ = this.store.select('user', 'user');
   // userFirebase: UserFirebase = <UserFirebase>{};

@@ -1,49 +1,74 @@
-#layout-container {
-  max-height: 100%;
-  max-width: 100%;
-  #layout-content-top {
-    position: relative;
-  }
+// #layout-container {
+//   max-height: 100%;
+//   max-width: 100%;
+//   #layout-content-top {
+//     position: relative;
+//   }
+//   .image-content {
+//     position: relative;
+//   }
 
-  .image-content {
-    position: relative;
-  }
+//   img {
+//     width: 100%;
+//     height: auto;
+//     filter: grayscale(30%);
+//   }
+//   .image-blur {
+//     filter: blur(1.8px);
+//   }
+//   .top-content {
+// position: absolute;
+// top: 30%;
+// left: 50%;
+// transform: translate(-50%, -50%);
+// color: #ffffff;
+// text-align: center;
+// margin: 0;
+// font-size: 2rem;
+// white-space: nowrap;
+// z-index: 1;
+// text-shadow: 2px 2px 4px #000000;
+//   }
+//   #navbar-layout-container {
+//     position: fixed;
+//     width: 100%;
+//     background-color: #ffffff;
+//     z-index: 1000;
+//   }
+// }
 
-  img {
-    width: 100%;
-    height: auto;
-    filter: grayscale(30%);
-  }
-  .image-blur {
-    filter: blur(1.8px);
-  }
-  .content {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #ffffff;
-    text-align: center;
-    margin: 0;
-    font-size: 2rem;
-    white-space: nowrap;
-    z-index: 1;
-    text-shadow: 2px 2px 4px #000000;
-  }
-  #navbar-layout-container {
+#layout {
+  height: 100vh;
+  width: 100%;
+  #navbar {
     position: fixed;
-    width: 100%;
     background-color: #ffffff;
     z-index: 1000;
   }
-  #layout-content-center {
-    .layout-center {
-      padding: 5rem 10rem;
-      height: 50%;
-      display: flex;
-      justify-content: space-between;
-      .ime {
-        border-radius: 1rem;
+  #first-lay {
+    height: 30%;
+    .first-content {
+      position: relative;
+      .image-blur {
+        filter: blur(2px);
+      }
+      .img-frd {
+        width: 100%;
+        height: auto;
+        filter: grayscale(30%);
+      }
+      .top-content {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        text-align: center;
+        margin: 0;
+        font-size: 2rem;
+        white-space: nowrap;
+        z-index: 1;
+        text-shadow: 2px 2px 4px #000000;
       }
     }
   }
