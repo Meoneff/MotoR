@@ -8,7 +8,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { TUI_IS_E2E } from '@taiga-ui/cdk';
-
+import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,7 +19,20 @@ import { TUI_IS_E2E } from '@taiga-ui/cdk';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  constructor(@Inject(TUI_IS_E2E) readonly isE2E: boolean) {}
+  constructor(
+    @Inject(TUI_IS_E2E) readonly isE2E: boolean,
+    private AuthService: AuthService,
+    private router: Router,
+  ) {}
+  async login() {
+    let loginResult = await this.AuthService.loginWithGoogle();
+    if (loginResult == null) {
+      console.log('Failed');
+    } else {
+      console.log('Succes');
+      this.router.navigate(['/home']);
+    }
+  }
 
   // isLoginWithGoogle = false;
   // user$ = this.store.select('user', 'user');

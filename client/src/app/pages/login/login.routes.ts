@@ -6,4 +6,9 @@ export const LOGIN_ROUTES: Routes = [
     path: '',
     component: LoginComponent,
   },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
