@@ -30,7 +30,7 @@ export class LoginComponent {
       console.log('Failed');
     } else {
       console.log('Succes');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 

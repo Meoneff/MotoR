@@ -10,6 +10,7 @@ export interface AuthCredentialModel {
 
 export interface FirebaseDataModel {
   uid: string;
+  name: string;
   email: string;
   photoURL: string;
 }

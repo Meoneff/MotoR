@@ -1,39 +1,8 @@
-<div id="layout">
+<div id="layout-container">
     <div id="navbar">
         <app-navbar></app-navbar>
     </div>
-    <div id="first-lay">
-        <div class="first-content">
-            <div class="image-blur">
-                <img class="img-frd" src="../../../assets/images/layout1.jpg" alt="layout" />
-            </div>
-            <div class="top-content">
-                <h1>RENT . MOTORCYCLE . DISCOVER</h1>
-                <span>MotoR Motorcycle Rental</span>
-            </div>
-        </div>
+    <div id="layout-content">
+        <router-outlet></router-outlet>
     </div>
-    <!-- <div id="first-lay">
-        <div tuiCarouselButtons class="first-content">
-            <button icon="tuiIconChevronLeftLarge" title="Previous" tuiIconButton type="button"
-                (click)="carousel.prev()"></button>
-            <tui-carousel #carousel class="carousel">
-                <div class="image-carousel">
-                    <img class="img-frd" src="../../../assets/images/layout1.jpg" alt="Image 1">
-                </div>
-                <div class="image-carousel">
-                    <img class="img-frd" src="../../../assets/images/layout.jpg" alt="Image 2">
-                </div>
-                <div class="image-carousel">
-                    <img class="img-frd" src="../../../assets/images/test.jpg" alt="Image 3">
-                </div>
-            </tui-carousel>
-            <button icon="tuiIconChevronRightLarge" title="Next" tuiIconButton type="button"
-                (click)="carousel.next()"></button>
-            <div class="top-content">
-                <h1>RENT . MOTORCYCLE . DISCOVER</h1>
-                <span>MotoR Motorcycle Rental</span>
-            </div>
-        </div>
-    </div> -->
 </div>

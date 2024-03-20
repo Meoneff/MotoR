@@ -14,7 +14,7 @@ import { ShareModule } from '../../share.module';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgClass, TaigaModule, RouterLink, ShareModule],
+  imports: [NgClass, TaigaModule, RouterLink, ShareModule, NavbarComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

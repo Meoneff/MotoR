@@ -1,12 +1,13 @@
+import { Role } from './role.model';
+
 export interface Profile {
-  id: string;
-  userName: string;
-  displayName: string;
+  _id: string;
+  uid: string;
+  name: string;
   email: string;
-  country: string;
+  phone: string;
   avatar: string;
-  gender: string;
-  bio: string;
-  notifications: string[];
-  role: string;
+  address: string;
+  role: Role;
+  password: string;
 }

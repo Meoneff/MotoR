@@ -12,6 +12,11 @@ export const LAYOUT_ROUTES: Routes = [
         redirectTo: 'home',
         pathMatch: 'full',
       },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./home/home.routes').then((m) => m.HOME_ROUTES),
+      },
     ],
   },
 ];
