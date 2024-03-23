@@ -1,22 +1,17 @@
 #layout-container {
   width: 100%;
   height: 100%;
-}
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
 
-#navbar {
-  width: 100%;
-  height: 4rem;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #ffffff;
-  z-index: 1000;
-}
+  #navbar {
+    width: 100%;
+    height: 4.5rem;
+  }
 
-#layout-content {
-  width: 100%;
-  height: calc(100% - 5rem);
-  margin-top: 1rem;
+  #layout-content {
+    width: 100%;
+    height: calc(100% - 4.5rem);
+  }
 }

@@ -10,6 +10,8 @@ import { Router, RouterLink } from '@angular/router';
 import { TaigaModule } from '../../taiga.module';
 import { TuiDialogService } from '@taiga-ui/core';
 import { ShareModule } from '../../share.module';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../nrgx/auth/auth.state';
 
 @Component({
   selector: 'app-navbar',

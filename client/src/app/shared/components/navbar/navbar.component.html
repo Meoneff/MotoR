@@ -3,19 +3,28 @@
         <div class="logo_nav">
             <img class="logo" src="../../../../assets/images/motor-high-resolution-logo-black-transparent.png" alt="">
         </div>
-        <div id="right-nav">
-            <div id="fcpa" class="faq">
+        <div id="center-nav">
+            <div id="but" class="rental">
+                <a href="/faq">Rental</a>
+            </div>
+            <div id="but" class="faq">
                 <a href="/faq">FAQ</a>
             </div>
-            <div id="fcpa" class="contact-us">
+            <div id="but" class="contact-us">
                 <a href="/contact-us">Contact Us</a>
             </div>
-            <div id="fcpa" class="partner-withus">
+            <div id="but" class="partner-withus">
                 <a href="/partner-with-us">Partner With Us</a>
             </div>
-            <div id="ic-login" class="ic-log" (click)="login()">
-                <tui-icon icon="tuiIconUserLarge" class="red"></tui-icon>
+        </div>
+        <div id="right-nav">
+
+            <div id="btn-login" (click)="login()" *ngIf="">
+                <button>Login</button>
             </div>
         </div>
     </div>
 </div>
+<!-- <div id="ic-login" class="ic-log" (click)="login()">
+                <tui-icon icon="tuiIconUserLarge" class="red"></tui-icon>
+            </div> -->

@@ -5,8 +5,8 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
-    margin-bottom: 8rem;
-    position: relative;
+    margin-bottom: 6rem;
+    // position: relative;
     .bg-ima {
       height: auto;
       max-width: 100%;
@@ -31,7 +31,7 @@
     padding: 0rem 20rem;
     display: flex;
     flex-direction: row;
-
+    margin-bottom: 8rem;
     .intro-ima {
       max-height: 100%;
       width: auto;
@@ -51,7 +51,8 @@
         }
 
         .wel {
-          text-align: left;
+          line-height: 1.6;
+          text-align: justify;
         }
       }
       .txt-bottom {
@@ -59,11 +60,15 @@
         justify-content: center;
         align-items: center;
         flex-direction: row;
+        margin-top: 3rem;
         .bottom-first,
         .bottom-seccond,
         .bottom-third {
           margin-right: 2rem;
           text-align: center;
+        }
+        span {
+          font-weight: 600;
         }
       }
     }
