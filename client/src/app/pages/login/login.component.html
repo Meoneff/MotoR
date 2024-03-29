@@ -9,7 +9,7 @@
                     alt="logo">
             </div>
             <div id="all-input">
-                <div class="input-box">
+                <div class="input-box" [formGroup]="accountForm">
                     <div class="input">
                         <tui-input formControlName="email" [tuiTextfieldCleaner]="true"
                             [tuiTextfieldLabelOutside]="true">
@@ -40,7 +40,7 @@
                     <span class="divider-text">or</span>
                     <span class="divider-line"></span>
                 </div>
-                <div class="google" (click)="login()">
+                <div class="google" (click)="loginWithGoogle()">
                     <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
                         style="width: 296px; margin: 0">
                         <img style="height: 20px; width: 20px; margin-right: 1rem"
@@ -53,48 +53,6 @@
                     <a href="#" id="create-account-link">Create an Account</a>
                 </div>
             </div>
-
-
-            <div id="register-form" style="display: none;">
-                <h2>Register</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password:</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthdate">Date of Birth:</label>
-                        <input type="date" id="birthdate" name="birthdate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender:</label>
-                        <select id="gender" name="gender" required>
-                            <option value="">Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" required>
-                    </div>
-                    <button type="submit">Register</button>
-                </form>
-            </div>
-
         </div>
 
     </div>

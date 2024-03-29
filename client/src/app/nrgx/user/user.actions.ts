@@ -1,31 +1,38 @@
 import { createAction, props } from '@ngrx/store';
-import { UserInfo } from '../../app/model/user.model';
+import { User } from '../../model/user.model';
+
+export const getByEmail = createAction(
+  '[User] Get User',
+  props<{ email: string }>(),
+);
+
+export const getByEmailSuccess = createAction(
+  '[User] Get User Success',
+  props<{ user: User }>(),
+);
+
+export const getByEmailFailure = createAction(
+  '[User] Get User Failure',
+  props<{ error: any }>(),
+);
 
 export const createUser = createAction(
   '[User] Create User',
-  props<{ idToken: string }>(),
+  props<{ user: User }>(),
 );
 
-export const createUserSuccess = createAction('[User] Create User Success');
+export const createUserSuccess = createAction(
+  '[User] Create User Success',
+  props<{ user: User }>(),
+);
 
 export const createUserFailure = createAction(
   '[User] Create User Failure',
-  props<{ errorMessage: string }>(),
+  props<{ error: any }>(),
 );
 
-export const getUser = createAction(
-  '[User] Get',
-  props<{ uid: string; idToken: string }>(),
-);
+export const storedUser = createAction('[User] Stored User', (user: User) => ({
+  user,
+}));
 
-export const getUserSuccess = createAction(
-  '[User] Get Success',
-  props<{ user: UserInfo }>(),
-);
-
-export const getUserFailure = createAction(
-  '[User] Get Failure',
-  props<{ errorMessage: string }>(),
-);
-
-export const clearUserInfo = createAction('[User] Clear Info');
+export const resetUser = createAction('[User] Reset User');

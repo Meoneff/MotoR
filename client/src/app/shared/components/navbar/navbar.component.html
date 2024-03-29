@@ -19,7 +19,7 @@
         </div>
         <div id="right-nav">
 
-            <div id="btn-login" (click)="login()" *ngIf="">
+            <div id="btn-login" (click)="login()" *ngIf="!userForm.value.uid">
                 <button>Login</button>
             </div>
         </div>

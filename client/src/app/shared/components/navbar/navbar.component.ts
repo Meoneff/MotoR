@@ -12,6 +12,7 @@ import { TuiDialogService } from '@taiga-ui/core';
 import { ShareModule } from '../../share.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../nrgx/auth/auth.state';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +24,13 @@ import { AuthState } from '../../../nrgx/auth/auth.state';
 })
 export class NavbarComponent {
   constructor(private router: Router) {}
+
+  userForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    uid: new FormControl('', Validators.required),
+    avatar: new FormControl('', Validators.required),
+  });
 
   login() {
     this.router.navigateByUrl('/login');

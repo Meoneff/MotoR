@@ -1,1 +1,63 @@
-<p>register works!</p>
+<!-- <div id="register_container">
+    <div id="background_box">
+        <h2>Welcome to Car Rentals!</h2>
+    </div>
+    <div id="register_box">
+        <div id="register">
+            <div class="register">
+                <h2>Register</h2>
+                <div [formGroup]="regisForm">
+                    <div class="input" *ngIf="this.isLoginWithGoogle==false">
+                        <input type="text" class="input1" placeholder="Name" required formControlName="name">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
+                        <input type="text" class="input1" [placeholder]="userFirebase.name" required
+                            formControlName="name">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="input">
+                        <input type="password" class="input1" placeholder="Password" required
+                            formControlName="password">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="input">
+                        <input type="password" class="input1" placeholder="Confirm Password" required
+                            formControlName="password">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="input" *ngIf="this.isLoginWithGoogle==false">
+                        <input type="text" class="input1" placeholder="Email" required formControlName="email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
+                        <input type="text" class="input1" placeholder="{{userFirebase.email}}" required
+                            formControlName="email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
+                        <input type="text" class="input1" placeholder="{{userFirebase.picture}}" required
+                            formControlName="avatar">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="input">
+                        <input type="text" class="input1" placeholder="Phone" required formControlName="phone">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="input">
+                        <input type="text" class="input1" placeholder="Address" required formControlName="address">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="btn_register">
+                    <button class="button-4" role="button" (click)="back()">Back</button>
+                </div>
+                <div class="btn_register">
+                    <button class="button-4" role="button" (click)="register()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

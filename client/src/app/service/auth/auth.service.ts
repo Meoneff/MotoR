@@ -13,34 +13,20 @@ import { from } from 'rxjs';
 export class AuthService {
   constructor(private auth: Auth) {}
 
-  loginWithGoogle() {
-    return from(
-      new Promise<string>(async (resolve, reject) => {
-        try {
-          let creadential = await signInWithPopup(
-            this.auth,
-            new GoogleAuthProvider(),
-          );
-          let idToken = await creadential.user.getIdToken();
-          resolve(idToken);
-        } catch {
-          reject('Cannot login with Google');
-        }
-      }),
-    );
+  async loginWithGoogle() {
+    let provider = new GoogleAuthProvider();
+    try {
+      let credential = await signInWithPopup(this.auth, provider);
+      console.log(credential);
+      return credential;
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
   }
 
   logout() {
-    return from(
-      new Promise<string>(async (resolve, reject) => {
-        try {
-          signOut(this.auth).then(() => {
-            resolve('Logout success!!!');
-          });
-        } catch {
-          reject('Cannot login with Google');
-        }
-      }),
-    );
+    console.log('logout');
+    return from(this.auth.signOut());
   }
 }

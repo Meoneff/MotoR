@@ -1,76 +1,95 @@
+import { UserFirebase } from '../../model/userFirebase.model';
+import * as LoginActions from '../../nrgx/auth/auth.actions';
+import { AuthState } from '../../nrgx/auth/auth.state';
 import { createReducer, on } from '@ngrx/store';
-import * as LoginActions from './auth.actions';
-import { AuthState } from './auth.state';
 
 export const initialState: AuthState = {
-  idToken: '',
+  userFirebase: <UserFirebase>{},
   isLoading: false,
   isSuccessful: false,
   errorMessage: '',
-  uid: '',
   isLogoutSuccess: false,
-  logoutErrorMessage: '',
 };
 
 export const authReducer = createReducer(
   initialState,
   on(LoginActions.login, (state, action) => {
-    return {
+    let newState: AuthState = {
       ...state,
       isLoading: true,
       isSuccessful: false,
       errorMessage: '',
     };
+    return newState;
   }),
+
   on(LoginActions.loginSuccess, (state, action) => {
-    return {
+    let newState: AuthState = {
       ...state,
       isLoading: false,
       isSuccessful: true,
       errorMessage: '',
     };
+    return newState;
   }),
-  on(LoginActions.loginFailure, (state, { errorMessage, type }) => {
-    return {
+
+  on(LoginActions.loginFailure, (state, action) => {
+    let newState: AuthState = {
       ...state,
       isLoading: false,
       isSuccessful: false,
-      errorMessage,
+      errorMessage: action.errorMessage,
     };
+    return newState;
   }),
+
   on(LoginActions.logout, (state, action) => {
-    return {
+    let newState: AuthState = {
       ...state,
+      isLoading: true,
       isLogoutSuccess: false,
-      logoutErrorMessage: '',
+      errorMessage: '',
     };
+    return newState;
   }),
+
   on(LoginActions.logoutSuccess, (state, action) => {
-    return {
+    console.log('logout success');
+
+    let newState: AuthState = {
       ...state,
+      isLoading: false,
       isLogoutSuccess: true,
-      isSuccessful: false,
-      idToken: '',
-      uid: '',
+      errorMessage: '',
     };
+    return newState;
   }),
-  on(LoginActions.logoutFailure, (state, { errorMessage, type }) => {
-    return {
+
+  on(LoginActions.logoutFailure, (state, action) => {
+    let newState: AuthState = {
       ...state,
+      isLoading: false,
       isLogoutSuccess: false,
-      logoutErrorMessage: errorMessage,
+      errorMessage: action.errorMessage,
     };
+    return newState;
   }),
-  on(LoginActions.storedIdToken, (state, { idToken, type }) => {
+  on(LoginActions.storedUserFirebase, (state, { userFirebase, type }) => {
+    console.log(type);
     return {
       ...state,
-      idToken,
+      userFirebase,
     };
   }),
-  on(LoginActions.storedUserUid, (state, action) => {
-    return {
+  on(LoginActions.resetState, (state, action) => {
+    let newState: AuthState = {
       ...state,
-      uid: action.uid,
+      userFirebase: <UserFirebase>{},
+      isLoading: false,
+      isSuccessful: false,
+      errorMessage: '',
+      isLogoutSuccess: false,
     };
+    return newState;
   }),
 );

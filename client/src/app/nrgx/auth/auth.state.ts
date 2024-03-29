@@ -1,9 +1,9 @@
+import { UserFirebase } from '../../model/userFirebase.model';
+
 export interface AuthState {
-  idToken: string;
+  userFirebase: UserFirebase;
   isLoading: boolean;
   isSuccessful: boolean;
   errorMessage: string;
-  uid: string;
   isLogoutSuccess: boolean;
-  logoutErrorMessage: string;
 }

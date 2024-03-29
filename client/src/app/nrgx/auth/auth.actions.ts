@@ -1,29 +1,27 @@
 import { createAction, props } from '@ngrx/store';
+import { UserFirebase } from '../../model/userFirebase.model';
 
-export const login = createAction('[Auth] Login');
+export const login = createAction('[Auth] login');
 
-export const loginSuccess = createAction('[Auth] Login Success');
+export const loginSuccess = createAction('[Auth] login success');
 
 export const loginFailure = createAction(
-  '[Auth] Login Failure',
-  props<{ errorMessage: string }>(),
+  '[Auth] login failure',
+  props<{ errorMessage: any }>(),
 );
 
-export const logout = createAction('[Auth] Logout');
+export const logout = createAction('[Auth] logout');
 
-export const logoutSuccess = createAction('[Auth] Logout Success');
+export const logoutSuccess = createAction('[Auth] logout success');
 
 export const logoutFailure = createAction(
-  '[Auth] Logout Failure',
-  props<{ errorMessage: string }>(),
+  '[Auth] logout failure',
+  props<{ errorMessage: any }>(),
 );
 
-export const storedIdToken = createAction(
-  '[Auth] Stored Id Token',
-  props<{ idToken: string }>(),
+export const storedUserFirebase = createAction(
+  '[Auth] stored user firebase',
+  (userFirebase: UserFirebase) => ({ userFirebase }),
 );
 
-export const storedUserUid = createAction(
-  '[Auth] Stored User Uid',
-  props<{ uid: string }>(),
-);
+export const resetState = createAction('[Auth] reset state');

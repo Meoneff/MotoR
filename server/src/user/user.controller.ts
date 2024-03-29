@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Put,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,28 +17,66 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Post('create')
+  async create(@Body() createUserDto: CreateUserDto) {
+    try {
+      const newUser = await this.userService.create(createUserDto);
+      return newUser;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Get('all')
+  async findAll() {
+    try {
+      const users = await this.userService.findAll();
+      return users;
+    } catch (err) {
+      throw err;
+    }
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findOne(@Query('id') id: string) {
+    try {
+      const user = this.userService.findOne(id);
+      return user;
+    } catch (err) {
+      throw err;
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get(':email')
+  async findByEmail(@Param('email') email: string) {
+    try {
+      const user = await this.userService.findByEmail(email);
+      return user;
+    } catch (err) {
+      throw err;
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @Put('update')
+  async update(@Query('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      const updatedUser = await this.userService.update(id, updateUserDto);
+      return updatedUser;
+    } catch (err) {
+      throw err;
+    }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Delete('delete')
+  remove(@Query('id') id: string) {
+    try {
+      const deletedUser = this.userService.remove(id);
+      return deletedUser;
+    } catch (err) {
+      throw err;
+    }
   }
+  // eslint-disable-next-line prettier/prettier
+  // eslint-disable-next-line prettier/prettier
+  // eslint-disable-next-line prettier/prettier
 }
