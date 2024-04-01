@@ -26,6 +26,16 @@
     justify-content: space-between;
     height: 100%;
     font-size: 1.25rem;
+    tui-hosted-dropdown {
+      transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+    }
+
+    tui-hosted-dropdown:hover:not(.tui-hosted-dropdown--open) {
+      opacity: 0.8;
+      visibility: visible;
+    }
     a {
       margin-right: 2rem;
       color: black;

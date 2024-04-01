@@ -5,16 +5,76 @@
         </div>
         <div id="center-nav">
             <div id="but" class="rental">
-                <a href="/faq">Rental</a>
+                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="auto" [(open)]="openAuto"
+                    (mouseleave)="closeDropdown('auto')">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                        Automatic Bikes
+                    </button>
+                    <ng-template #auto>
+                        <tui-data-list (click)="autoClick()">
+                            <button tuiOption>Honda Lead</button>
+                            <button tuiOption>Honda Vision</button>
+                            <button tuiOption>Honda Airblade</button>
+                            <button tuiOption>Honda SH</button>
+                            <button tuiOption>Yamaha Nouvo</button>
+                            <button tuiOption>Yamaha Mio</button>
+                            <button tuiOption>View All</button>
+                        </tui-data-list>
+                    </ng-template>
+                </tui-hosted-dropdown>
             </div>
-            <div id="but" class="faq">
-                <a href="/faq">FAQ</a>
+            <div id="but" class="semi">
+                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="semi" [(open)]="openSemi"
+                    (mouseleave)="closeDropdown('semi')">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                        Semi-Auto Bikes
+                    </button>
+                    <ng-template #semi>
+                        <tui-data-list (click)="semiClick()">
+                            <button tuiOption>Honda Cub</button>
+                            <button tuiOption>Honda Wave Alpha</button>
+                            <button tuiOption>Honda Wave Blade</button>
+                            <button tuiOption>Honda RSX</button>
+                            <button tuiOption>Honda Future</button>
+                            <button tuiOption>View All</button>
+                        </tui-data-list>
+                    </ng-template>
+                </tui-hosted-dropdown>
             </div>
-            <div id="but" class="contact-us">
-                <a href="/contact-us">Contact Us</a>
+            <div id="but" class="manual">
+                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="manual" [(open)]="openManual"
+                    (mouseleave)="closeDropdown('manual')">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                        Manual Bikes
+                    </button>
+                    <ng-template #manual>
+                        <tui-data-list (click)="manualClick()">
+                            <button tuiOption>Honda Master 125</button>
+                            <button tuiOption>Honda Winner 150</button>
+                            <button tuiOption>Honda XR 150</button>
+                            <button tuiOption>Honda CRF 300</button>
+                            <button tuiOption>Honda CB 500X</button>
+                            <button tuiOption>BMW 1250 GS</button>
+                            <button tuiOption>RE Himalayan 400</button>
+                            <button tuiOption>View All</button>
+                        </tui-data-list>
+                    </ng-template>
+                </tui-hosted-dropdown>
             </div>
-            <div id="but" class="partner-withus">
-                <a href="/partner-with-us">Partner With Us</a>
+            <div id="but" class="info">
+                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="info" [(open)]="openInfo"
+                    (mouseleave)="closeDropdown('info')">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                        Info
+                    </button>
+                    <ng-template #info>
+                        <tui-data-list (click)="infoClick()">
+                            <button tuiOption>FAQ</button>
+                            <button tuiOption>About</button>
+                            <button tuiOption>Contact With Us</button>
+                        </tui-data-list>
+                    </ng-template>
+                </tui-hosted-dropdown>
             </div>
         </div>
         <div id="right-nav">
@@ -25,6 +85,3 @@
         </div>
     </div>
 </div>
-<!-- <div id="ic-login" class="ic-log" (click)="login()">
-                <tui-icon icon="tuiIconUserLarge" class="red"></tui-icon>
-            </div> -->
