@@ -1,5 +1,3 @@
-import { Role } from './role.model';
-
 export interface User {
   id: string;
   uid: string;
@@ -10,4 +8,5 @@ export interface User {
   address: string;
   role: string;
   password: string;
+  confirmPassword: string;
 }

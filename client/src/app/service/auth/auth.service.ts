@@ -6,6 +6,7 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { from } from 'rxjs';
+import { userFirebase } from '../../model/userFirebase.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,15 +15,19 @@ export class AuthService {
   constructor(private auth: Auth) {}
 
   async loginWithGoogle() {
+    const userFirebase: userFirebase = <userFirebase>{};
     let provider = new GoogleAuthProvider();
     try {
       let credential = await signInWithPopup(this.auth, provider);
-      console.log(credential);
-      return credential;
+      userFirebase.email = credential.user.email ?? '';
+      userFirebase.name = credential.user.displayName ?? '';
+      userFirebase.picture = credential.user.photoURL ?? '';
+      userFirebase.uid = credential.user.uid;
+      return userFirebase;
     } catch (error) {
       console.log(error);
     }
-    return null;
+    return userFirebase;
   }
 
   logout() {

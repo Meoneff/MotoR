@@ -1,63 +1,76 @@
-<!-- <div id="register_container">
-    <div id="background_box">
-        <h2>Welcome to Car Rentals!</h2>
-    </div>
-    <div id="register_box">
+<div id="register-container">
+    <div id="box-register">
         <div id="register">
-            <div class="register">
-                <h2>Register</h2>
-                <div [formGroup]="regisForm">
-                    <div class="input" *ngIf="this.isLoginWithGoogle==false">
-                        <input type="text" class="input1" placeholder="Name" required formControlName="name">
-                        <i class="fa-solid fa-envelope"></i>
+            <div class="ima-box">
+                <img class="image-register" src="../../../assets/images/motor-high-resolution-logo-transparent.png"
+                    alt="logo">
+            </div>
+            <div class="all-input" [formGroup]="registForm">
+                <div class="input">
+                    <div class="fu-name">
+                        <tui-input style="width: 14rem;" formControlName="last-name" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            LastName
+                            <input autocomplete="last-name" placeholder="Your last name" tuiTextfield type="text" />
+                        </tui-input>
+                        <tui-input style="width: 14rem;" formControlName="first-name" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            FirstName
+                            <input autocomplete="given-name" placeholder="Your first name" tuiTextfield type="text" />
+                        </tui-input>
                     </div>
-                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
-                        <input type="text" class="input1" [placeholder]="userFirebase.name" required
-                            formControlName="name">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div class="input">
-                        <input type="password" class="input1" placeholder="Password" required
-                            formControlName="password">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <div class="input">
-                        <input type="password" class="input1" placeholder="Confirm Password" required
-                            formControlName="password">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <div class="input" *ngIf="this.isLoginWithGoogle==false">
-                        <input type="text" class="input1" placeholder="Email" required formControlName="email">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-
-                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
-                        <input type="text" class="input1" placeholder="{{userFirebase.email}}" required
-                            formControlName="email">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div class="input" *ngIf="this.isLoginWithGoogle==true">
-                        <input type="text" class="input1" placeholder="{{userFirebase.picture}}" required
-                            formControlName="avatar">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div class="input">
-                        <input type="text" class="input1" placeholder="Phone" required formControlName="phone">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div class="input">
-                        <input type="text" class="input1" placeholder="Address" required formControlName="address">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
+                </div>
+                <div class="input">
+                    <tui-input formControlName="email" [tuiTextfieldCleaner]="true" [tuiTextfieldLabelOutside]="true">
+                        Gmail
+                        <input autocomplete="email" placeholder="example@gmail.com" tuiTextfield type="email" />
+                    </tui-input>
                 </div>
 
-                <div class="btn_register">
-                    <button class="button-4" role="button" (click)="back()">Back</button>
+                <div class="input">
+                    <div class="ci-coun">
+                        <tui-select style="width: 14rem" [formControl]="countriesValue">
+                            Country
+                            <input placeholder="Choose your Country" tuiTextfield />
+                            <tui-data-list-wrapper *tuiDataList [items]="countries"></tui-data-list-wrapper>
+                        </tui-select>
+                        <tui-select style="width: 14rem" [formControl]="cityValue">
+                            City
+                            <input placeholder="Choose your city you live in" tuiTextfield />
+                            <tui-data-list-wrapper *tuiDataList [items]="city"></tui-data-list-wrapper>
+                        </tui-select>
+                    </div>
                 </div>
-                <div class="btn_register">
-                    <button class="button-4" role="button" (click)="register()">Submit</button>
+                <div class="input">
+                    <tui-input formControlName="password" [tuiTextfieldCleaner]="true"
+                        [tuiTextfieldLabelOutside]="true">
+                        Password
+                        <input autocomplete="current-password" placeholder="********" tuiTextfield type="password" />
+                    </tui-input>
                 </div>
+                <div class="input">
+                    <tui-input formControlName="confirm-password" [tuiTextfieldCleaner]="true"
+                        [tuiTextfieldLabelOutside]="true">
+                        Confirm Password
+                        <input autocomplete="current-password" placeholder="********" tuiTextfield type="password" />
+                    </tui-input>
+                </div>
+
+                <div class="input">
+                    <div class="date-phone">
+                        <tui-input-date class="b-form" formControlName="Datetime">
+                            Date of Birth
+                            <input autocomplete="bday" tuiTextfield />
+                        </tui-input-date>
+                        <tui-input formControlName="phone" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            Phone
+                            <input autocomplete="tel" placeholder="Your phone number" tuiTextfield type="tel" />
+                        </tui-input>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-</div> -->
+</div>

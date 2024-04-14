@@ -13,6 +13,9 @@ import { ShareModule } from '../../share.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../nrgx/auth/auth.state';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as AuthActions from '../../../nrgx/auth/auth.actions';
+import { UserState } from '../../../nrgx/user/user.state';
+import { User } from '../../../model/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -20,14 +23,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   imports: [NgClass, TaigaModule, RouterLink, ShareModule, NavbarComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
-
-  readonly testForm = new FormGroup({
-    option: new FormControl(false),
-  });
+  constructor(
+    private router: Router,
+    private store: Store<{ auth: AuthState; user: UserState }>,
+  ) {}
 
   openAuto = false;
   openInfo = false;
@@ -53,24 +55,59 @@ export class NavbarComponent {
         break;
     }
   }
-
+  autoMotorcycles = [
+    'Honda Lead',
+    'Honda Vision',
+    'Honda Air blade',
+    'Honda SH',
+    'Yamaha Nouvo',
+    'Yamaha Mio',
+    'View All',
+  ];
   autoClick(): void {
     this.openAuto = false;
     this.index = 1;
   }
-
+  semiMotorcycles = [
+    'Honda Cub',
+    'Honda Wave Alpha',
+    'Honda Wave Blade',
+    'Honda RSX',
+    'Honda Future',
+    'View All',
+  ];
   semiClick(): void {
     this.openSemi = false;
     this.index = 1;
   }
+  manualMotorcycles = [
+    'Honda Winner 150',
+    'Honda XR 150',
+    'Honda CRF 300',
+    'Honda CB 500X',
+    'BMW 1250 GS',
+    'RE Himalayan 400',
+    'View All',
+  ];
   manualClick(): void {
     this.openManual = false;
     this.index = 1;
   }
+  infoList = [
+    { name: 'FAQ', type: 'faq' },
+    { name: 'About', type: 'about' },
+    { name: 'Contact Us', type: 'contact' },
+  ];
   infoClick(): void {
     this.openInfo = false;
     this.index = 1;
   }
+
+  user: User = <User>{};
+  route$ = this.router.events;
+  user$ = this.store.select('user', 'user');
+  auth$ = this.store.select('auth', 'isLogoutSuccess');
+
   userForm = new FormGroup({
     email: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
@@ -80,5 +117,8 @@ export class NavbarComponent {
 
   login() {
     this.router.navigateByUrl('/login');
+  }
+  logout() {
+    this.store.dispatch(AuthActions.logout());
   }
 }

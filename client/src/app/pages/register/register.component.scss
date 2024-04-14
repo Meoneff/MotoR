@@ -1,0 +1,56 @@
+#register-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../../assets/images/number.jpg");
+  background-size: cover;
+  #box-register {
+    max-height: 100%;
+    width: 30%;
+    border: 2px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    .ima-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        height: 10rem;
+      }
+    }
+    .all-input {
+      display: flex;
+      flex-direction: column;
+      padding: 0rem 3rem;
+      // align-items: center;
+      // justify-content: center;
+
+      .input {
+        margin-bottom: 2rem;
+        width: 100%;
+        .fu-name {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          .fu-name input {
+            width: 100%;
+          }
+        }
+        .date-phone {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .ci-coun {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

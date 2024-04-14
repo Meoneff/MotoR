@@ -2,7 +2,7 @@ import { TaigaModule } from '../../shared/taiga.module';
 import { NgOptimizedImage } from '@angular/common';
 import { User } from '../../model/user.model';
 import { Component } from '@angular/core';
-import * as AuthAcitons from '../../nrgx/auth/auth.actions';
+import * as AuthActions from '../../nrgx/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../nrgx/auth/auth.state';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserState } from '../../nrgx/user/user.state';
 import * as UserActions from '../../nrgx/user/user.actions';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { UserFirebase } from '../../model/userFirebase.model';
+import { userFirebase } from '../../model/userFirebase.model';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ import { UserFirebase } from '../../model/userFirebase.model';
 export class LoginComponent {
   isLoginWithGoogle = false;
   user$ = this.store.select('user', 'user');
-  userFirebase: UserFirebase = <UserFirebase>{};
+  userFirebase: userFirebase = <userFirebase>{};
   userFirebase$ = this.store.select('auth', 'userFirebase');
   isGetSuccessUser = false;
 
@@ -101,7 +101,7 @@ export class LoginComponent {
         this.isLoginWithGoogle
       ) {
         console.log(this.userFirebase);
-        this.router.navigate(['/register']);
+        this.router.navigate(['/home']);
       }
     });
   }
@@ -128,7 +128,7 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.isLoginWithGoogle = true;
-    this.store.dispatch(AuthAcitons.login());
+    this.store.dispatch(AuthActions.login());
   }
 
   register() {

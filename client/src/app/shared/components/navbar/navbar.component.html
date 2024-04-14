@@ -12,13 +12,7 @@
                     </button>
                     <ng-template #auto>
                         <tui-data-list (click)="autoClick()">
-                            <button tuiOption>Honda Lead</button>
-                            <button tuiOption>Honda Vision</button>
-                            <button tuiOption>Honda Airblade</button>
-                            <button tuiOption>Honda SH</button>
-                            <button tuiOption>Yamaha Nouvo</button>
-                            <button tuiOption>Yamaha Mio</button>
-                            <button tuiOption>View All</button>
+                            <button tuiOption *ngFor="let motorcycle of autoMotorcycles">{{ motorcycle }}</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
@@ -31,12 +25,7 @@
                     </button>
                     <ng-template #semi>
                         <tui-data-list (click)="semiClick()">
-                            <button tuiOption>Honda Cub</button>
-                            <button tuiOption>Honda Wave Alpha</button>
-                            <button tuiOption>Honda Wave Blade</button>
-                            <button tuiOption>Honda RSX</button>
-                            <button tuiOption>Honda Future</button>
-                            <button tuiOption>View All</button>
+                            <button tuiOption *ngFor="let motorcycle of semiMotorcycles">{{ motorcycle }}</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
@@ -49,14 +38,7 @@
                     </button>
                     <ng-template #manual>
                         <tui-data-list (click)="manualClick()">
-                            <button tuiOption>Honda Master 125</button>
-                            <button tuiOption>Honda Winner 150</button>
-                            <button tuiOption>Honda XR 150</button>
-                            <button tuiOption>Honda CRF 300</button>
-                            <button tuiOption>Honda CB 500X</button>
-                            <button tuiOption>BMW 1250 GS</button>
-                            <button tuiOption>RE Himalayan 400</button>
-                            <button tuiOption>View All</button>
+                            <button tuiOption *ngFor="let motorcycle of manualMotorcycles">{{ motorcycle }}</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
@@ -69,18 +51,27 @@
                     </button>
                     <ng-template #info>
                         <tui-data-list (click)="infoClick()">
-                            <button tuiOption>FAQ</button>
-                            <button tuiOption>About</button>
-                            <button tuiOption>Contact With Us</button>
+                            <button tuiOption *ngFor="let info of infoList">
+                                {{ info.name }}</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
             </div>
         </div>
         <div id="right-nav">
+            <div class="login">
+                <img style="width: 40px;
+                    height: 40px;
+                    border-radius: 50%;" src={{userForm.value.avatar}} alt="" *ngIf="userForm.value.uid">
+                <p style="font-size: 14px; margin-right: 2rem; margin-left: 1rem;" *ngIf="userForm.value.uid">
+                    {{userForm.value.name}}</p>
+                <div class="profile_menu">
+                    <p (click)="logout()">Logout</p>
+                </div>
+            </div>
 
-            <div id="btn-login" (click)="login()" *ngIf="!userForm.value.uid">
-                <button>Login</button>
+            <div class="login" *ngIf="!userForm.value.uid" (click)="login()">
+                <p>Login</p>
             </div>
         </div>
     </div>

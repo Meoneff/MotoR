@@ -1,12 +1,10 @@
 #home-container {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   #bg-container {
-    height: 100%;
+    height: 80%;
     width: 100%;
     overflow: hidden;
-    margin-bottom: 6rem;
-    // position: relative;
     .bg-ima {
       height: auto;
       max-width: 100%;
@@ -25,70 +23,91 @@
       text-shadow: 2px 2px 4px #000000;
     }
   }
-  #intro-container {
-    height: 70%;
-    width: auto;
-    padding: 0rem 20rem;
+  #center-container {
+    max-width: 100%;
+    padding: 0% 15%;
     display: flex;
-    flex-direction: row;
-    margin-bottom: 8rem;
-    .intro-ima {
-      max-height: 100%;
-      width: auto;
-      border-radius: 10%;
+    flex-direction: column;
+    margin: 5rem 0rem;
+    #first-center {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      .intro-bg {
+        .bg-im {
+          height: 25rem;
+          width: auto;
+          border-radius: 2%;
+        }
+      }
+      .intro-txt {
+        margin-left: 5rem;
+        .txt-top {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          span {
+            text-align: justify;
+            white-space: normal;
+            word-wrap: normal;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-break: normal;
+          }
+        }
+        .txt-bottom {
+          margin-top: 4rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          .bottom-item {
+            margin-right: 5rem;
+            text-align: center;
+          }
+        }
+      }
     }
-    .intro-txt {
-      margin-left: 2rem;
-      // font-size: 2rem;
-      color: #000000;
+    #sec-center {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      .txt-top {
-        .title {
-          text-align: center;
+      position: relative;
+      margin: 5rem 0rem;
+      .sec-bg {
+        position: relative; /* Thêm dòng này để tạo một khung cho hover */
+        overflow: hidden;
+        border-radius: 2rem;
+        img {
+          width: 70rem;
+          max-height: 30rem;
+          border-radius: 2rem;
+          transition: transform 1.5s ease; /* Áp dụng hiệu ứng chuyển động cho hình ảnh */
+          // opacity: 0.8;
+          filter: brightness(50%); //tăng độ đậm màu
         }
-
-        .wel {
-          line-height: 1.6;
-          text-align: justify;
-        }
-      }
-      .txt-bottom {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        margin-top: 3rem;
-        .bottom-first,
-        .bottom-seccond,
-        .bottom-third {
-          margin-right: 2rem;
-          text-align: center;
-        }
-        span {
-          font-weight: 600;
+        &:hover img {
+          transform: scale(1.5); /* Scale hình ảnh lên 110% khi hover */
         }
       }
-    }
-  }
-  #content-container {
-    height: 60%;
-    width: auto;
-    padding: 0rem 20rem;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 8rem;
-    .inner-lay {
-      height: 100%;
-    }
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      overflow: hidden;
-      border-radius: 2%;
-      object-fit: cover;
+      .sec-txt {
+        position: absolute;
+        color: #ffffff;
+        top: 40%;
+        left: 35%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        transition: transform 1.5s ease; /* Áp dụng hiệu ứng chuyển động cho hình ảnh */
+        h1 {
+          margin-bottom: 2rem;
+        }
+        h2 {
+          margin-bottom: 3rem;
+        }
+      }
     }
   }
 }

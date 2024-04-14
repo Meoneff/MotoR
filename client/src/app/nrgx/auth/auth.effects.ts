@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
-import { Store } from '@ngrx/store';
 import * as AuthActions from '../auth/auth.actions';
 import { AuthService } from '../../service/auth/auth.service';
+import { catchError, map, of, switchMap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
@@ -20,9 +20,7 @@ export class AuthEffects {
         return this.authService.loginWithGoogle();
       }),
       map(() => AuthActions.loginSuccess()),
-      catchError((error) =>
-        of(AuthActions.loginFailure({ errorMessage: error })),
-      ),
+      catchError((error) => of(AuthActions.loginFailure({ error: error }))),
     ),
   );
 
@@ -33,9 +31,7 @@ export class AuthEffects {
         return this.authService.logout();
       }),
       map(() => AuthActions.logoutSuccess()),
-      catchError((error) =>
-        of(AuthActions.logoutFailure({ errorMessage: error })),
-      ),
+      catchError((error) => of(AuthActions.logoutFailure({ error: error }))),
     ),
   );
 }
