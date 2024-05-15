@@ -8,26 +8,39 @@
             <div class="all-input" [formGroup]="registForm">
                 <div class="input">
                     <div class="fu-name">
-                        <tui-input style="width: 14rem;" formControlName="last-name" [tuiTextfieldCleaner]="true"
-                            [tuiTextfieldLabelOutside]="true">
-                            LastName
-                            <input autocomplete="last-name" placeholder="Your last name" tuiTextfield type="text" />
-                        </tui-input>
-                        <tui-input style="width: 14rem;" formControlName="first-name" [tuiTextfieldCleaner]="true"
-                            [tuiTextfieldLabelOutside]="true">
-                            FirstName
-                            <input autocomplete="given-name" placeholder="Your first name" tuiTextfield type="text" />
-                        </tui-input>
+                        <div class="name" *ngIf="this.isLoginWithGoogle==false">
+                            <tui-input style="width: 12rem;" formControlName="Name" [tuiTextfieldCleaner]="true"
+                                [tuiTextfieldLabelOutside]="true">
+                                Name
+                                <input autocomplete="name" placeholder="Your Name" tuiTextfield type="text" />
+                            </tui-input>
+                        </div>
+                        <div class="name" *ngIf="this.isLoginWithGoogle==true">
+                            <input type="text" [placeholder]="userFirebase.name" required formControlName="name">
+                        </div>
+                        <!-- <tui-radio-list class="gende" formControlName="gender" [items]="genders">
+                            <ng-template tuiRadioListItem let-item>
+                                {{ item.name }}
+                            </ng-template>
+                        </tui-radio-list> -->
                     </div>
                 </div>
                 <div class="input">
-                    <tui-input formControlName="email" [tuiTextfieldCleaner]="true" [tuiTextfieldLabelOutside]="true">
-                        Gmail
-                        <input autocomplete="email" placeholder="example@gmail.com" tuiTextfield type="email" />
-                    </tui-input>
+                    <div class="mail" *ngIf="this.isLoginWithGoogle==false">
+                        <tui-input formControlName="email" [tuiTextfieldCleaner]="true"
+                            [tuiTextfieldLabelOutside]="true">
+                            Gmail
+                            <input (blur)="validateEmail($event)" autocomplete="email" placeholder="example@gmail.com"
+                                tuiTextfield type="email" />
+                        </tui-input>
+                        <span *ngIf="emailError" class="error-message">{{ emailError }}</span>
+                    </div>
+                    <div class="mail" *ngIf="this.isLoginWithGoogle==true">
+                        <input type="text" [placeholder]="userFirebase.email" formControlName="email" required>
+                    </div>
                 </div>
 
-                <div class="input">
+                <!-- <div class="input">
                     <div class="ci-coun">
                         <tui-select style="width: 14rem" [formControl]="countriesValue">
                             Country
@@ -40,7 +53,7 @@
                             <tui-data-list-wrapper *tuiDataList [items]="city"></tui-data-list-wrapper>
                         </tui-select>
                     </div>
-                </div>
+                </div> -->
                 <div class="input">
                     <tui-input formControlName="password" [tuiTextfieldCleaner]="true"
                         [tuiTextfieldLabelOutside]="true">
@@ -55,22 +68,29 @@
                         <input autocomplete="current-password" placeholder="********" tuiTextfield type="password" />
                     </tui-input>
                 </div>
-
                 <div class="input">
                     <div class="date-phone">
-                        <tui-input-date class="b-form" formControlName="Datetime">
+                        <tui-input-date style="width: 12rem;" class="b-form" formControlName="dateOfBirth"
+                            (ngModelChange)="calculateAge($event)">
                             Date of Birth
                             <input autocomplete="bday" tuiTextfield />
                         </tui-input-date>
-                        <tui-input formControlName="phone" [tuiTextfieldCleaner]="true"
+                        <span *ngIf="dateOfBirthError" class="error-message">{{ dateOfBirthError }}</span>
+
+
+                        <tui-input style="width: 12rem;" formControlName="phone" [tuiTextfieldCleaner]="true"
                             [tuiTextfieldLabelOutside]="true">
                             Phone
                             <input autocomplete="tel" placeholder="Your phone number" tuiTextfield type="tel" />
                         </tui-input>
                     </div>
                 </div>
-
+                <div class="btn_register">
+                    <button appearance="primary" tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3"
+                        (click)="submitClick()">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>

@@ -1,6 +1,6 @@
 <div id="navbar-container">
     <div id="nav-both">
-        <div class="logo_nav">
+        <div class="logo_nav" (click)="home()">
             <img class="logo" src="../../../../assets/images/motor-high-resolution-logo-black-transparent.png" alt="">
         </div>
         <div id="center-nav">
@@ -59,11 +59,11 @@
             </div>
         </div>
         <div id="right-nav">
-            <div class="login">
-                <img style="width: 40px;
+            <div class="login" *ngIf="userForm.value.uid">
+                <!-- <img style="width: 40px;
                     height: 40px;
-                    border-radius: 50%;" src={{userForm.value.avatar}} alt="" *ngIf="userForm.value.uid">
-                <p style="font-size: 14px; margin-right: 2rem; margin-left: 1rem;" *ngIf="userForm.value.uid">
+                    border-radius: 50%;" src={{userForm.value.avatar}} alt=""> -->
+                <p style="font-size: 14px; margin-right: 2rem; margin-left: 1rem;">
                     {{userForm.value.name}}</p>
                 <div class="profile_menu">
                     <p (click)="logout()">Logout</p>

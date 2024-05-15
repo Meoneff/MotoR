@@ -1,17 +1,16 @@
-import { UserState } from '../../nrgx/user/user.state';
+import { UserState } from './user.state';
 import { User } from '../../model/user.model';
-import * as UserActions from '../../nrgx/user/user.actions';
+import * as UserActions from './user.actions';
 import { createReducer, on } from '@ngrx/store';
 
 export const initialState: UserState = {
   isGetLoading: false,
   isGetSuccess: false,
-  getErrorMessage: '',
+  getErrMess: '',
   user: <User>{},
   isCreateSussess: false,
   isCreateLoading: false,
   createErrMess: '',
-  errorMessage: '',
 };
 
 export const userReducer = createReducer(
@@ -22,7 +21,7 @@ export const userReducer = createReducer(
       ...state,
       isGetLoading: true,
       isGetSuccess: false,
-      getErrorMessage: '',
+      getErrMess: '',
       user: <User>{},
     };
     return newState;
@@ -45,8 +44,9 @@ export const userReducer = createReducer(
       ...state,
       isGetLoading: false,
       isGetSuccess: false,
-      getErrorMessage: action.error,
+      getErrMess: action.error,
     };
+    console.log(action.error);
     return newState;
   }),
 
@@ -85,7 +85,6 @@ export const userReducer = createReducer(
 
   on(UserActions.storedUser, (state, { user, type }) => {
     console.log(type);
-
     return {
       ...state,
       user: user,
@@ -94,7 +93,6 @@ export const userReducer = createReducer(
 
   on(UserActions.resetUser, (state, { type }) => {
     console.log(type);
-
     return {
       ...state,
       isGetLoading: false,

@@ -38,8 +38,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'user', reducer: userReducer }),
-    // provideState({ name: 'candidate', reducer: candidateReducer }),
-    // provideState({ name: 'job', reducer: jobReducer }),
     provideEffects([AuthEffects, UserEffects]),
     provideHttpClient(),
   ],

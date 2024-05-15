@@ -83,6 +83,7 @@ import { TuiMediaModule } from '@taiga-ui/cdk';
 import { TuiProgressModule } from '@taiga-ui/kit';
 import { TuiMultiSelectModule } from '@taiga-ui/kit';
 import { TuiLineClampModule } from '@taiga-ui/kit';
+import { TuiRadioListModule } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import {
   TuiCardModule,
@@ -109,7 +110,7 @@ const TaigaModules = [
   TuiTextareaModule,
   TuiInputDateRangeModule,
   TuiInputPhoneInternationalModule,
-
+  TuiRadioListModule,
   TuiButtonModule,
   TuiActionModule,
 

@@ -11,6 +11,9 @@ import { RevenueModule } from './revenue/revenue.module';
 import { ReservationsModule } from './reservations/reservations.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { ManufacturerService } from './manufacturer/manufacturer.service';
+import { ManufacturerModule } from './manufacturer/manufacturer.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -25,6 +28,8 @@ import { AuthModule } from './auth/auth.module';
     CommentModule,
     RevenueModule,
     ReservationsModule,
+    ManufacturerModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

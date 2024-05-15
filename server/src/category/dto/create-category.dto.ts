@@ -1,1 +1,7 @@
-export class CreateCategoryDto {}
+export class CreateCategoryDto {
+  constructor(
+    public categoryId: string,
+    public name: string,
+    public quantity: number,
+  ) {}
+}

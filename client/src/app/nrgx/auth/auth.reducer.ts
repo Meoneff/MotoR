@@ -1,6 +1,6 @@
 import { userFirebase } from '../../model/userFirebase.model';
-import * as AuthActions from '../auth/auth.actions';
-import { AuthState } from '../auth/auth.state';
+import * as LoginActions from './auth.actions';
+import { AuthState } from './auth.state';
 import { createReducer, on } from '@ngrx/store';
 
 export const initialState: AuthState = {
@@ -13,7 +13,7 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(AuthActions.login, (state, action) => {
+  on(LoginActions.login, (state, action) => {
     let newState: AuthState = {
       ...state,
       isLoading: true,
@@ -23,7 +23,7 @@ export const authReducer = createReducer(
     return newState;
   }),
 
-  on(AuthActions.loginSuccess, (state, action) => {
+  on(LoginActions.loginSuccess, (state, action) => {
     let newState: AuthState = {
       ...state,
       isLoading: false,
@@ -33,7 +33,7 @@ export const authReducer = createReducer(
     return newState;
   }),
 
-  on(AuthActions.loginFailure, (state, action) => {
+  on(LoginActions.loginFailure, (state, action) => {
     let newState: AuthState = {
       ...state,
       isLoading: false,
@@ -43,7 +43,7 @@ export const authReducer = createReducer(
     return newState;
   }),
 
-  on(AuthActions.logout, (state, action) => {
+  on(LoginActions.logout, (state, action) => {
     let newState: AuthState = {
       ...state,
       isLoading: true,
@@ -53,7 +53,7 @@ export const authReducer = createReducer(
     return newState;
   }),
 
-  on(AuthActions.logoutSuccess, (state, action) => {
+  on(LoginActions.logoutSuccess, (state, action) => {
     console.log('logout success');
 
     let newState: AuthState = {
@@ -65,7 +65,7 @@ export const authReducer = createReducer(
     return newState;
   }),
 
-  on(AuthActions.logoutFailure, (state, action) => {
+  on(LoginActions.logoutFailure, (state, action) => {
     let newState: AuthState = {
       ...state,
       isLoading: false,
@@ -74,14 +74,14 @@ export const authReducer = createReducer(
     };
     return newState;
   }),
-  on(AuthActions.storageUserFirebase, (state, { userFirebase, type }) => {
+  on(LoginActions.storageUserFirebase, (state, { userFirebase, type }) => {
     console.log(type);
     return {
       ...state,
       userFirebase,
     };
   }),
-  on(AuthActions.resetState, (state, action) => {
+  on(LoginActions.resetState, (state, action) => {
     let newState: AuthState = {
       ...state,
       userFirebase: <userFirebase>{},

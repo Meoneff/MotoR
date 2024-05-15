@@ -23,7 +23,7 @@ export class UserService {
       password: newUser.password,
     };
     return this.httpClient.post<User>(
-      environment.host_url + 'user',
+      environment.host_url + 'user' + '/' + 'create',
       newUser,
       {},
     );

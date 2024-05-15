@@ -1,33 +1,38 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../model/user.model';
 
+export const getUserId = createAction(
+  '[User] Get User ID',
+  props<{ userId: string }>(),
+);
+
 export const getByEmail = createAction(
-  '[User] Get User',
+  '[User] get by email',
   props<{ email: string }>(),
 );
 
 export const getByEmailSuccess = createAction(
-  '[User] Get User Success',
+  '[User] get by email success',
   props<{ user: User }>(),
 );
 
 export const getByEmailFailure = createAction(
-  '[User] Get User Failure',
+  '[User] get by email failure',
   props<{ error: any }>(),
 );
 
 export const createUser = createAction(
-  '[User] Create User',
+  '[User] create user',
   props<{ user: User }>(),
 );
 
 export const createUserSuccess = createAction(
-  '[User] Create User Success',
+  '[User] create user success',
   props<{ user: User }>(),
 );
 
 export const createUserFailure = createAction(
-  '[User] Create User Failure',
+  '[User] create user failure',
   props<{ error: any }>(),
 );
 

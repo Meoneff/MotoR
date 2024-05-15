@@ -1,0 +1,16 @@
+#auto-container {
+  height: 100%;
+  width: 100%;
+  padding: 0rem 2rem;
+  #autoBike {
+    display: flex;
+    justify-content: space-between;
+    .igauto {
+      width: auto;
+      height: 20rem;
+      border-radius: 2%;
+      //   object-fit: cover;
+      //   position: absolute;
+    }
+  }
+}

@@ -1,13 +1,13 @@
 #register-container {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("../../../assets/images/number.jpg");
   background-size: cover;
   #box-register {
-    max-height: 100%;
+    height: auto;
     width: 30%;
     border: 2px solid #ccc;
     background-color: rgba(255, 255, 255, 0.7);
@@ -24,21 +24,38 @@
       display: flex;
       flex-direction: column;
       padding: 0rem 3rem;
-      // align-items: center;
-      // justify-content: center;
+      align-items: center;
+      justify-content: center;
 
       .input {
+        flex: 1;
         margin-bottom: 2rem;
-        width: 100%;
+        width: 80%;
         .fu-name {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
+          align-items: center;
           width: 100%;
+          ::ng-deep .gende {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
           .fu-name input {
             width: 100%;
+            flex: 1;
           }
         }
+        .error input {
+          border-color: red; /* Thay đổi màu của viền thành màu đỏ */
+        }
+
+        .error-message {
+          color: red; /* Thay đổi màu của thông báo lỗi thành màu đỏ */
+          font-size: 12px; /* Cỡ chữ nhỏ */
+        }
+
         .date-phone {
           display: flex;
           flex-direction: row;

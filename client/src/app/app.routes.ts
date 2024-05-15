@@ -3,6 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.LAYOUT_ROUTES),
   },
@@ -17,5 +22,10 @@ export const routes: Routes = [
       import('../app/pages/register/register.routes').then(
         (m) => m.REGISTER_ROUTES,
       ),
+  },
+  {
+    path: '**',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
 ];

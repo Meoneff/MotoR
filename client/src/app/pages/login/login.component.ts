@@ -33,9 +33,7 @@ export class LoginComponent {
     private router: Router,
   ) {
     onAuthStateChanged(this.auth, (user) => {
-      console.log(user);
-
-      if (user && user.email != undefined && user.email != '') {
+      if (user && user.email) {
         this.isLoginWithGoogle = true;
         this.userFirebase = {
           uid: user.uid,
@@ -50,34 +48,19 @@ export class LoginComponent {
     });
 
     this.user$.subscribe((user) => {
-      if (
-        user != <User>{} &&
-        user != undefined &&
-        user != null &&
-        user.email != undefined
-      ) {
+      if (user && user.email) {
         this.isGetSuccessUser = true;
-        console.log('có User: ' + user.email);
-        console.log(this.accountData);
-        console.log(this.userFirebase);
-        console.log(this.isLoginWithGoogle);
-
         console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-
-        if (
-          this.accountData.password != '' &&
-          this.accountData.email != '' &&
-          !this.isLoginWithGoogle
-        ) {
+        this.router.navigate(['/register']);
+        if (this.accountData.password != '' && this.accountData.email != '') {
           console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-          console.log('có tài khoản k phải tk gg');
           if (user.password == this.accountData.password) {
             const userAsJsoBth = JSON.stringify(user);
             sessionStorage.setItem('user', userAsJsoBth);
             console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/base/home']);
             this.isGetSuccessUser = false;
-            console.log('đăng nhập với tk thường');
+            console.log('login w account');
             this.accountData = {
               email: '',
               password: '',
@@ -88,22 +71,93 @@ export class LoginComponent {
             console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
             const userAsJsonGG = JSON.stringify(user);
             sessionStorage.setItem('user', userAsJsonGG);
-
-            this.router.navigate(['/home']);
-            console.log('đăng nhập với gg');
+            console.log(sessionStorage);
+            this.router.navigate(['/base/home']);
+            console.log('login w gg');
             this.isGetSuccessUser = false;
           }
         }
-      }
-      if (
+      } else if (
         this.isGetSuccessUser &&
         user.email == '404 user not found' &&
         this.isLoginWithGoogle
       ) {
         console.log(this.userFirebase);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/register']);
       }
     });
+    // onAuthStateChanged(this.auth, (user) => {
+    //   console.log(user);
+
+    //   if (user && user.email != undefined && user.email != '') {
+    //     this.isLoginWithGoogle = true;
+    //     this.userFirebase = {
+    //       uid: user.uid,
+    //       email: user.email || '',
+    //       name: user.displayName || '',
+    //       picture: user.photoURL || '',
+    //     };
+    //     this.store.dispatch(
+    //       UserActions.getByEmail({ email: user.email || '' }),
+    //     );
+    //   }
+    // });
+
+    // this.user$.subscribe((user) => {
+    //   if (
+    //     user != <User>{} &&
+    //     user != undefined &&
+    //     user != null &&
+    //     user.email != undefined
+    //   ) {
+    //     this.isGetSuccessUser = true;
+    //     console.log('có User: ' + user.email);
+    //     console.log(this.accountData);
+    //     console.log(this.userFirebase);
+    //     console.log(this.isLoginWithGoogle);
+
+    //     console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
+
+    //     if (
+    //       this.accountData.password != '' &&
+    //       this.accountData.email != '' &&
+    //       !this.isLoginWithGoogle
+    //     ) {
+    //       console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
+    //       console.log('có tài khoản k phải tk gg');
+    //       if (user.password == this.accountData.password) {
+    //         const userAsJsoBth = JSON.stringify(user);
+    //         sessionStorage.setItem('user', userAsJsoBth);
+    //         console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
+    //         this.router.navigate(['/home']);
+    //         this.isGetSuccessUser = false;
+    //         console.log('đăng nhập với tk thường');
+    //         this.accountData = {
+    //           email: '',
+    //           password: '',
+    //         };
+    //       }
+    //     } else {
+    //       if (this.isLoginWithGoogle && this.userFirebase.email == user.email) {
+    //         console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
+    //         const userAsJsonGG = JSON.stringify(user);
+    //         sessionStorage.setItem('user', userAsJsonGG);
+
+    //         this.router.navigate(['/home']);
+    //         console.log('đăng nhập với gg');
+    //         this.isGetSuccessUser = false;
+    //       }
+    //     }
+    //   }
+    //   if (
+    //     this.isGetSuccessUser &&
+    //     user.email == '404 user not found' &&
+    //     this.isLoginWithGoogle
+    //   ) {
+    //     console.log(this.userFirebase);
+    //     this.router.navigate(['/home']);
+    //   }
+    // });
   }
 
   accountForm = new FormGroup({
