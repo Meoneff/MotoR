@@ -39,11 +39,12 @@ export class ManufacturerController {
     }
   }
 
-  @Get()
-  async findOne(@Query('id') id: string) {
+  @Get('get/id')
+  async findOne(@Query('manufacturerId') manufacturerId: string) {
     try {
-      console.log(id);
-      const manufacturer = await this.manufacturerService.findOne(id);
+      console.log(manufacturerId);
+      const manufacturer =
+        await this.manufacturerService.findOne(manufacturerId);
       return manufacturer;
     } catch (err) {
       throw err;

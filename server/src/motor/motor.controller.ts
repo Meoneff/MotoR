@@ -61,10 +61,10 @@ export class MotorController {
     }
   }
 
-  @Get('byMotorId')
-  async findOne(@Query('id') id: string) {
+  @Get('get/id')
+  async findOne(@Query('motorId') motorId: string) {
     try {
-      const motor = await this.motorService.findOne(id);
+      const motor = await this.motorService.findOne(motorId);
       return motor;
     } catch (e) {
       console.log(e);

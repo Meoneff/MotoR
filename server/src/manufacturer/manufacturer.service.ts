@@ -31,10 +31,10 @@ export class ManufacturerService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(manufacturerId: string) {
     try {
       const manufacturer = await this.manufacturerModel
-        .findOne({ manufacturerId: id })
+        .findOne({ manufacturerId: manufacturerId })
         .exec();
       return manufacturer;
     } catch (err) {

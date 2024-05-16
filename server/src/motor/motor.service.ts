@@ -83,10 +83,10 @@ export class MotorService {
     }
   }
 
-  async findById(id: string) {
+  async findById(motorId: string) {
     try {
       const motor = await this.motorModel
-        .findById(id)
+        .findById(motorId)
         .populate('image', 'urls', this.storageModel)
         .populate('manufacturerId', 'name', this.manufacturerModel)
         .populate('categoryId', 'name', this.categoryModel)

@@ -29,10 +29,10 @@ export class CategoryService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(categoryId: string) {
     try {
       const category = await this.categoryModel
-        .findOne({ categoryId: id })
+        .findOne({ categoryId: categoryId })
         .exec();
       return category;
     } catch (err) {

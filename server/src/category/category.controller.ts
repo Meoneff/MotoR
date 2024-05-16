@@ -35,10 +35,10 @@ export class CategoryController {
     }
   }
 
-  @Get()
-  async findOne(@Query('id') id: string) {
+  @Get('get/id')
+  async findOne(@Query('categoryId') categoryId: string) {
     try {
-      const category = await this.categoryService.findOne(id);
+      const category = await this.categoryService.findOne(categoryId);
       return category;
     } catch (err) {
       throw err;
