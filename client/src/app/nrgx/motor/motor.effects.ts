@@ -18,6 +18,7 @@ export class MotorEffects {
         this.motorService.getMotor().pipe(
           map((items) => {
             if (items.length > 0) {
+              // console.log(items);
               return MotorActions.getSuccess({ motorList: items });
             } else {
               return MotorActions.getFailure({ getErrMess: 'No dish found' });

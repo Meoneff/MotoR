@@ -4,12 +4,12 @@ import { Motor } from '../../model/motor.model';
 
 export const getSuccess = createAction(
   '[Motor] Get Success',
-  props<{ motorList: Motor }>(),
+  props<{ motorList: Motor[] }>(),
 );
 
 export const get = createAction(
   '[Motor] get all',
-  props<{ featured?: boolean }>(),
+  // props<{ featured?: boolean }>(),
 );
 
 export const loadMotors = createAction('[Motor] Load Motors');

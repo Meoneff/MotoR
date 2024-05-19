@@ -58,7 +58,7 @@ export class NavbarComponent {
           confirmPassword: '',
           phone: '',
           gender: '',
-          dateOfBirth: '',
+          // dateOfBirth: '',
         };
       }
     });
@@ -137,7 +137,6 @@ export class NavbarComponent {
     'Honda XR 150',
     'Honda CRF 300',
     'Honda CB 500X',
-    'BMW 1250 GS',
     'RE Himalayan 400',
     'View All',
   ];

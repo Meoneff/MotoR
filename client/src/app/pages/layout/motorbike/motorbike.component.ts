@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { User } from '../../../model/user.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,6 +14,7 @@ import { UserState } from '../../../nrgx/user/user.state';
 import { categoryState } from '../../../nrgx/category/category.state';
 import { ManufacturerState } from '../../../nrgx/manufacturer/manufacturer.state';
 import { Reservation } from '../../../model/reservation.model';
+import { get } from '../../../nrgx/motor/motor.actions';
 import * as MotorActions from '../../../nrgx/motor/motor.actions';
 import * as CategoryActions from '../../../nrgx/category/category.actions';
 import * as ManufacturerActions from '../../../nrgx/manufacturer/manufacturer.actions';
@@ -24,7 +25,7 @@ import * as ManufacturerActions from '../../../nrgx/manufacturer/manufacturer.ac
   templateUrl: './motorbike.component.html',
   styleUrl: './motorbike.component.scss',
 })
-export class MotorbikeComponent {
+export class MotorbikeComponent implements OnDestroy {
   index = 0;
 
   userFirebase$ = this.store.select('auth', 'userFirebase');
@@ -57,8 +58,24 @@ export class MotorbikeComponent {
       manufacturer: ManufacturerState;
     }>,
   ) {
-    this.store.dispatch(MotorActions.get({}));
+    this.store.dispatch(MotorActions.get());
     this.store.dispatch(CategoryActions.get());
     this.store.dispatch(ManufacturerActions.get());
+    this.store.dispatch(get());
+  }
+
+  ngOnInit() {
+    this.subscriptions.push(
+      this.motor$.subscribe((motorList) => {
+        if (motorList.length > 0) {
+          console.log(motorList);
+          this.motorList = motorList;
+        }
+      }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

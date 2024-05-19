@@ -81,7 +81,7 @@ export class RegisterComponent {
         avatar: this.userFirebase.picture, // Giữ nguyên giá trị từ userFirebase.picture
         gender: this.registForm.value.gender ?? '',
         role: 'user', // Đặt giá trị mặc định cho role là 'user'
-        dateOfBirth: this.registForm.value.dateOfBirth ?? '', // Sử dụng nullish coalescing để gán giá trị mặc định cho dateOfBirth
+        // dateOfBirth: this.registForm.value.dateOfBirth ?? '', // Sử dụng nullish coalescing để gán giá trị mặc định cho dateOfBirth
       };
       this.store.dispatch(UserActions.createUser({ user: registData }));
       console.log(registData);
@@ -97,7 +97,7 @@ export class RegisterComponent {
         phone: this.registForm.value.phone ?? '',
         avatar: '',
         role: 'user',
-        dateOfBirth: this.registForm.value.dateOfBirth ?? '',
+        // dateOfBirth: this.registForm.value.dateOfBirth ?? '',
       };
       this.store.dispatch(UserActions.createUser({ user: registData }));
     }

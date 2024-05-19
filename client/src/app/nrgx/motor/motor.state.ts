@@ -4,6 +4,6 @@ export interface MotorState {
   isGetLoading: boolean;
   isGetSuccess: boolean;
   getErrMess: string;
-  motors: Motor[];
+  motorList: Motor[];
   selectedMotor: Motor[];
 }

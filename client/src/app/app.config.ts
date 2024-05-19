@@ -17,6 +17,8 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { provideHttpClient } from '@angular/common/http';
 import { userReducer } from './nrgx/user/user.reducer';
 import { UserEffects } from './nrgx/user/user.effects';
+import { motorReducer } from './nrgx/motor/motor.reducer';
+import { MotorEffects } from './nrgx/motor/motor.effects';
 // import { candidateReducer } from './ngrx/reducers/candidate.reducer';
 // import { CandidateEffects } from './ngrx/effects/candidate.effects';
 // import { jobReducer } from './ngrx/reducers/job.reducer';
@@ -38,7 +40,9 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'user', reducer: userReducer }),
-    provideEffects([AuthEffects, UserEffects]),
+    provideState({ name: 'motor', reducer: motorReducer }),
+    // provideState({ name: 'motor', reducer: motorReducer }),
+    provideEffects([AuthEffects, UserEffects, MotorEffects]),
     provideHttpClient(),
   ],
 };

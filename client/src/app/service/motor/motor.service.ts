@@ -9,6 +9,7 @@ export class MotorService {
   constructor(private httpClient: HttpClient) {}
 
   getMotor() {
+    console.log('getMotor');
     return this.httpClient.get<Motor[] | any>(
       'http://localhost:3000/motor/get',
     );
