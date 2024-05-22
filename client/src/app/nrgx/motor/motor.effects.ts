@@ -44,4 +44,27 @@ export class MotorEffects {
       ),
     ),
   );
+  getMotorByCategoryId$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(MotorActions.getMotorByCategoryId),
+      exhaustMap((action) =>
+        this.motorService.getMotorByCategoryId(action.categoryId).pipe(
+          map((items) => {
+            if (items.length > 0) {
+              return MotorActions.getMotorByCategoryIdSuccess({
+                motorList: items,
+              });
+            } else {
+              return MotorActions.getMotorByCategoryIdFailure({
+                getErrMess: 'No dish found',
+              });
+            }
+          }),
+          catchError((err) =>
+            of(MotorActions.getMotorByCategoryIdFailure({ getErrMess: err })),
+          ),
+        ),
+      ),
+    ),
+  );
 }

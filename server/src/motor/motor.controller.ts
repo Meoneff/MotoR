@@ -83,6 +83,19 @@ export class MotorController {
     }
   }
 
+  //Category
+
+  @Get('motorCategoryId')
+  async findByCategoryId(@Query('categoryId') categoryId: string) {
+    try {
+      const motors = await this.motorService.getByCategoryId(categoryId);
+      return motors;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   @Put('update')
   async update(
     @Query('id') id: string,

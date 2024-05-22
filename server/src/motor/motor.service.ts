@@ -145,4 +145,15 @@ export class MotorService {
       throw new HttpException(err.message, err.status);
     }
   }
+
+  async getByCategoryId(categoryId: string) {
+    try {
+      const motors = await this.motorModel
+        .find({ categoryId: categoryId })
+        .exec();
+      return motors;
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
 }

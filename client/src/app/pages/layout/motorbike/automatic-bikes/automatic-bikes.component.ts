@@ -15,8 +15,7 @@ import * as ManufacturerActions from '../../../../nrgx/manufacturer/manufacturer
 import { Motor } from '../../../../model/motor.model';
 import { Manufacturer } from '../../../../model/manufacturer.model';
 import { Category } from '../../../../model/category.model';
-import { Subscription } from 'rxjs';
-import { Reservation } from '../../../../model/reservation.model';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../../../../model/user.model';
 
 @Component({
@@ -33,23 +32,18 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
   user$ = this.store.select('user', 'user');
   user: User = <User>{};
 
+  //here
+  automatic$ = this.store.select('motor', 'motorList');
+
   motor$ = this.store.select('motor', 'motorList');
 
   category$ = this.store.select('category', 'categories');
   manufacturer$ = this.store.select('manufacturer', 'manufacturers');
   motorList: Motor[] = [];
   categories: Category[] = [];
+  automaticCategories: Category[] = [];
   manufacturers: Manufacturer[] = [];
   subscriptions: Subscription[] = [];
-  reservationListByEndDate: Reservation[] = [];
-  reservationListByStartDate: Reservation[] = [];
-  userToGetReservation: User = <User>{};
-  isFirstZeroInEndDate: boolean = false;
-  isFirstZeroInStartDate: boolean = false;
-  isUpdateStatusMotorOneTime = false;
-  reservation_id: string = '';
-  selectedDays: number = 1;
-  motor_id: string = '';
 
   constructor(
     private router: Router,
@@ -62,32 +56,26 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
     }>,
   ) {
     this.store.dispatch(MotorActions.get());
-    this.store.dispatch(CategoryActions.getById({ categoryId: 'A01' }));
+    this.store.dispatch(
+      CategoryActions.getById({ categoryId: '6625353eaf10759eba05ccf0' }),
+    );
     this.store.dispatch(ManufacturerActions.get());
     this.store.dispatch(get());
-
-    //sử dụng để nghe thay đổi và cập nhật dữ liệu
-    this.subscriptions.push(
-      this.motor$.subscribe((motorList) => {
-        if (motorList.length > 0) {
-          console.log(motorList);
-          this.motorList = motorList;
-        }
-      }),
-      this.category$.subscribe((categories) => {
-        this.categories = categories;
-      }),
-      this.manufacturer$.subscribe((manufacturers) => {
-        this.manufacturers = manufacturers;
-      }),
-    );
   }
   ngOnInit() {
+    // this.subscriptions.push(
+    //   this.motor$.subscribe((motorList) => {
+    //     if (motorList.length > 0) {
+    //       console.log(motorList);
+    //       this.motorList = motorList;
+    //     }
+    //   }),
+    // );
     this.subscriptions.push(
-      this.motor$.subscribe((motorList) => {
-        if (motorList.length > 0) {
-          console.log(motorList);
-          this.motorList = motorList;
+      this.automatic$.subscribe((automaticCategories) => {
+        if (automaticCategories.length > 0) {
+          console.log(automaticCategories);
+          this.motorList = automaticCategories;
         }
       }),
     );

@@ -29,7 +29,7 @@ export class CategoryEffects {
     this.action$.pipe(
       ofType(CategoryActions.getById),
       switchMap((action) => {
-        return this.categoryService.getCategoryById(action.id);
+        return this.categoryService.getCategoryById(action.categoryId);
       }),
       map((category) => {
         return CategoryActions.getByIdSuccess({ category: category });

@@ -75,14 +75,17 @@ export const getFailure = createAction(
   '[Motor] get failure',
   props<{ getErrMess: any }>(),
 );
-// Path: client/src/app/nrgx/motor/motor.effects.ts
-// Compare this snippet from client/src/app/model/motorcycle.model.ts:
-// export interface Motorcycle {
-//   id: number;
-//   model: string;
-//   year: number;
-//   engineCapacity: number;
-
-//   rentalPricePerDay: number;
-//   available: boolean;
-// }
+///////////////////////////////////////////////////////////////
+//getMotorByCategoryId
+export const getMotorByCategoryId = createAction(
+  '[Motor] get by category id',
+  props<{ categoryId: string }>(),
+);
+export const getMotorByCategoryIdSuccess = createAction(
+  '[Motor] get by category id success',
+  props<{ motorList: Motor[] }>(),
+);
+export const getMotorByCategoryIdFailure = createAction(
+  '[Motor] get by category id failure',
+  props<{ getErrMess: any }>(),
+);

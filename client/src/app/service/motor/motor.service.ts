@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Motor } from '../../model/motor.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MotorService {
+  private baseURL = 'http://localhost:3000';
+
   constructor(private httpClient: HttpClient) {}
 
   getMotor() {
@@ -39,6 +42,13 @@ export class MotorService {
   deleteMotor(id: number) {
     return this.httpClient.delete<number | any>(
       `http://localhost:3000/motor/delete?id=${id}`,
+    );
+  }
+  ////////////////////////////////////////////////////////////////
+  //getMotorByCategoryId
+  getMotorByCategoryId(categoryId: string): Observable<Motor[]> {
+    return this.httpClient.get<Motor[]>(
+      `http://localhost:3000/motor/motorCategoryId?categoryId=${categoryId}`,
     );
   }
 }

@@ -6,4 +6,9 @@ export interface MotorState {
   getErrMess: string;
   motorList: Motor[];
   selectedMotor: Motor[];
+
+  getMotorByCategoryId: boolean;
+  getMotorByCategoryIdSuccess: boolean;
+  getMotorByCategoryIdFailure: string;
+  motorGetByCategoryId: Motor[];
 }
