@@ -111,7 +111,6 @@ export class NavbarComponent {
     'Honda Lead',
     'Honda Vision',
     'Honda Air blade',
-    'Honda SH',
     'Yamaha Nouvo',
     'Yamaha Mio',
     'View All',

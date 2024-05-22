@@ -9,7 +9,12 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) {}
   getCategories() {
     return this.httpClient.get<Category[]>(
-      'http://localhost:3000/category/all',
+      'http://localhost:3000/category/get/all',
+    );
+  }
+  getCategoryById(id: string) {
+    return this.httpClient.get<Category>(
+      'http://localhost:3000/category/get/id?categoryId=${categoryId}',
     );
   }
 }

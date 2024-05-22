@@ -4,11 +4,14 @@
   #bg-container {
     height: 80%;
     width: 100%;
-    overflow: hidden;
-    .bg-ima {
-      height: auto;
-      max-width: 100%;
-    }
+    background-image: url(../../../../assets/images/1he.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    // .bg-ima {
+    //   height: auto;
+    //   max-width: 100%;
+    // }
     .bg-txt {
       position: absolute;
       top: 30%;

@@ -18,11 +18,32 @@ export const LAYOUT_ROUTES: Routes = [
           import('./home/home.routes').then((m) => m.HOME_ROUTES),
         // component: HomeComponent,
       },
+      // {
+      //   path: 'rental/all',
+      //   loadChildren: () =>
+      //     import('./motorbike/motorbike.routes').then(
+      //       (m) => m.MOTORBIKE_ROUTES,
+      //     ),
+      // },
       {
-        path: 'rental/all',
+        path: 'automatic/rental',
         loadChildren: () =>
-          import('./motorbike/motorbike.routes').then(
-            (m) => m.MOTORBIKE_ROUTES,
+          import('./motorbike/automatic-bikes/automatic-bikes.routes').then(
+            (m) => m.AUTOMATIC_BIKES_ROUTES,
+          ),
+      },
+      {
+        path: 'semi-auto/rental',
+        loadChildren: () =>
+          import('./motorbike/semi-auto-bikes/semi-auto-bikes.routes').then(
+            (m) => m.SEMI_AUTO_BIKES_ROUTES,
+          ),
+      },
+      {
+        path: 'manual/rental',
+        loadChildren: () =>
+          import('./motorbike/manual-bikes/manual-bikes.routes').then(
+            (m) => m.MANUAL_BIKES_ROUTES,
           ),
       },
     ],

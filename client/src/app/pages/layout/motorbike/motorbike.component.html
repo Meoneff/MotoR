@@ -1,9 +1,0 @@
-<div id="bike-container">
-    <div class="full-bike">
-        <h2>4</h2>
-        <div *ngFor="let motor of motorList ">
-            <h2>{{motor.name}}</h2>
-            <img class="img" *ngFor="let img of motor.image.urls" [src]="img" alt="">
-        </div>
-    </div>
-</div>

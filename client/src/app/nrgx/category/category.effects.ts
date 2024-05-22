@@ -25,4 +25,18 @@ export class CategoryEffects {
       }),
     ),
   );
+  getCategoryById$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CategoryActions.getById),
+      switchMap((action) => {
+        return this.categoryService.getCategoryById(action.id);
+      }),
+      map((category) => {
+        return CategoryActions.getByIdSuccess({ category: category });
+      }),
+      catchError((error) => {
+        return of(CategoryActions.getByIdFailure({ errorMessage: error }));
+      }),
+    ),
+  );
 }

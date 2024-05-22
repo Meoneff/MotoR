@@ -1,0 +1,41 @@
+<div id="automatic-container">
+    <div id="bg-motor">
+        <div class="bg-container">
+            <div class="f-inner">
+                <div class="f-left">
+                    <span>MotoR Bike Rentals</span>
+                </div>
+                <div class="f-right"></div>
+            </div>
+            <div class="s-inner">
+
+            </div>
+        </div>
+    </div>
+    <div id="contain-motor">
+        <div class="l-contan">
+            <h2>Sort</h2>
+        </div>
+        <div class="r-contan">
+            <div class="rental" *ngFor="let motor of motorList">
+                <div class="tit-rent">
+                    <h2>{{motor.name}}</h2>
+                    <span> {{motor.price}} đ/ngày </span>
+                </div>
+                <img class="image" *ngFor="let img of motor.image.urls" [src]="img" alt="">
+                <div class=""></div>
+                <div class="bt-motor">
+                    <button id="bt-dt" tuiButton type="button" appearance="secondary"
+                        class="tui-space_right-3 tui-space_bottom-3">
+                        Detail
+                    </button>
+                    <button id="bt-atc" tuiButton type="button" appearance="flat"
+                        class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconShoppingCart">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

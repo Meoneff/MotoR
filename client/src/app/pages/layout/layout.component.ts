@@ -10,6 +10,6 @@ import { ShareModule } from '../../shared/share.module';
   imports: [RouterOutlet, NavbarComponent, TaigaModule, ShareModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {}

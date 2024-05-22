@@ -6,9 +6,10 @@
   flex-direction: column;
 
   #navbar {
-    top: 0;
     width: 100%;
     height: 4.5rem;
+    // top: 0;
+    // position: fixed;
   }
 
   #layout-content {

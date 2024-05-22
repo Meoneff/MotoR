@@ -22,6 +22,7 @@ import {
   TuiSliderModule,
   TuiSortCountriesPipeModule,
   TuiStringifyContentPipeModule,
+  TuiPushModule,
   TuiTabsModule,
 } from '@taiga-ui/kit';
 import {
@@ -113,7 +114,7 @@ const TaigaModules = [
   TuiRadioListModule,
   TuiButtonModule,
   TuiActionModule,
-
+  TuiPushModule,
   TuiCheckboxModule,
   TuiCheckboxLabeledModule,
   TuiPrimitiveCheckboxModule,
@@ -187,8 +188,8 @@ const TaigaModules = [
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ...TaigaModules, TuiIconModule],
-  exports: [...TaigaModules, TuiIconModule, ReactiveFormsModule],
+  imports: [CommonModule, ...TaigaModules, TuiIconModule, TuiPushModule],
+  exports: [...TaigaModules, TuiIconModule, ReactiveFormsModule, TuiPushModule],
   providers: [FormBuilder, Validators],
 })
 export class TaigaModule {}

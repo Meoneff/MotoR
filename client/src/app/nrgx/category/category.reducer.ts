@@ -38,4 +38,35 @@ export const categoryReducer = createReducer(
     };
     return newState;
   }),
+
+  //getById
+  on(CategoryActions.getById, (state, action) => {
+    let newState: categoryState = {
+      ...state,
+      isGetting: true,
+      isGetSuccess: false,
+      getErrorMessage: '',
+    };
+    return newState;
+  }),
+
+  on(CategoryActions.getByIdSuccess, (state, action) => {
+    let newState: categoryState = {
+      ...state,
+      isGetting: false,
+      isGetSuccess: true,
+      categories: [...state.categories, action.category],
+    };
+    return newState;
+  }),
+
+  on(CategoryActions.getByIdFailure, (state, action) => {
+    let newState: categoryState = {
+      ...state,
+      isGetting: false,
+      isGetSuccess: false,
+      getErrorMessage: action.errorMessage,
+    };
+    return newState;
+  }),
 );
