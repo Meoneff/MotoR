@@ -46,6 +46,13 @@ export const LAYOUT_ROUTES: Routes = [
             (m) => m.MANUAL_BIKES_ROUTES,
           ),
       },
+      {
+        path: 'detail',
+        loadChildren: () =>
+          import('./motorbike/detail/detail.routes').then(
+            (m) => m.DETAIL_ROUTES,
+          ),
+      },
     ],
   },
 ];

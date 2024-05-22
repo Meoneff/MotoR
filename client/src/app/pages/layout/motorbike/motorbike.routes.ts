@@ -32,6 +32,11 @@ export const MOTORBIKE_ROUTES: Routes = [
             (m) => m.ManualBikesComponent,
           ),
       },
+      {
+        path: 'detail',
+        loadChildren: () =>
+          import('./detail/detail.component').then((m) => m.DetailComponent),
+      },
     ],
   },
 ];
