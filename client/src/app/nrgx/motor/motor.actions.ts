@@ -83,7 +83,7 @@ export const getMotorByCategoryId = createAction(
 );
 export const getMotorByCategoryIdSuccess = createAction(
   '[Motor] get by category id success',
-  props<{ motorList: Motor[] }>(),
+  props<{ motors: Motor[] }>(),
 );
 export const getMotorByCategoryIdFailure = createAction(
   '[Motor] get by category id failure',

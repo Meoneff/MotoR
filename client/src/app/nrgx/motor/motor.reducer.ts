@@ -58,7 +58,7 @@ export const motorReducer = createReducer(
       isGetLoading: false,
       isGetSuccess: true,
       getErrMess: '',
-      motorGetByCategoryId: action.motorList,
+      motorGetByCategoryId: action.motors,
     };
   }),
   on(MotorActions.getMotorByCategoryIdFailure, (state, action) => {

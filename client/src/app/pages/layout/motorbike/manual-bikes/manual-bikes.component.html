@@ -17,23 +17,25 @@
             <h2>Sort</h2>
         </div>
         <div class="r-contan">
-            <div>
-                a
-            </div>
-            <div>
-                b
+            <div class="rental" *ngFor="let motor of motorList">
+                <div class="tit-rent">
+                    <h2>{{motor.name}}</h2>
+                    <span> {{motor.price}} đ/ngày </span>
+                </div>
+                <img class="image" *ngFor="let img of motor.image.urls" [src]="img" alt="">
+                <div class=""></div>
+                <div class="bt-motor">
+                    <button id="bt-dt" tuiButton type="button" appearance="secondary"
+                        class="tui-space_right-3 tui-space_bottom-3">
+                        Detail
+                    </button>
+                    <button id="bt-atc" tuiButton type="button" appearance="flat"
+                        class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconShoppingCart">
+                        ADD TO CART
+                    </button>
+                </div>
             </div>
         </div>
 
     </div>
 </div>
-<!-- <div id="bike-container">
-    <div class="full-bike">
-        <h2>4</h2>
-        <div *ngFor="let motor of motorList ">
-            <h2>{{motor.name}}</h2>
-            <img class="img" *ngFor="let img of motor.image.urls" [src]="img" alt="">
-            <span>{{motor.description}}</span>
-        </div>
-    </div>
-</div> -->

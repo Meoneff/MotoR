@@ -52,11 +52,11 @@ export class MotorEffects {
           map((items) => {
             if (items.length > 0) {
               return MotorActions.getMotorByCategoryIdSuccess({
-                motorList: items,
+                motors: items,
               });
             } else {
               return MotorActions.getMotorByCategoryIdFailure({
-                getErrMess: 'No dish found',
+                getErrMess: 'No motor found',
               });
             }
           }),

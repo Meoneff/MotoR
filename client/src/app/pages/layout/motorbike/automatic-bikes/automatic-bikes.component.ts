@@ -32,12 +32,12 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
   user$ = this.store.select('user', 'user');
   user: User = <User>{};
 
-  //here
-  automatic$ = this.store.select('motor', 'motorList');
+  automatic$ = this.store.select('motor', 'motorGetByCategoryId');
 
   motor$ = this.store.select('motor', 'motorList');
 
   category$ = this.store.select('category', 'categories');
+
   manufacturer$ = this.store.select('manufacturer', 'manufacturers');
   motorList: Motor[] = [];
   categories: Category[] = [];
@@ -56,21 +56,16 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
     }>,
   ) {
     this.store.dispatch(MotorActions.get());
+    this.store.dispatch(CategoryActions.getById({ categoryId: 'A01' }));
     this.store.dispatch(
-      CategoryActions.getById({ categoryId: '6625353eaf10759eba05ccf0' }),
+      MotorActions.getMotorByCategoryId({
+        categoryId: '6625353eaf10759eba05ccf0',
+      }),
     );
     this.store.dispatch(ManufacturerActions.get());
     this.store.dispatch(get());
   }
   ngOnInit() {
-    // this.subscriptions.push(
-    //   this.motor$.subscribe((motorList) => {
-    //     if (motorList.length > 0) {
-    //       console.log(motorList);
-    //       this.motorList = motorList;
-    //     }
-    //   }),
-    // );
     this.subscriptions.push(
       this.automatic$.subscribe((automaticCategories) => {
         if (automaticCategories.length > 0) {

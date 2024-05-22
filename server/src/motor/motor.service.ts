@@ -97,6 +97,20 @@ export class MotorService {
     }
   }
 
+  async getByCategoryId(categoryId: string) {
+    try {
+      const motors = await this.motorModel
+        .find({ categoryId: categoryId })
+        .populate('image', 'urls', this.storageModel)
+        .populate('manufacturerId', 'name', this.manufacturerModel)
+        .populate('categoryId', 'name', this.categoryModel)
+        .exec();
+      return motors;
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
+
   async update(id: string, updateMotorDto: UpdateMotorDto) {
     try {
       const updateMotor = await this.motorModel.findOneAndUpdate(
@@ -141,17 +155,6 @@ export class MotorService {
         motorId: id,
       });
       return deletedMotor;
-    } catch (err) {
-      throw new HttpException(err.message, err.status);
-    }
-  }
-
-  async getByCategoryId(categoryId: string) {
-    try {
-      const motors = await this.motorModel
-        .find({ categoryId: categoryId })
-        .exec();
-      return motors;
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }

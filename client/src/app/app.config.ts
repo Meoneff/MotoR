@@ -19,6 +19,8 @@ import { userReducer } from './nrgx/user/user.reducer';
 import { UserEffects } from './nrgx/user/user.effects';
 import { motorReducer } from './nrgx/motor/motor.reducer';
 import { MotorEffects } from './nrgx/motor/motor.effects';
+import { categoryReducer } from './nrgx/category/category.reducer';
+import { CategoryEffects } from './nrgx/category/category.effects';
 // import { candidateReducer } from './ngrx/reducers/candidate.reducer';
 // import { CandidateEffects } from './ngrx/effects/candidate.effects';
 // import { jobReducer } from './ngrx/reducers/job.reducer';
@@ -41,8 +43,10 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'user', reducer: userReducer }),
     provideState({ name: 'motor', reducer: motorReducer }),
+    provideState({ name: 'category', reducer: categoryReducer }),
+
     // provideState({ name: 'motor', reducer: motorReducer }),
-    provideEffects([AuthEffects, UserEffects, MotorEffects]),
+    provideEffects([AuthEffects, UserEffects, MotorEffects, CategoryEffects]),
     provideHttpClient(),
   ],
 };
