@@ -1,0 +1,156 @@
+#detail-container {
+  height: 100%;
+  width: 100%;
+  padding: 5rem 2rem;
+  .title-detail {
+    padding: 0rem 22rem;
+    span {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    h1 {
+      font-size: 3rem;
+      text-transform: uppercase;
+    }
+  }
+  .detail-motor {
+    padding: 2rem 22rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    .about-detail {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      //   img {
+      //     width: 50%;
+      //     height: 100%;
+      //   }
+    }
+    .setup-rent {
+      .star {
+        color: red;
+      }
+      width: 50%;
+      margin-left: 8rem;
+      margin-top: 2rem;
+      h1 {
+        font-weight: 800;
+      }
+      #tab {
+        #rent {
+          margin-top: 2rem;
+          #cityrent {
+            margin-bottom: 1rem;
+          }
+          #numofmot {
+            font-size: 1rem;
+            label {
+              margin-right: 10px;
+              font-size: normal;
+            }
+          }
+          #datetime-reservation {
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            height: 30%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-size: 1rem;
+            width: 90%;
+            .input-motorform {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+
+              label {
+                margin-bottom: 0.5rem;
+              }
+
+              input {
+                width: 100%;
+                padding: 0.5rem;
+                font-size: 1.2rem;
+                border: 1px solid #ccc;
+                border-radius: 0.25rem;
+                filter: drop-shadow(0px 0px 3px #000);
+                -webkit-filter: drop-shadow(0px 0px 3px #000);
+              }
+            }
+          }
+          #bill-form {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 2rem;
+            width: 90%;
+            .price-motor {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-bottom: 0.5rem;
+              .price-title {
+              }
+              .price-value {
+              }
+            }
+            .quantity-motor {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-bottom: 0.5rem;
+              .quantity-title {
+              }
+              .quantity-value {
+              }
+            }
+            .service-fee {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-bottom: 0.5rem;
+              .service-title {
+              }
+              .service-value {
+              }
+            }
+            .insurance-fee {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-bottom: 0.5rem;
+              .insurance-title {
+              }
+              .insurance-value {
+              }
+            }
+            .rental-day {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-top: 1rem;
+              margin-bottom: 1rem;
+              .rental-title {
+              }
+              .rental-value {
+              }
+            }
+            .total-fee {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              margin-top: 1rem;
+              .total-title {
+              }
+              .total-value {
+              }
+            }
+          }
+        }
+        #detail {
+        }
+      }
+    }
+  }
+}

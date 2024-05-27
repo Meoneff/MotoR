@@ -20,7 +20,7 @@
             <div class="rental" *ngFor="let motor of motorList">
                 <div class="tit-rent">
                     <h2>{{motor.name}}</h2>
-                    <span> {{motor.price}} đ/ngày </span>
+                    <span> ${{motor.price}}/day </span>
                 </div>
                 <img class="image" *ngFor="let img of motor.image.urls" [src]="img" alt="">
                 <div class=""></div>
