@@ -55,7 +55,7 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
       manufacturer: ManufacturerState;
     }>,
   ) {
-    this.store.dispatch(MotorActions.get());
+    this.store.dispatch(MotorActions.get({ isConfirmed: true }));
     this.store.dispatch(CategoryActions.getById({ categoryId: 'A01' }));
     this.store.dispatch(
       MotorActions.getMotorByCategoryId({
@@ -63,7 +63,7 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
       }),
     );
     this.store.dispatch(ManufacturerActions.get());
-    this.store.dispatch(get());
+    this.store.dispatch(get({ isConfirmed: true }));
   }
   ngOnInit() {
     this.subscriptions.push(

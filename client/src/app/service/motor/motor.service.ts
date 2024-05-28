@@ -11,7 +11,7 @@ export class MotorService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getMotor() {
+  getMotor(isConfirmed: boolean) {
     console.log('getMotor');
     return this.httpClient.get<Motor[] | any>(
       'http://localhost:3000/motor/get',
@@ -44,6 +44,12 @@ export class MotorService {
       `http://localhost:3000/motor/delete?id=${id}`,
     );
   }
+  ///////////////////////////////////////////////////
+  // confirmMotor(motorId: string) {
+  //   return this.httpClient.put<Motor | any>(
+  //     `http://localhost:3000/motor/isconfirmMotor?motorId=${motorId}`,
+  //   );
+  // }
   ////////////////////////////////////////////////////////////////
   //getMotorByCategoryId
   getMotorByCategoryId(categoryId: string): Observable<Motor[]> {

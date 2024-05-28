@@ -6,9 +6,30 @@ export interface MotorState {
   getErrMess: string;
   motorList: Motor[];
   selectedMotor: Motor[];
-
+  //////////////////////////////////////////////
   getMotorByCategoryId: boolean;
   getMotorByCategoryIdSuccess: boolean;
   getMotorByCategoryIdFailure: string;
   motorGetByCategoryId: Motor[];
+  ////////////////////////////////
+  isCreateLoading: boolean;
+  isCreateSuccess: boolean;
+  createErrMess: string;
+  motor: Motor;
+  ////////////////////////////////
+  isUpdateLoading: boolean;
+  isUpdateSuccess: boolean;
+  updateErrMess: string;
+  ////////////////////////////////
+  isDeleteLoading: boolean;
+  isDeleteSuccess: boolean;
+  deleteErrMess: string;
+  ////////////////////////////////
+  isUpdateStatusAllTrueLoading: boolean;
+  isUpdateStatusAllTrueSuccess: boolean;
+  updateStatusAllTrueErrMess: string;
+  //////////////////////////////
+  isUpdateStatusAllFalseLoading: boolean;
+  isUpdateStatusAllFalseSuccess: boolean;
+  updateStatusAllFalseErrMess: string;
 }

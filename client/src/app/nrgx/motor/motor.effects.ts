@@ -11,20 +11,45 @@ export class MotorEffects {
     private action$: Actions,
   ) {}
 
+  // getMotor$ = createEffect(() =>
+  //   this.action$.pipe(
+  //     ofType(MotorActions.get),
+  //     exhaustMap(() =>
+  //       this.motorService.getMotor().pipe(
+  //         map((items) => {
+  //           if (items.length > 0) {
+  //             // console.log(items);
+  //             return MotorActions.getSuccess({ motorList: items });
+  //           } else {
+  //             return MotorActions.getFailure({ getErrMess: 'No dish found' });
+  //           }
+  //         }),
+  //         catchError((err) => of(MotorActions.getFailure({ getErrMess: err }))),
+  //       ),
+  //     ),
+  //   ),
+  // );
+
   getMotor$ = createEffect(() =>
     this.action$.pipe(
       ofType(MotorActions.get),
-      exhaustMap(() =>
-        this.motorService.getMotor().pipe(
+      exhaustMap((action) =>
+        this.motorService.getMotor(action.isConfirmed).pipe(
           map((items) => {
-            if (items.length > 0) {
-              // console.log(items);
+            if (items != undefined || items != null) {
+              if (items.message) {
+                return MotorActions.getFailure({ getErrMess: items.message });
+              }
               return MotorActions.getSuccess({ motorList: items });
             } else {
-              return MotorActions.getFailure({ getErrMess: 'No dish found' });
+              return MotorActions.getFailure({
+                getErrMess: 'Car is undefined or null',
+              });
             }
           }),
-          catchError((err) => of(MotorActions.getFailure({ getErrMess: err }))),
+          catchError((error) =>
+            of(MotorActions.getFailure({ getErrMess: error })),
+          ),
         ),
       ),
     ),
@@ -44,6 +69,53 @@ export class MotorEffects {
       ),
     ),
   );
+
+  deleteMotor$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(MotorActions.deleteMotor),
+      exhaustMap((action) =>
+        this.motorService.deleteMotor(action.motorId).pipe(
+          map((item) => {
+            if (item != undefined || item != null) {
+              return MotorActions.deleteMotorSuccess({ motorId: item });
+            } else {
+              return MotorActions.deleteMotorFailure({
+                error: 'No motor found',
+              });
+            }
+          }),
+          catchError((err) =>
+            of(MotorActions.deleteMotorFailure({ error: err })),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  updateMotor$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(MotorActions.updateMotor),
+      exhaustMap((action) =>
+        this.motorService.updateMotor(action.motor).pipe(
+          map((item) => {
+            if (item != undefined || item != null) {
+              if (item.message) {
+                return MotorActions.updateMotorFailure({
+                  error: item.message,
+                });
+              }
+              return MotorActions.updateMotorSuccess({ motor: item });
+            } else {
+              return MotorActions.updateMotorFailure({
+                error: 'No motor found',
+              });
+            }
+          }),
+        ),
+      ),
+    ),
+  );
+
   getMotorByCategoryId$ = createEffect(() =>
     this.action$.pipe(
       ofType(MotorActions.getMotorByCategoryId),
