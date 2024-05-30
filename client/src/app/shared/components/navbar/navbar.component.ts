@@ -90,59 +90,47 @@ export class NavbarComponent {
   index = 0;
 
   closeDropdown(dropdown: string): void {
-    switch (dropdown) {
-      case 'auto':
-        this.openAuto = false;
-        break;
-      case 'semi':
-        this.openSemi = false;
-        break;
-      case 'manual':
-        this.openManual = false;
-        break;
-      case 'info':
-        this.openInfo = false;
-        break;
-      default:
-        break;
-    }
+    setTimeout(() => {
+      switch (dropdown) {
+        case 'auto':
+          this.openAuto = false;
+          break;
+        case 'semi':
+          this.openSemi = false;
+          break;
+        case 'manual':
+          this.openManual = false;
+          break;
+        case 'info':
+          this.openInfo = false;
+          break;
+        default:
+          break;
+      }
+    }, 150);
   }
-  autoMotorcycles = [
-    'Honda Lead',
-    'Honda Vision',
-    'Honda Air blade',
-    'Yamaha Nouvo',
-    'Yamaha Mio',
-    'View All',
-  ];
+
   autoClick(): void {
     this.openAuto = false;
-    this.index = 1;
   }
-  semiMotorcycles = [
-    'Honda Cub',
-    'Honda Wave Alpha',
-    'Honda Wave Blade',
-    'Honda RSX',
-    'Honda Future',
-    'View All',
-  ];
+  autonaviClick() {
+    this.router.navigate(['/automatic/rental']);
+  }
+
   semiClick(): void {
     this.openSemi = false;
-    this.index = 1;
   }
-  manualMotorcycles = [
-    'Honda Winner 150',
-    'Honda XR 150',
-    'Honda CRF 300',
-    'Honda CB 500X',
-    'RE Himalayan 400',
-    'View All',
-  ];
+  seminaviClick() {
+    this.router.navigate(['/semi-auto/rental']);
+  }
+
   manualClick(): void {
     this.openManual = false;
-    this.index = 1;
   }
+  manualnaviClick() {
+    this.router.navigate(['/manual/rental']);
+  }
+
   infoList = [
     { name: 'FAQ', type: 'faq' },
     { name: 'About', type: 'about' },
@@ -150,7 +138,65 @@ export class NavbarComponent {
   ];
   infoClick(): void {
     this.openInfo = false;
-    this.index = 1;
+  }
+
+  viewAll(type: string): void {
+    switch (type) {
+      case 'auto':
+        this.autoClick();
+        break;
+      case 'semi':
+        this.semiClick();
+        break;
+      case 'manual':
+        this.manualClick();
+        break;
+      default:
+        break;
+    }
+  }
+
+  hondaLead() {
+    this.router.navigateByUrl('/detail/664a360da6dc163dc2421385');
+  }
+  hondaVision() {
+    this.router.navigateByUrl('/detail/664a34dbde98ef26556e56be');
+  }
+  hondaAirBlade() {
+    this.router.navigateByUrl('/detail/664a3679a6dc163dc242138b');
+  }
+  yamahaNouvo() {
+    this.router.navigateByUrl('/detail/664a3b3251d699691926e35e');
+  }
+  yamahaMio() {
+    this.router.navigateByUrl('/detail/664a36e6a6dc163dc242138d');
+  }
+  hondaWaveAlpha() {
+    this.router.navigateByUrl('/detail/664b307aa1ed0bcf37970687');
+  }
+  hondaWaveBlade() {
+    this.router.navigateByUrl('/detail/664b310aa1ed0bcf3797068d');
+  }
+  hondaRSX() {
+    this.router.navigateByUrl('/detail/664b3428a1ed0bcf3797068f');
+  }
+  hondaFuture() {
+    this.router.navigateByUrl('/detail/664b35e6a1ed0bcf37970695');
+  }
+  hondaWinner() {
+    this.router.navigateByUrl('/detail/664b3678a1ed0bcf3797069a');
+  }
+  hondaXR() {
+    this.router.navigateByUrl('/detail/664b36b2a1ed0bcf3797069c');
+  }
+  hondaCRF() {
+    this.router.navigateByUrl('/detail/664b3754a1ed0bcf379706a2');
+  }
+  hondaCB() {
+    this.router.navigateByUrl('/detail/664b3834a1ed0bcf379706a6');
+  }
+  hondaRE() {
+    this.router.navigateByUrl('/detail/664b3954a1ed0bcf379706ad');
   }
 
   login() {

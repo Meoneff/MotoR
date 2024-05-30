@@ -321,7 +321,7 @@ export class DetailComponent {
     return total;
   }
 
-  goToExtras() {
+  goToRent() {
     this.activeTabIndex = 1;
   }
 }

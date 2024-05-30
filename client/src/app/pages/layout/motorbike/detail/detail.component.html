@@ -16,11 +16,19 @@
             <h1>BOOK NOW</h1>
             <div id="tab">
                 <tui-tabs [(activeItemIndex)]="activeTabIndex" class="red">
-                    <button tuiTab (click)="setActiveTab(0)">Rental</button>
+                    <button tuiTab (click)="setActiveTab(0)">Detail</button>
+                    <button tuiTab (click)="setActiveTab(1)">Rental</button>
                     <!-- <button tuiTab (click)="setActiveTab(1)">Extras</button> -->
-                    <button tuiTab (click)="setActiveTab(1)">Detail</button>
+
                 </tui-tabs>
-                <div id="rent" *ngIf="activeTabIndex === 0">
+                <div id="detail" *ngIf="activeTabIndex === 0">
+                    <h2>Detail</h2>
+                    <p>Detail content goes here...</p>
+                    <div id="btn-next">
+                        <button (click)="goToRent()">Next</button>
+                    </div>
+                </div>
+                <div id="rent" *ngIf="activeTabIndex === 1">
                     <div id="cityrent">
                         <span>City: <span class="star">*</span></span>
                         <tui-select tuiTextfieldSize="l" [formControl]="chooseCity">
@@ -127,16 +135,11 @@
                             </div>
                         </div>
                     </div>
-                    <div id="btn-next">
-                        <button (click)="goToExtras()">Next</button>
-                    </div>
+
                 </div>
 
 
-                <div id="detail" *ngIf="activeTabIndex === 1">
-                    <h2>Detail</h2>
-                    <p>Detail content goes here...</p>
-                </div>
+
             </div>
         </div>
     </div>

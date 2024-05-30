@@ -1,0 +1,17 @@
+#admin-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  #admin-slidebar {
+    width: 20%;
+    height: 100%;
+    background-color: aqua;
+  }
+  #admin-application {
+    width: 70%;
+    height: 100%;
+    background-color: palegreen;
+  }
+}

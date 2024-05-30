@@ -7,44 +7,58 @@
             <div id="but" class="rental">
                 <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="auto" [(open)]="openAuto"
                     (mouseleave)="closeDropdown('auto')">
-                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)" (click)="autonaviClick()">
                         Automatic Bikes
                     </button>
                     <ng-template #auto>
                         <tui-data-list (click)="autoClick()">
-                            <button tuiOption *ngFor="let motorcycle of autoMotorcycles">{{ motorcycle }}</button>
+                            <button tuiOption (click)="hondaLead()">Honda Lead</button>
+                            <button tuiOption (click)="hondaVision()">Honda Vision</button>
+                            <button tuiOption (click)="hondaAirBlade()">Honda Airblade</button>
+                            <button tuiOption (click)="yamahaNouvo()">Yamaha Nouvo</button>
+                            <button tuiOption (click)="yamahaMio()">Yamaha Mio</button>
+                            <button tuiOption (click)="autonaviClick()">View All</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
             </div>
             <div id="but" class="semi">
-                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="semi" [(open)]="openSemi"
+                <tui-hosted-dropdown tuiDropdownAlign="center" tuiDropdownHover [content]="semi" [(open)]="openSemi"
                     (mouseleave)="closeDropdown('semi')">
-                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)" (click)="seminaviClick()">
                         Semi-Auto Bikes
                     </button>
                     <ng-template #semi>
                         <tui-data-list (click)="semiClick()">
-                            <button tuiOption *ngFor="let motorcycle of semiMotorcycles">{{ motorcycle }}</button>
+                            <button tuiOption (click)="hondaWaveAlpha()">Honda Wave Alpha</button>
+                            <button tuiOption (click)="hondaWaveBlade()">Honda Wave Blade</button>
+                            <button tuiOption (click)="hondaRSX()">Honda RSX</button>
+                            <button tuiOption (click)="hondaFuture()">Honda Future</button>
+                            <button tuiOption (click)="seminaviClick()">View All</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
             </div>
             <div id="but" class="manual">
-                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="manual" [(open)]="openManual"
+                <tui-hosted-dropdown tuiDropdownAlign="left" tuiDropdownHover [content]="manual" [(open)]="openManual"
                     (mouseleave)="closeDropdown('manual')">
-                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
+                    <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)" (click)="manualnaviClick()">
                         Manual Bikes
                     </button>
                     <ng-template #manual>
-                        <tui-data-list (click)="manualClick()">
-                            <button tuiOption *ngFor="let motorcycle of manualMotorcycles">{{ motorcycle }}</button>
+                        <tui-data-list (mouseleave)="closeDropdown('manual')" (click)="manualClick()">
+                            <button tuiOption (click)="hondaWinner()">Honda Winner 150</button>
+                            <button tuiOption (click)="hondaXR()">Honda XR 150</button>
+                            <button tuiOption (click)="hondaCRF()">Honda CRF 300</button>
+                            <button tuiOption (click)="hondaCB()">Honda CB 500X</button>
+                            <button tuiOption (click)="hondaRE()">RE Himalayan 400</button>
+                            <button tuiOption (click)="manualnaviClick()">View All</button>
                         </tui-data-list>
                     </ng-template>
                 </tui-hosted-dropdown>
             </div>
             <div id="but" class="info">
-                <tui-hosted-dropdown tuiDropdownAlign="right" tuiDropdownHover [content]="info" [(open)]="openInfo"
+                <tui-hosted-dropdown tuiDropdownAlign="left" tuiDropdownHover [content]="info" [(open)]="openInfo"
                     (mouseleave)="closeDropdown('info')">
                     <button tuiHostedDropdownHost tuiTab (tui-tab-activate.stop)="(0)">
                         Info

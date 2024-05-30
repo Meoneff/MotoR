@@ -13,6 +13,12 @@ export const LAYOUT_ROUTES: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'admin',
+        loadChildren: () =>
+          import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+        // component: AdminComponent,
+      },
+      {
         path: 'home',
         loadChildren: () =>
           import('./home/home.routes').then((m) => m.HOME_ROUTES),
