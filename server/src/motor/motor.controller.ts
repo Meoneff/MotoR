@@ -61,7 +61,7 @@ export class MotorController {
     }
   }
 
-  @Get('get/id')
+  @Get('byMotorId')
   async findOne(@Query('motorId') motorId: string) {
     try {
       const motor = await this.motorService.findOne(motorId);

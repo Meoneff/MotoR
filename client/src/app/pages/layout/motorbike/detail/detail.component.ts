@@ -8,7 +8,7 @@ import {
   inject,
   AfterViewInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShareModule } from '../../../../shared/share.module';
 import { TaigaModule } from '../../../../shared/taiga.module';
 import {
@@ -17,7 +17,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { MotorState } from '../../../../nrgx/motor/motor.state';
 import { AuthState } from '../../../../nrgx/auth/auth.state';
 import { UserState } from '../../../../nrgx/user/user.state';
@@ -27,6 +27,9 @@ import { Motor } from '../../../../model/motor.model';
 import { User } from '../../../../model/user.model';
 import { Reservation } from '../../../../model/reservation.model';
 import * as ReservationActions from '../../../../nrgx/reservation/reservation.actions';
+import * as MotorActions from '../../../../nrgx/motor/motor.actions';
+import { Observable, Subscription } from 'rxjs';
+import { MotorService } from '../../../../service/motor/motor.service';
 @Component({
   selector: 'app-detail',
   standalone: true,
@@ -41,7 +44,7 @@ export class DetailComponent {
     this.activeTabIndex = index;
   }
 
-  city = ['Thành phố Hồ Chí Minh', 'Hà Nội'];
+  city = ['Thành phố Hồ Chí Minh', 'Hà Nội', 'Huế'];
 
   chooseCity = new FormControl();
 
@@ -50,6 +53,11 @@ export class DetailComponent {
   //   startDate: new FormControl(),
   //   endDate: new FormControl(),
   // });
+  selectedMotor$: Observable<Motor> = this.store.select(
+    'motor',
+    'selectedMotor',
+  );
+
   user$ = this.store.select('user', 'user');
   userFirebase$ = this.store.select('auth', 'userFirebase');
   isCreateReservationSuccess$ = this.store.select(
@@ -72,6 +80,8 @@ export class DetailComponent {
   //   'motor',
   //   'isUpdateStatusAllFalseSuccess',
   // );
+
+  selectedMotor: Motor[] = [];
   motorcycleForm: FormGroup;
   motorList: Motor[] = [];
   user: User = <User>{};
@@ -80,14 +90,16 @@ export class DetailComponent {
   userToGetReservation: User = <User>{};
   isFirstZeroInStartDate: boolean = false;
   isFirstZeroInEndDate: boolean = false;
-
   isUpdateStatusMotorOneTime = false;
   reservation_id: string = '';
-  selectDays: number = 1;
+  selectedDays: number = 0;
   motor_id: string = '';
+  subcriptions: Subscription[] = [];
 
   constructor(
+    private motorService: MotorService,
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private store: Store<{
       motor: MotorState;
@@ -121,14 +133,15 @@ export class DetailComponent {
     );
   }
 
-  // updateQuantity() {
-  //   const formControl = this.motorcycleForm.get('numberOfMotorcycles');
-  //   if (formControl) {
-  //     const selectedQuantity = formControl.value;
-  //     return parseInt(selectedQuantity);
-  //   }
-  //   return 0; // Trả về giá trị mặc định nếu không tìm thấy form control
-  // }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.store.dispatch(MotorActions.getMotorById({ motorId: id }));
+      }
+    });
+  }
+  item = this.motorService.getMotorDetail();
 
   updateQuantity() {
     const formControl = this.motorcycleForm.get('numberOfMotorcycles');

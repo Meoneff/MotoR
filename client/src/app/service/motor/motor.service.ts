@@ -19,7 +19,7 @@ export class MotorService {
   }
   getMotorById(id: string) {
     return this.httpClient.get<Motor | any>(
-      `http://localhost:3000/motor/byMotorId?id=${id}`,
+      `http://localhost:3000/motor/byMotorId?motorId=${id}`,
     );
   }
   getMotorByObjectId(id: string) {
@@ -56,5 +56,43 @@ export class MotorService {
     return this.httpClient.get<Motor[]>(
       `http://localhost:3000/motor/motorCategoryId?categoryId=${categoryId}`,
     );
+  }
+  ///////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+
+  private motorKey = 'motorItems';
+
+  motorItems: Motor = {} as Motor;
+
+  addToMotorDetail(motorDetail: Motor): void {
+    this.motorItems = {
+      _id: motorDetail._id,
+      motorId: motorDetail.motorId,
+      name: motorDetail.name,
+      model: motorDetail.model,
+      categoryId: motorDetail.categoryId,
+      manufacturerId: motorDetail.manufacturerId,
+      price: motorDetail.price,
+      description: motorDetail.description,
+      image: motorDetail.image,
+      status: motorDetail.status,
+    };
+    this.saveMotorDetailToMotorStorage();
+  }
+  private saveMotorDetailToMotorStorage() {
+    localStorage.setItem(this.motorKey, JSON.stringify(this.motorItems));
+  }
+
+  getMotorDetail() {
+    this.loadMotorDetailFromLocalStorage();
+    console.log(this.motorItems);
+    return this.motorItems;
+  }
+  private loadMotorDetailFromLocalStorage(): void {
+    const storedItems = localStorage.getItem(this.motorKey);
+    if (storedItems) {
+      this.motorItems = JSON.parse(storedItems);
+    }
+    console.log('get thanh cong');
   }
 }

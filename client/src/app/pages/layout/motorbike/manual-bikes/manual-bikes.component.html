@@ -25,13 +25,9 @@
                 <img class="image" *ngFor="let img of motor.image.urls" [src]="img" alt="">
                 <div class=""></div>
                 <div class="bt-motor">
-                    <button id="bt-dt" tuiButton type="button" appearance="secondary"
-                        class="tui-space_right-3 tui-space_bottom-3">
-                        Detail
-                    </button>
-                    <button id="bt-atc" tuiButton type="button" appearance="flat"
-                        class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconShoppingCart">
-                        ADD TO CART
+                    <button id="bt-dt" style="width: 100%" tuiButton type="button" appearance="secondary"
+                        class="tui-space_right-3 tui-space_bottom-3" (click)="detail(motor,motor._id)">
+                        Book Now
                     </button>
                 </div>
             </div>

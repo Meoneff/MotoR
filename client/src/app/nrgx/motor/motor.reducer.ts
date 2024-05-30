@@ -9,7 +9,7 @@ export const initialState: MotorState = {
   isGetLoading: false,
   isGetSuccess: false,
   getErrMess: '',
-  selectedMotor: [],
+  selectedMotor: <Motor>{},
   getMotorByCategoryId: false,
   getMotorByCategoryIdSuccess: false,
   getMotorByCategoryIdFailure: '',
@@ -53,6 +53,33 @@ export const motorReducer = createReducer(
     };
   }),
   on(MotorActions.getFailure, (state, action) => {
+    return {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrMess: action.getErrMess,
+    };
+  }),
+  on(MotorActions.getMotorById, (state, action) => {
+    console.log('getMotorbyid');
+    return {
+      ...state,
+      isGetLoading: true,
+      isGetSuccess: false,
+      getErrMess: '',
+    };
+  }),
+  on(MotorActions.getMotorByIdSuccess, (state, action) => {
+    console.log('GetMotorId');
+    return {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: true,
+      getErrMess: '',
+      selectedMotor: action.selectedMotor,
+    };
+  }),
+  on(MotorActions.getMotorByIdFailure, (state, action) => {
     return {
       ...state,
       isGetLoading: false,

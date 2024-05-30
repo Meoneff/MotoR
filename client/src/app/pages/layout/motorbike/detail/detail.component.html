@@ -1,18 +1,15 @@
 <div id="detail-container">
     <div class="title-detail">
-        <span>$10/day</span>
-        <h1>HONDA LEAD</h1>
+        <span>${{item.price}}/days</span>
+
+        <h1>{{item.name}}</h1>
     </div>
     <div class="detail-motor">
         <div class="about-detail">
             <img src="../../../../../assets/images/HondaLead2.png" alt="">
             <div class="des-detail">
                 <h1>OVERVIEW</h1>
-                <span>The Honda Lead is one of Vietnam’s most popular scooters. Designed pretty much exclusively for
-                    riding in the city, it’s comfortable and has a huge amount of storage space under the seat as well
-                    as a unique, almost art deco design.
-
-                    Honda Lead motorcycle rental is available in Hanoi, Danang and Ho Chi Minh City.</span>
+                <span>{{item.description}}</span>
             </div>
         </div>
         <div class="setup-rent">
@@ -78,7 +75,7 @@
                                 <span>Rental Price</span>
                             </div>
                             <div class="price-value">
-                                <span>$ 20</span>
+                                <span>$ {{item.price}}</span>
                             </div>
                         </div>
                         <div class="quantity-motor">
@@ -89,6 +86,9 @@
                                 <span>{{ updateQuantity() }}</span>
                             </div>
                         </div>
+
+                        <!-- xét cứng  -->
+
                         <div class="service-fee">
                             <div class="service-title">
                                 <span>Service Fee</span>
@@ -97,6 +97,8 @@
                                 <span>$ 5</span>
                             </div>
                         </div>
+                        <!-- xét cứng  -->
+
                         <div class="insurance-fee">
                             <div class="insurance-title">
                                 <span>Insurance Fee</span>
@@ -106,12 +108,13 @@
                             </div>
                         </div>
                         <hr>
+
                         <div class="rental-day">
                             <div class="rental-title">
                                 <span>Rental Day</span>
                             </div>
                             <div class="rental-value">
-                                <span>20$ x 4 days</span>
+                                <span>{{item.price}} x {{updateQuantity()}} x {{selectedDays}}</span>
                             </div>
                         </div>
                         <hr>
@@ -129,10 +132,6 @@
                     </div>
                 </div>
 
-                <!-- <div id="extras" *ngIf="activeTabIndex === 1">
-                    <h2>Add professional tour guild</h2>
-                    <p>Extras content goes here...</p>
-                </div> -->
 
                 <div id="detail" *ngIf="activeTabIndex === 1">
                     <h2>Detail</h2>

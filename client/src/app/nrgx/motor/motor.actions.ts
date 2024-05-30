@@ -17,6 +17,8 @@ export const getFailure = createAction(
   props<{ getErrMess: any }>(),
 );
 
+///////////////////////////////////////
+
 ////////////////////////////////////////
 
 export const loadMotors = createAction('[Motor] Load Motors');
@@ -156,7 +158,7 @@ export const getMotorById = createAction(
 );
 export const getMotorByIdSuccess = createAction(
   '[Motor] get by id success',
-  props<{ motor: Motor }>(),
+  props<{ selectedMotor: Motor }>(),
 );
 export const getMotorByIdFailure = createAction(
   '[Motor] get by id failure',

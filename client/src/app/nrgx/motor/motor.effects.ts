@@ -116,6 +116,33 @@ export class MotorEffects {
     ),
   );
 
+  getMotorById$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(MotorActions.getMotorById),
+      exhaustMap((action) =>
+        this.motorService.getMotorById(action.motorId).pipe(
+          map((item) => {
+            if (item != undefined || item != null) {
+              if (item.message) {
+                return MotorActions.getMotorByIdFailure({
+                  getErrMess: item.message,
+                });
+              }
+              return MotorActions.getMotorByIdSuccess({ selectedMotor: item });
+            } else {
+              return MotorActions.getMotorByIdFailure({
+                getErrMess: 'No motor found',
+              });
+            }
+          }),
+          catchError((err) =>
+            of(MotorActions.getMotorByIdFailure({ getErrMess: err })),
+          ),
+        ),
+      ),
+    ),
+  );
+
   getMotorByCategoryId$ = createEffect(() =>
     this.action$.pipe(
       ofType(MotorActions.getMotorByCategoryId),

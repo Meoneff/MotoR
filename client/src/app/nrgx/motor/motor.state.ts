@@ -5,7 +5,11 @@ export interface MotorState {
   isGetSuccess: boolean;
   getErrMess: string;
   motorList: Motor[];
-  selectedMotor: Motor[];
+
+  selectedMotor: Motor;
+
+  ////////////////////////////////////////////////////
+
   //////////////////////////////////////////////
   getMotorByCategoryId: boolean;
   getMotorByCategoryIdSuccess: boolean;

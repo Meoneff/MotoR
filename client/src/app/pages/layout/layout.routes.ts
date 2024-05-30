@@ -47,7 +47,7 @@ export const LAYOUT_ROUTES: Routes = [
           ),
       },
       {
-        path: 'detail',
+        path: 'detail/:id',
         loadChildren: () =>
           import('./motorbike/detail/detail.routes').then(
             (m) => m.DETAIL_ROUTES,

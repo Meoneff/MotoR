@@ -17,6 +17,7 @@ import { Manufacturer } from '../../../../model/manufacturer.model';
 import { Category } from '../../../../model/category.model';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../../../../model/user.model';
+import { MotorService } from '../../../../service/motor/motor.service';
 
 @Component({
   selector: 'app-automatic-bikes',
@@ -46,6 +47,7 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
+    private motorService: MotorService,
     private router: Router,
     private store: Store<{
       motor: MotorState;
@@ -74,6 +76,12 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
         }
       }),
     );
+  }
+
+  detail(motorDetail: Motor, id: string) {
+    this.motorService.addToMotorDetail(motorDetail);
+    this.store.dispatch(MotorActions.getMotorById({ motorId: id }));
+    this.router.navigate([`/detail/${id}`]);
   }
 
   ngOnDestroy() {
