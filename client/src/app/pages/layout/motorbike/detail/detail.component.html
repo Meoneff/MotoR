@@ -6,7 +6,7 @@
     </div>
     <div class="detail-motor">
         <div class="about-detail">
-            <img src="../../../../../assets/images/HondaLead2.png" alt="">
+            <img [src]="item.image.urls" alt="">
             <div class="des-detail">
                 <h1>OVERVIEW</h1>
                 <span>{{item.description}}</span>
@@ -56,14 +56,14 @@
                     <div id="datetime-reservation">
                         <div class="start">
                             <div class="input-motorform">
-                                <label for="startDate">Start Date: <span class="star">*</span></label>
-                                <input type="date" id="startDate" formControlName="startDate">
+                                <label for="date-checkin">Start Date: <span class="star">*</span></label>
+                                <input #dateCheckin type="date" id="date-checkin" class="date-field" name="date-from">
                             </div>
                         </div>
                         <div class="end">
                             <div class="input-motorform">
-                                <label for="endDate">End Date: <span class="star">*</span></label>
-                                <input type="date" id="endDate" formControlName="endDate">
+                                <label for="date-checkout">End Date: <span class="star">*</span></label>
+                                <input #dateCheckout type="date" id="date-checkout" class="date-field" name="">
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                                 <span>Total</span>
                             </div>
                             <div class="total-value">
-                                <span>$ 40</span>
+                                <span>$ {{ totalCost() }}</span>
                             </div>
                         </div>
                     </div>
