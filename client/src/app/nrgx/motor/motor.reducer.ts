@@ -24,12 +24,12 @@ export const initialState: MotorState = {
   isDeleteLoading: false,
   isDeleteSuccess: false,
   deleteErrMess: '',
-  isUpdateStatusAllTrueLoading: false,
-  isUpdateStatusAllTrueSuccess: false,
-  updateStatusAllTrueErrMess: '',
-  isUpdateStatusAllFalseLoading: false,
-  isUpdateStatusAllFalseSuccess: false,
-  updateStatusAllFalseErrMess: '',
+  isUpdateAllStatusTrueLoading: false,
+  isUpdateAllStatusTrueSuccess: false,
+  updateAllStatusTrueErrMess: '',
+  isUpdateAllStatusFalseLoading: false,
+  isUpdateAllStatusFalseSuccess: false,
+  updateAllStatusFalseErrMess: '',
 };
 
 export const motorReducer = createReducer(
@@ -185,7 +185,7 @@ export const motorReducer = createReducer(
       deleteErrMess: action.error,
     };
   }),
-  on(MotorActions.updateStatusAllTrue, (state, action) => {
+  on(MotorActions.updateAllStatusTrue, (state, action) => {
     return {
       ...state,
       isUpdateStatusAllTrueLoading: true,
@@ -193,29 +193,29 @@ export const motorReducer = createReducer(
       updateStatusAllTrueErrMess: '',
     };
   }),
-  on(MotorActions.updateStatusAllTrueSuccess, (state, action) => {
+  on(MotorActions.updateAllStatusTrueSuccess, (state, action) => {
     return {
       ...state,
-      isUpdateStatusAllTrueLoading: false,
-      isUpdateStatusAllTrueSuccess: true,
-      updateStatusAllTrueErrMess: '',
+      isUpdateAllStatusTrueLoading: false,
+      isUpdateAllStatusTrueSuccess: true,
+      updateAllStatusTrueErrMess: '',
     };
   }),
-  on(MotorActions.updateStatusAllTrueFailure, (state, action) => {
+  on(MotorActions.updateAllStatusTrueFailure, (state, action) => {
     return {
       ...state,
-      isUpdateStatusAllTrueLoading: false,
-      isUpdateStatusAllTrueSuccess: false,
-      updateStatusAllTrueErrMess: action.error,
+      isUpdateAllStatusTrueLoading: false,
+      isUpdateAllStatusTrueSuccess: false,
+      updateAllStatusTrueErrMess: action.error,
     };
   }),
   on(MotorActions.resetUpdateAllStatus, (state, action) => {
     return {
       ...state,
-      isUpdateStatusAllTrueSuccess: false,
-      isUpdateStatusAllFalseSuccess: false,
-      updateStatusAllTrueErrMess: '',
-      updateStatusAllFalseErrMess: '',
+      isUpdateAllStatusTrueSuccess: false,
+      isUpdateAllStatusFalseSuccess: false,
+      updateAllStatusTrueErrMess: '',
+      updateAllStatusFalseErrMess: '',
     };
   }),
 );

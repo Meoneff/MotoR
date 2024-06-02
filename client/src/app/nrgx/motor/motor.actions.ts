@@ -95,27 +95,27 @@ export const confirmFailure = createAction(
 export const resetAddSuccess = createAction('[motor] reset is add success');
 //////////////////////////////////
 
-export const updateStatusAllTrue = createAction(
+export const updateAllStatusTrue = createAction(
   '[motor] update status all',
   props<{ motorId: string[] }>(),
 );
-export const updateStatusAllTrueSuccess = createAction(
+export const updateAllStatusTrueSuccess = createAction(
   '[motor] update status all success',
 );
-export const updateStatusAllTrueFailure = createAction(
+export const updateAllStatusTrueFailure = createAction(
   '[motor] update status all failure',
   props<{ error: any }>(),
 );
 
 //////////////////////////////////////
-export const updateStatusAllFalse = createAction(
+export const updateAllStatusFalse = createAction(
   '[motor] update status false all',
   props<{ motorId: string[] }>(),
 );
-export const updateStatusAllFalseSuccess = createAction(
+export const updateAllStatusFalseSuccess = createAction(
   '[motor] update status false all success',
 );
-export const updateStatusAllFalseFailure = createAction(
+export const updateAllStatusFalseFailure = createAction(
   '[motor] update status false all failure',
   props<{ error: any }>(),
 );

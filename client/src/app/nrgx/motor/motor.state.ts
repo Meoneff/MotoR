@@ -29,11 +29,11 @@ export interface MotorState {
   isDeleteSuccess: boolean;
   deleteErrMess: string;
   ////////////////////////////////
-  isUpdateStatusAllTrueLoading: boolean;
-  isUpdateStatusAllTrueSuccess: boolean;
-  updateStatusAllTrueErrMess: string;
+  isUpdateAllStatusTrueLoading: boolean;
+  isUpdateAllStatusTrueSuccess: boolean;
+  updateAllStatusTrueErrMess: string;
   //////////////////////////////
-  isUpdateStatusAllFalseLoading: boolean;
-  isUpdateStatusAllFalseSuccess: boolean;
-  updateStatusAllFalseErrMess: string;
+  isUpdateAllStatusFalseLoading: boolean;
+  isUpdateAllStatusFalseSuccess: boolean;
+  updateAllStatusFalseErrMess: string;
 }

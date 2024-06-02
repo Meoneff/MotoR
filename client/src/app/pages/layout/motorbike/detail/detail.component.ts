@@ -26,6 +26,7 @@ import { PaymentState } from '../../../../nrgx/payment/payment.state';
 import { Motor } from '../../../../model/motor.model';
 import { User } from '../../../../model/user.model';
 import { Reservation } from '../../../../model/reservation.model';
+import * as UserActions from '../../../../nrgx/user/user.actions';
 import * as ReservationActions from '../../../../nrgx/reservation/reservation.actions';
 import * as MotorActions from '../../../../nrgx/motor/motor.actions';
 import { Observable, Subscription } from 'rxjs';
@@ -66,14 +67,14 @@ export class DetailComponent {
     'reservation',
     'reservationListByStartDate',
   );
-  // isUpdateAllStatusTrue$ = this.store.select(
-  //   'motor',
-  //   'isUpdateStatusAllTrueSuccess',
-  // );
-  // isUpdateAllStatusFalse$ = this.store.select(
-  //   'motor',
-  //   'isUpdateStatusAllFalseSuccess',
-  // );
+  isUpdateAllStatusTrue$ = this.store.select(
+    'motor',
+    'isUpdateAllStatusTrueSuccess',
+  );
+  isUpdateAllStatusFalse$ = this.store.select(
+    'motor',
+    'isUpdateAllStatusFalseSuccess',
+  );
 
   selectedMotor: Motor[] = [];
   motorcycleForm: FormGroup;
@@ -130,6 +131,99 @@ export class DetailComponent {
     this.store.dispatch(
       ReservationActions.getReservationByEndDate({ endDate: utcStringEndDate }),
     );
+
+    this.user$.subscribe((user) => {
+      if (user._id != null && user._id != undefined) {
+        console.log(user);
+        this.user = user;
+        const userAsJson = JSON.stringify(user);
+        //save userAsJson at sessionStorage
+        sessionStorage.setItem('user', userAsJson);
+        console.log('lưu vào sessionStorage');
+      } else {
+        console.log('get từ sesssionStorage');
+
+        //get user from sessionStorage
+        const userAsJson = sessionStorage.getItem('user');
+        console.log(userAsJson);
+        //chuyển đổi sang đối tượng user
+        this.user = JSON.parse(userAsJson || '');
+        this.store.dispatch(UserActions.storedUser(this.user));
+      }
+    });
+
+    //follow get reservation by endDate
+    this.reservationListByEndDate$.subscribe((val) => {
+      if (val.length > 0) {
+        const motorId = val.map((motor) => motor.motorId.motorId);
+        this.reservationListByEndDate = val;
+        console.log('motorId');
+        this.store.dispatch(
+          MotorActions.updateAllStatusTrue({ motorId: motorId }),
+        );
+      } else if (this.isFirstZeroInEndDate) {
+        if (!this.isUpdateStatusMotorOneTime) {
+          this.store.dispatch(
+            ReservationActions.getReservationByStartDate({
+              startDate: utcStringStartDate,
+            }),
+          );
+          this.isUpdateStatusMotorOneTime = true;
+        }
+      } else {
+        this.isFirstZeroInEndDate = true;
+      }
+      //
+    });
+
+    //folow get reservation by startDate
+    this.reservationListByStartDate$.subscribe((val) => {
+      if (val.length > 0) {
+        const motorId = val.map((motor) => motor.motorId.motorId);
+        this.reservationListByStartDate = val;
+        console.log('motorId');
+        this.store.dispatch(
+          MotorActions.updateAllStatusFalse({ motorId: motorId }),
+        );
+      } else if (this.isFirstZeroInStartDate) {
+        console.log(this.isUpdateStatusMotorOneTime);
+        console.log(this.isFirstZeroInStartDate);
+
+        this.store.dispatch(MotorActions.get({ isConfirmed: true }));
+        this.isUpdateStatusMotorOneTime = true;
+        this.isFirstZeroInStartDate = false;
+      } else {
+        this.isFirstZeroInStartDate = true;
+      }
+    });
+
+    //folow update status motor
+    this.isUpdateAllStatusFalse$.subscribe((val) => {
+      if (val) {
+        this.store.dispatch(MotorActions.get({ isConfirmed: true }));
+      }
+    });
+    this.isUpdateAllStatusTrue$.subscribe((val) => {
+      if (val) {
+        console.log('start');
+        if (!this.isUpdateStatusMotorOneTime) {
+          this.store.dispatch(
+            ReservationActions.getReservationByStartDate({
+              startDate: utcStringStartDate,
+            }),
+          );
+          this.isUpdateStatusMotorOneTime = true;
+        }
+      }
+    });
+
+    //follow create card reservation
+    this.isCreateReservationSuccess$.subscribe((val) => {
+      if (val) {
+        this.router.navigate(['/payment']);
+      }
+    });
+    //review
   }
 
   // khai báo gần như ngOnInit
