@@ -1,7 +1,7 @@
+import { Reservation } from '../../model/reservation.model';
 import { ReservationState } from './reservation.state';
 import * as ReservationActions from './reservation.actions';
 import { createReducer, on } from '@ngrx/store';
-import { Reservation } from '../../model/reservation.model';
 
 export const initialState: ReservationState = {
   isGetLoading: false,

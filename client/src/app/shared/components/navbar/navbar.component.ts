@@ -17,17 +17,27 @@ import * as AuthActions from '../../../nrgx/auth/auth.actions';
 import * as UserAction from '../../../nrgx/user/user.actions';
 import { UserState } from '../../../nrgx/user/user.state';
 import { User } from '../../../model/user.model';
+import { combineLatest } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgClass, TaigaModule, RouterLink, ShareModule, NavbarComponent],
+  imports: [
+    NgClass,
+    TaigaModule,
+    RouterLink,
+    ShareModule,
+    NavbarComponent,
+    MatIconModule,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
   user: User = <User>{};
+
   route$ = this.router.events;
   user$ = this.store.select('user', 'user');
   auth$ = this.store.select('auth', 'isLogoutSuccess');
@@ -81,6 +91,10 @@ export class NavbarComponent {
         this.store.dispatch(UserAction.resetUser());
       }
     });
+    combineLatest({
+      route: this.route$,
+      user: this.user$,
+    }).subscribe((res) => {});
   }
 
   openAuto = false;

@@ -8,6 +8,8 @@ export interface Reservation {
   motorId: Motor;
   customerId: User;
   startDate: string;
+  city: string;
+  quantityMotor: number;
   endDate: string;
   status: boolean;
   total: number;

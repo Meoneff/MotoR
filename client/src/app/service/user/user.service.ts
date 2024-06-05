@@ -21,6 +21,7 @@ export class UserService {
       address: newUser.address,
       role: 'user',
       password: newUser.password,
+      confirmPassword: newUser.confirmPassword,
     };
     return this.httpClient.post<User>(
       environment.host_url + 'user' + '/' + 'create',

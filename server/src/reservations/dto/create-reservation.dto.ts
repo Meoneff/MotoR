@@ -3,6 +3,8 @@ export class CreateReservationDto {
     public reservationId: string,
     public motorId: string,
     public userId: string,
+    public image: string,
+    public city: string,
     public startDate: Date,
     public endDate: Date,
     public total: number,

@@ -20,6 +20,11 @@ export class Reservation {
   })
   image: string;
 
+  @Prop({
+    required: true,
+  })
+  city: string;
+
   @Prop({ required: true })
   startDate: string;
 

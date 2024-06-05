@@ -48,6 +48,22 @@
     }
   }
   #right-nav {
+    .store-pay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 2rem;
+      flex-direction: row;
+    }
+    .login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 2rem;
+      flex-direction: row;
+    }
+    display: flex;
+    flex-direction: row;
     #ic-login {
       margin-right: 2rem;
     }

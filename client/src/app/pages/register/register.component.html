@@ -1,90 +1,44 @@
 <div id="register-container">
-    <div id="box-register">
-        <div id="register">
-            <div class="ima-box">
-                <img class="image-register" src="../../../assets/images/motor-high-resolution-logo-transparent.png"
-                    alt="logo">
-            </div>
-            <div class="all-input" [formGroup]="registForm">
-                <div class="input">
-                    <div class="fu-name">
-                        <div class="name" *ngIf="this.isLoginWithGoogle==false">
-                            <tui-input style="width: 12rem;" formControlName="Name" [tuiTextfieldCleaner]="true"
-                                [tuiTextfieldLabelOutside]="true">
-                                Name
-                                <input autocomplete="name" placeholder="Your Name" tuiTextfield type="text" />
-                            </tui-input>
-                        </div>
-                        <div class="name" *ngIf="this.isLoginWithGoogle==true">
-                            <input type="text" [placeholder]="userFirebase.name" required formControlName="name">
-                        </div>
-                        <!-- <tui-radio-list class="gende" formControlName="gender" [items]="genders">
-                            <ng-template tuiRadioListItem let-item>
-                                {{ item.name }}
-                            </ng-template>
-                        </tui-radio-list> -->
-                    </div>
+    <div class="wrapper">
+        <form action="#">
+            <h2>REGISTER</h2>
+            <div [formGroup]="registForm">
+                <!-- name -->
+                <div class="input-field" *ngIf="!isLoginWithGoogle">
+                    <input type="text" placeholder="Name" required formControlName="name">
+                    <label>Name</label>
                 </div>
-                <div class="input">
-                    <div class="mail" *ngIf="this.isLoginWithGoogle==false">
-                        <tui-input formControlName="email" [tuiTextfieldCleaner]="true"
-                            [tuiTextfieldLabelOutside]="true">
-                            Gmail
-                            <input (blur)="validateEmail($event)" autocomplete="email" placeholder="example@gmail.com"
-                                tuiTextfield type="email" />
-                        </tui-input>
-                        <span *ngIf="emailError" class="error-message">{{ emailError }}</span>
-                    </div>
-                    <div class="mail" *ngIf="this.isLoginWithGoogle==true">
-                        <input type="text" [placeholder]="userFirebase.email" formControlName="email" required>
-                    </div>
+                <div class="input-field" *ngIf="isLoginWithGoogle">
+                    <input type="text" [placeholder]="userFirebase.name" required formControlName="name">
                 </div>
 
-                <!-- <div class="input">
-                    <div class="ci-coun">
-                        <tui-select style="width: 14rem" [formControl]="countriesValue">
-                            Country
-                            <input placeholder="Choose your Country" tuiTextfield />
-                            <tui-data-list-wrapper *tuiDataList [items]="countries"></tui-data-list-wrapper>
-                        </tui-select>
-                        <tui-select style="width: 14rem" [formControl]="cityValue">
-                            City
-                            <input placeholder="Choose your city you live in" tuiTextfield />
-                            <tui-data-list-wrapper *tuiDataList [items]="city"></tui-data-list-wrapper>
-                        </tui-select>
-                    </div>
-                </div> -->
-                <div class="input">
-                    <tui-input formControlName="password" [tuiTextfieldCleaner]="true"
-                        [tuiTextfieldLabelOutside]="true">
-                        Password
-                        <input autocomplete="current-password" placeholder="********" tuiTextfield type="password" />
-                    </tui-input>
+                <!-- password -->
+                <div class="input-field">
+                    <input type="text" formControlName="password" required>
+                    <label>Password</label>
                 </div>
-                <div class="input">
-                    <tui-input formControlName="confirm-password" [tuiTextfieldCleaner]="true"
-                        [tuiTextfieldLabelOutside]="true">
-                        Confirm Password
-                        <input autocomplete="current-password" placeholder="********" tuiTextfield type="password" />
-                    </tui-input>
-                </div>
-                <div class="input">
-                    <div class="date-phone">
-                        <tui-input-date style="width: 12rem;" class="b-form" formControlName="dateOfBirth"
-                            (ngModelChange)="calculateAge($event)">
-                            Date of Birth
-                            <input autocomplete="bday" tuiTextfield />
-                        </tui-input-date>
-                        <span *ngIf="dateOfBirthError" class="error-message">{{ dateOfBirthError }}</span>
 
-
-                        <tui-input style="width: 12rem;" formControlName="phone" [tuiTextfieldCleaner]="true"
-                            [tuiTextfieldLabelOutside]="true">
-                            Phone
-                            <input autocomplete="tel" placeholder="Your phone number" tuiTextfield type="tel" />
-                        </tui-input>
-                    </div>
+                <!-- email -->
+                <div class="input-field" *ngIf="!isLoginWithGoogle">
+                    <input type="text" placeholder="Email" formControlName="email" required>
+                    <label>Email</label>
                 </div>
+                <div class="input-field" *ngIf="isLoginWithGoogle">
+                    <input type="text" [placeholder]="userFirebase.email" formControlName="email" required>
+                </div>
+
+                <!-- phone -->
+                <div class="input-field">
+                    <input type="text" formControlName="phone" required>
+                    <label>Phone number</label>
+                </div>
+
+                <!-- address -->
+                <div class="input-field">
+                    <input type="text" formControlName="address" required>
+                    <label>Address</label>
+                </div>
+
                 <div class="btn_register">
                     <button appearance="primary" tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3"
                         (click)="submitClick()">
@@ -92,5 +46,6 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+</div>

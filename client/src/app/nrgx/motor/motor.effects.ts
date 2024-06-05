@@ -43,7 +43,7 @@ export class MotorEffects {
               return MotorActions.getSuccess({ motorList: items });
             } else {
               return MotorActions.getFailure({
-                getErrMess: 'Car is undefined or null',
+                getErrMess: 'Motor is undefined or null',
               });
             }
           }),

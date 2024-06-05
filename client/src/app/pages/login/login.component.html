@@ -1,4 +1,4 @@
-<div id="login-container">
+<!-- <div id="login-container">
     <div id="box-login">
         <div id="login">
             <div class="top-box">
@@ -51,6 +51,41 @@
                 </div>
             </div>
         </div>
+
+    </div>
+</div> -->
+
+
+<div class="login-container">
+    <div class="wrapper">
+        <form action="#">
+            <h2>Sign in</h2>
+            <div [formGroup]="accountForm" (ngSubmit)="loginWithAccount()">
+                <div class="input-field">
+                    <input type="text" formControlName="email" required>
+                    <label> Enter your email</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" formControlName="password" required>
+                    <label> Enter your password</label>
+                </div>
+            </div>
+            <div class="container_login">
+                <button type="submit" (click)="loginWithAccount()"> Sign in</button>
+
+            </div>
+            <div class="container_login">
+
+                <button class="loginwithgg" type="submit" (click)="loginWithGoogle()">
+                    <img style="height: 20px; width: 20px; margin-right: 1rem" src="../../../assets/images/google1.png"
+                        alt="" /> Login With Google</button>
+            </div>
+            <div class="text_register">
+                <span>Don't have an account?</span>
+                <a (click)="register()" id="create-account-link"> Sign up</a>
+            </div>
+
+        </form>
 
     </div>
 </div>

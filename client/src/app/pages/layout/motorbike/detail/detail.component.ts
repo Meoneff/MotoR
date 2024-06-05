@@ -17,6 +17,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { Store, select } from '@ngrx/store';
 import { MotorState } from '../../../../nrgx/motor/motor.state';
 import { AuthState } from '../../../../nrgx/auth/auth.state';
@@ -31,28 +32,23 @@ import * as ReservationActions from '../../../../nrgx/reservation/reservation.ac
 import * as MotorActions from '../../../../nrgx/motor/motor.actions';
 import { Observable, Subscription } from 'rxjs';
 import { MotorService } from '../../../../service/motor/motor.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [ShareModule, TaigaModule],
+  imports: [ShareModule, TaigaModule, MatDialogModule],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
 })
-export class DetailComponent {
-  activeTabIndex: number = 0;
-
-  setActiveTab(index: number) {
-    this.activeTabIndex = index;
-  }
-
+export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
   city = ['Thành phố Hồ Chí Minh', 'Hà Nội', 'Huế'];
-
   chooseCity = new FormControl();
   selectedMotor$: Observable<Motor> = this.store.select(
     'motor',
     'selectedMotor',
   );
-
   user$ = this.store.select('user', 'user');
   userFirebase$ = this.store.select('auth', 'userFirebase');
   isCreateReservationSuccess$ = this.store.select(
@@ -75,8 +71,6 @@ export class DetailComponent {
     'motor',
     'isUpdateAllStatusFalseSuccess',
   );
-
-  selectedMotor: Motor[] = [];
   motorcycleForm: FormGroup;
   motorList: Motor[] = [];
   user: User = <User>{};
@@ -90,11 +84,11 @@ export class DetailComponent {
   selectedDays: number = 1;
   motor_id: string = '';
   total: number = 0;
+  selectedCity: string = '';
   subcriptions: Subscription[] = [];
-
   @ViewChild('dateCheckin') dateCheckin!: ElementRef;
   @ViewChild('dateCheckout') dateCheckout!: ElementRef;
-
+  @ViewChild('paymentDialog') paymentDialog!: ElementRef;
   constructor(
     private cd: ChangeDetectorRef,
     private motorService: MotorService,
@@ -115,10 +109,8 @@ export class DetailComponent {
     const utcStringStartDate = dateCheck.toUTCString();
     dateCheck.setDate(dateCheck.getDate() - 1);
     const utcStringEndDate = dateCheck.toUTCString();
-
     console.log('Start date: ' + utcStringStartDate);
     console.log('End date: ' + utcStringEndDate);
-
     this.store.select('motor').subscribe((val) => {
       if (val != null && val != undefined) {
         this.motorList = val.motorList;
@@ -126,12 +118,12 @@ export class DetailComponent {
     });
     this.motorcycleForm = this.formBuilder.group({
       numberOfMotorcycles: ['', Validators.required],
+      chooseCity: ['', Validators.required],
       // numberOfMotorcycles: ['1'],
     });
     this.store.dispatch(
       ReservationActions.getReservationByEndDate({ endDate: utcStringEndDate }),
     );
-
     this.user$.subscribe((user) => {
       if (user._id != null && user._id != undefined) {
         console.log(user);
@@ -141,26 +133,23 @@ export class DetailComponent {
         sessionStorage.setItem('user', userAsJson);
         console.log('lưu vào sessionStorage');
       } else {
-        console.log('get từ sesssionStorage');
-
-        //get user from sessionStorage
+        console.log('lấy từ sessionStorage');
+        // Lấy đối tượng user từ sessionStorage
         const userAsJson = sessionStorage.getItem('user');
         console.log(userAsJson);
-        //chuyển đổi sang đối tượng user
+        // Chuyển đổi chuỗi sang đối tượng user
         this.user = JSON.parse(userAsJson || '');
         this.store.dispatch(UserActions.storedUser(this.user));
       }
     });
-
     //follow get reservation by endDate
+    // Theo dõi lấy reservation theo endDate
     this.reservationListByEndDate$.subscribe((val) => {
-      if (val.length > 0) {
+      if (val && val.length > 0) {
         const motorId = val.map((motor) => motor.motorId.motorId);
         this.reservationListByEndDate = val;
         console.log('motorId');
-        this.store.dispatch(
-          MotorActions.updateAllStatusTrue({ motorId: motorId }),
-        );
+        this.store.dispatch(MotorActions.updateAllStatusTrue({ ids: motorId }));
       } else if (this.isFirstZeroInEndDate) {
         if (!this.isUpdateStatusMotorOneTime) {
           this.store.dispatch(
@@ -173,22 +162,20 @@ export class DetailComponent {
       } else {
         this.isFirstZeroInEndDate = true;
       }
-      //
     });
-
-    //folow get reservation by startDate
+    //follow reservation of startDate
+    // Theo dõi lấy reservation theo startDate
     this.reservationListByStartDate$.subscribe((val) => {
-      if (val.length > 0) {
+      if (val && val.length > 0) {
         const motorId = val.map((motor) => motor.motorId.motorId);
         this.reservationListByStartDate = val;
         console.log('motorId');
         this.store.dispatch(
-          MotorActions.updateAllStatusFalse({ motorId: motorId }),
+          MotorActions.updateAllStatusFalse({ ids: motorId }),
         );
       } else if (this.isFirstZeroInStartDate) {
         console.log(this.isUpdateStatusMotorOneTime);
         console.log(this.isFirstZeroInStartDate);
-
         this.store.dispatch(MotorActions.get({ isConfirmed: true }));
         this.isUpdateStatusMotorOneTime = true;
         this.isFirstZeroInStartDate = false;
@@ -196,7 +183,6 @@ export class DetailComponent {
         this.isFirstZeroInStartDate = true;
       }
     });
-
     //folow update status motor
     this.isUpdateAllStatusFalse$.subscribe((val) => {
       if (val) {
@@ -216,37 +202,59 @@ export class DetailComponent {
         }
       }
     });
-
     //follow create card reservation
     this.isCreateReservationSuccess$.subscribe((val) => {
       if (val) {
-        this.router.navigate(['/payment']);
+        this.openPaymentDialog();
+        console.log('successReser');
       }
     });
     //review
   }
-
+  @ViewChild('appDialog', { static: true })
+  dialog!: ElementRef<HTMLDialogElement>;
+  cdr = inject(ChangeDetectorRef);
+  openPaymentDialog() {
+    const dialog = this.paymentDialog.nativeElement as HTMLDialogElement;
+    this.selectedCity = this.chooseCity.value; // Cập nhật thành phố đã chọn
+    dialog.showModal();
+  }
+  closePaymentDialog() {
+    const dialog = this.paymentDialog.nativeElement as HTMLDialogElement;
+    dialog.close();
+  }
   // khai báo gần như ngOnInit
   ngAfterViewInit(): void {
     this.setupDatePickers();
   }
-
   //khai báo thêm để cho chúng sẵn sàng truy cập và thao tác bổ sung vào
-
   setupDatePickers(): void {
+    const dateCheckin = this.dateCheckin.nativeElement as HTMLInputElement;
+    const dateCheckout = this.dateCheckout.nativeElement as HTMLInputElement;
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.dateCheckin.nativeElement.valueAsDate = today;
     this.dateCheckout.nativeElement.valueAsDate = tomorrow;
-
+    console.log('after view init');
+    dateCheckin.addEventListener('change', () => {
+      const selectedDate = new Date(dateCheckin.value);
+      selectedDate.setDate(selectedDate.getDate() + 1);
+      dateCheckout.valueAsDate = selectedDate;
+    });
+    dateCheckout.addEventListener('change', () => {
+      if (dateCheckout.valueAsDate) {
+        const selectedDate = new Date(dateCheckout.value);
+        selectedDate.setDate(selectedDate.getDate() - 1);
+        dateCheckin.valueAsDate = selectedDate;
+      }
+    });
     this.dateCheckin.nativeElement.min = today.toISOString().split('T')[0];
     const minDateCheckout = new Date(today);
     minDateCheckout.setDate(today.getDate() + 1);
     this.dateCheckout.nativeElement.min = minDateCheckout
       .toISOString()
       .split('T')[0];
-
     this.dateCheckin.nativeElement.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(this.dateCheckin.nativeElement.value);
@@ -259,7 +267,6 @@ export class DetailComponent {
       const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
       this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     });
-
     this.dateCheckout.nativeElement.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(this.dateCheckin.nativeElement.value);
@@ -273,7 +280,20 @@ export class DetailComponent {
       this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     });
   }
-
+  ngOnDestroy(): void {
+    this.store.dispatch(ReservationActions.reset());
+    this.isFirstZeroInEndDate = false;
+    this.isFirstZeroInStartDate = false;
+    this.subcriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+  generateRandomId(length: number): string {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+    const result = new Array(length);
+    for (let i = 0; i < length; i++) {
+      result[i] = chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result.join('');
+  }
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -281,7 +301,6 @@ export class DetailComponent {
         this.store.dispatch(MotorActions.getMotorById({ motorId: id }));
       }
     });
-
     //date-pikcer
     const dateContainers = document.querySelectorAll('.input-container');
     dateContainers.forEach((dateContainer) => {
@@ -305,13 +324,11 @@ export class DetailComponent {
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateCheckin.valueAsDate = today;
     dateCheckout.valueAsDate = tomorrow;
-
     // Không cho phép chọn ngày trước ngày hiện tại
     dateCheckin.min = today.toISOString().split('T')[0];
     const minDateCheckout = new Date(today);
     minDateCheckout.setDate(today.getDate() + 1);
     dateCheckout.min = minDateCheckout.toISOString().split('T')[0];
-
     dateCheckin.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(dateCheckin.value);
@@ -331,7 +348,6 @@ export class DetailComponent {
       //   totalCostElement.textContent = `${this.totalCost}`;
       // }
     });
-
     dateCheckout.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(dateCheckin.value);
@@ -353,7 +369,17 @@ export class DetailComponent {
     });
     //date-pikcer
   }
-
+  reservationData = {
+    reservationId: '',
+    motorId: '',
+    customerId: '',
+    startDate: '',
+    endDate: '',
+    city: '',
+    status: false,
+    total: 0,
+    image: '',
+  };
   updateTotalDays() {
     const dateCheckin = document.getElementById(
       'date-checkin',
@@ -361,10 +387,8 @@ export class DetailComponent {
     const dateCheckout = document.getElementById(
       'date-checkout',
     ) as HTMLInputElement;
-
     const checkinDate = new Date(dateCheckin.value);
     const checkoutDate = new Date(dateCheckout.value);
-
     if (checkinDate && checkoutDate) {
       const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
       const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -374,7 +398,6 @@ export class DetailComponent {
     }
   }
   item = this.motorService.getMotorDetail();
-
   updateQuantity() {
     const formControl = this.motorcycleForm.get('numberOfMotorcycles');
     if (
@@ -386,7 +409,6 @@ export class DetailComponent {
     }
     return 0; // Trả về 0 nếu không tìm thấy form control hoặc giá trị không hợp lệ
   }
-
   totalCost(): number {
     if (
       !this.item ||
@@ -397,25 +419,74 @@ export class DetailComponent {
       // Trả về 0 nếu không có chi tiết hoặc thông tin giá hoặc số ngày thuê hoặc số lượng chưa được chọn
       return 0;
     }
-
     const rentalPrice = this.item.price;
     const quantity = this.updateQuantity();
     const rentalDays = this.selectedDays;
-
     // Tính toán tổng giá trị thuê xe
     const rentalTotal = rentalPrice * quantity * rentalDays;
-
     // Các khoản phí cố định
     const serviceFee = 5;
     const insuranceFee = 5;
-
     // Tổng giá trị
     const total = rentalTotal + serviceFee + insuranceFee;
-
     return total;
   }
+  rentMotor(): void {
+    // Open the payment dialog after creating the reservation
+    this.openPaymentDialog();
+  }
+  onSubmit(item: Motor): void {
+    const dateCheckin = document.getElementById(
+      'date-checkin',
+    ) as HTMLInputElement;
+    const dateCheckout = document.getElementById(
+      'date-checkout',
+    ) as HTMLInputElement;
+    const checkinDate = dateCheckin.valueAsDate;
+    const checkoutDate = dateCheckout.valueAsDate;
+    const startDate = new Date(this.dateCheckin.nativeElement.value);
+    const endDate = new Date(this.dateCheckout.nativeElement.value);
+    const totalDays = Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24),
+    );
+    const numberOfMotorcycles = this.motorcycleForm.get(
+      'numberOfMotorcycles',
+    )?.value;
+    const rentalPricePerDay = item.price; // Assuming item.price is the rental price per day
+    const rentalTotal = rentalPricePerDay * totalDays * numberOfMotorcycles;
+    // Fixed fees
+    const serviceFee = 5;
+    const insuranceFee = 5;
+    // Calculate total cost including rental, service, and insurance fees
+    const totalPrice = rentalTotal + serviceFee + insuranceFee;
 
-  goToRent() {
-    this.activeTabIndex = 1;
+    if (checkinDate && checkoutDate) {
+      console.log('Ngày check-in:', checkinDate);
+      console.log('Ngày check-out:', checkoutDate);
+      const string = this.generateRandomId(10);
+      this.reservationData = {
+        reservationId: item._id + this.user._id + string,
+        motorId: item._id,
+        customerId: this.user._id,
+        startDate: checkinDate.toUTCString(),
+        endDate: checkoutDate.toUTCString(),
+        status: false,
+        total: this.totalCost(),
+        city: this.chooseCity.value,
+        image: item.image._id,
+      };
+      this.store.dispatch(
+        ReservationActions.create({ reservation: this.reservationData }),
+      );
+    } else {
+      console.log('Ngày không hợp lệ');
+    }
+  }
+  formatPrice(price: number) {
+    // Chuyển đổi số thành chuỗi và ngược lại
+    let priceString = price.toString();
+    // Sử dụng biểu thức chính quy để thêm dấu phẩy mỗi 3 số
+    priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return priceString;
   }
 }

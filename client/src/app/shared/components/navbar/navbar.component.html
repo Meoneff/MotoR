@@ -73,19 +73,25 @@
             </div>
         </div>
         <div id="right-nav">
+            <div class="store_pay" *ngIf="userForm.value.uid">
+                <mat-icon class="material-symbols-outlined">
+                    payments
+                </mat-icon>
+            </div>
             <div class="login" *ngIf="userForm.value.uid">
-                <!-- <img style="width: 40px;
-                    height: 40px;
-                    border-radius: 50%;" src={{userForm.value.avatar}} alt=""> -->
-                <p style="font-size: 14px; margin-right: 2rem; margin-left: 1rem;">
-                    {{userForm.value.name}}</p>
+                <img style="width: 35px;
+                    height: 35px;
+                    border-radius: 50%;" src={{userForm.value.avatar}} alt="">
+                <p style="font-size: 14px; margin-right: 1rem; margin-left: 1rem;">{{userForm.value.name}}</p>
                 <div class="profile_menu">
-                    <p (click)="logout()">Logout</p>
+                    <span (click)="logout()" class="material-symbols-outlined">
+                        Logout
+                    </span>
                 </div>
             </div>
 
             <div class="login" *ngIf="!userForm.value.uid" (click)="login()">
-                <p>Login</p>
+                Login
             </div>
         </div>
     </div>

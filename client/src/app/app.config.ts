@@ -21,6 +21,14 @@ import { motorReducer } from './nrgx/motor/motor.reducer';
 import { MotorEffects } from './nrgx/motor/motor.effects';
 import { categoryReducer } from './nrgx/category/category.reducer';
 import { CategoryEffects } from './nrgx/category/category.effects';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { reservationReducer } from './nrgx/reservation/reservation.reducer';
+import { storageReducer } from './nrgx/storage/storage.reducer';
+import { manufacturerReducer } from './nrgx/manufacturer/manufacturer.reducer';
+import { paymentReducer } from './nrgx/payment/payment.reducer';
+import { ManufacturerEffects } from './nrgx/manufacturer/manufacturer.effects';
+import { ReservationEffects } from './nrgx/reservation/reservation.effects';
+import { StorageEffects } from './nrgx/storage/storage.effects';
 // import { candidateReducer } from './ngrx/reducers/candidate.reducer';
 // import { CandidateEffects } from './ngrx/effects/candidate.effects';
 // import { jobReducer } from './ngrx/reducers/job.reducer';
@@ -44,9 +52,22 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'user', reducer: userReducer }),
     provideState({ name: 'motor', reducer: motorReducer }),
     provideState({ name: 'category', reducer: categoryReducer }),
+    provideState({ name: 'manufacturer', reducer: manufacturerReducer }),
+    provideState({ name: 'payment', reducer: paymentReducer }),
+    provideState({ name: 'reservation', reducer: reservationReducer }),
+    provideState({ name: 'storage', reducer: storageReducer }),
 
     // provideState({ name: 'motor', reducer: motorReducer }),
-    provideEffects([AuthEffects, UserEffects, MotorEffects, CategoryEffects]),
+    provideEffects([
+      AuthEffects,
+      UserEffects,
+      MotorEffects,
+      CategoryEffects,
+      ManufacturerEffects,
+      ReservationEffects,
+      StorageEffects,
+    ]),
     provideHttpClient(),
+    provideAnimationsAsync(),
   ],
 };

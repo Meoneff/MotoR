@@ -15,30 +15,18 @@
         <div class="setup-rent">
             <h1>BOOK NOW</h1>
             <div id="tab">
-                <tui-tabs [(activeItemIndex)]="activeTabIndex" class="red">
-                    <button tuiTab (click)="setActiveTab(0)">Detail</button>
-                    <button tuiTab (click)="setActiveTab(1)">Rental</button>
-                    <!-- <button tuiTab (click)="setActiveTab(1)">Extras</button> -->
+                <div id="rent">
+                    <form [formGroup]="motorcycleForm">
+                        <div id="cityrent">
+                            <span>City: <span class="star">*</span></span>
+                            <tui-select tuiTextfieldSize="l" [formControl]="chooseCity">
+                                Choose your city you want to rental
+                                <!-- <input placeholder="Choose your city you want to rental" tuiTextfield /> -->
+                                <tui-data-list-wrapper *tuiDataList [items]="city"></tui-data-list-wrapper>
+                            </tui-select>
+                        </div>
+                        <div id="numofmot">
 
-                </tui-tabs>
-                <div id="detail" *ngIf="activeTabIndex === 0">
-                    <h2>Detail</h2>
-                    <p>Detail content goes here...</p>
-                    <div id="btn-next">
-                        <button (click)="goToRent()">Next</button>
-                    </div>
-                </div>
-                <div id="rent" *ngIf="activeTabIndex === 1">
-                    <div id="cityrent">
-                        <span>City: <span class="star">*</span></span>
-                        <tui-select tuiTextfieldSize="l" [formControl]="chooseCity">
-                            Choose your city you want to rental
-                            <!-- <input placeholder="Choose your city you want to rental" tuiTextfield /> -->
-                            <tui-data-list-wrapper *tuiDataList [items]="city"></tui-data-list-wrapper>
-                        </tui-select>
-                    </div>
-                    <div id="numofmot">
-                        <form [formGroup]="motorcycleForm">
                             <label>Number of Motorcycles: <span class="star">*</span></label>
                             <div style="margin-top: 1rem; margin-left:.5rem">
                                 <label>
@@ -58,90 +46,121 @@
                                 </label>
                             </div>
 
-                        </form>
 
-                    </div>
-                    <div id="datetime-reservation">
-                        <div class="start">
-                            <div class="input-motorform">
-                                <label for="date-checkin">Start Date: <span class="star">*</span></label>
-                                <input #dateCheckin type="date" id="date-checkin" class="date-field" name="date-from">
-                            </div>
-                        </div>
-                        <div class="end">
-                            <div class="input-motorform">
-                                <label for="date-checkout">End Date: <span class="star">*</span></label>
-                                <input #dateCheckout type="date" id="date-checkout" class="date-field" name="">
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <hr>
-                    <div id="bill-form">
-                        <div class="price-motor">
-                            <div class="price-title">
-                                <span>Rental Price</span>
-                            </div>
-                            <div class="price-value">
-                                <span>$ {{item.price}}</span>
-                            </div>
-                        </div>
-                        <div class="quantity-motor">
-                            <div class="quantity-title">
-                                <span>Quantity</span>
-                            </div>
-                            <div class="quantity-value">
-                                <span>{{ updateQuantity() }}</span>
-                            </div>
-                        </div>
 
-                        <!-- xét cứng  -->
-
-                        <div class="service-fee">
-                            <div class="service-title">
-                                <span>Service Fee</span>
-                            </div>
-                            <div class="service-value">
-                                <span>$ 5</span>
-                            </div>
                         </div>
-                        <!-- xét cứng  -->
-
-                        <div class="insurance-fee">
-                            <div class="insurance-title">
-                                <span>Insurance Fee</span>
+                        <div id="datetime-reservation">
+                            <div class="start">
+                                <div class="input-motorform">
+                                    <label for="date-checkin">Start Date: <span class="star">*</span></label>
+                                    <input #dateCheckin type="date" id="date-checkin" class="date-field"
+                                        name="date-from">
+                                </div>
                             </div>
-                            <div class="insurance-value">
-                                <span>$ 5</span>
+                            <div class="end">
+                                <div class="input-motorform">
+                                    <label for="date-checkout">End Date: <span class="star">*</span></label>
+                                    <input #dateCheckout type="date" id="date-checkout" class="date-field" name="">
+                                </div>
                             </div>
                         </div>
                         <hr>
-
-                        <div class="rental-day">
-                            <div class="rental-title">
-                                <span>Rental Day</span>
-                            </div>
-                            <div class="rental-value">
-                                <span>{{item.price}} x {{updateQuantity()}} x {{selectedDays}}</span>
-                            </div>
-                        </div>
                         <hr>
-                        <div class="total-fee">
-                            <div class="total-title">
-                                <span>Total</span>
+                        <div id="bill-form">
+                            <div class="price-motor">
+                                <div class="price-title">
+                                    <span>Rental Price</span>
+                                </div>
+                                <div class="price-value">
+                                    <span>$ {{item.price}}</span>
+                                </div>
                             </div>
-                            <div class="total-value">
-                                <span>$ {{ totalCost() }}</span>
+                            <div class="quantity-motor">
+                                <div class="quantity-title">
+                                    <span>Quantity</span>
+                                </div>
+                                <div class="quantity-value">
+                                    <span>{{ updateQuantity() }}</span>
+                                </div>
+                            </div>
+
+                            <!-- xét cứng  -->
+
+                            <div class="service-fee">
+                                <div class="service-title">
+                                    <span>Service Fee</span>
+                                </div>
+                                <div class="service-value">
+                                    <span>$ 5</span>
+                                </div>
+                            </div>
+                            <!-- xét cứng  -->
+
+                            <div class="insurance-fee">
+                                <div class="insurance-title">
+                                    <span>Insurance Fee</span>
+                                </div>
+                                <div class="insurance-value">
+                                    <span>$ 5</span>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="rental-day">
+                                <div class="rental-title">
+                                    <span>Rental Day</span>
+                                </div>
+                                <div class="rental-value">
+                                    <span>{{item.price}} x {{updateQuantity()}} x {{selectedDays}}</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="total-fee">
+                                <div class="total-title">
+                                    <span>Total</span>
+                                </div>
+                                <div class="total-value">
+                                    <span>$ {{ totalCost() }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    </form>
                 </div>
-
-
-
+            </div>
+            <div class="fram-book-bt" (click)="rentMotor()">
+                <button class="custom-btn btn-3">
+                    <span>Rent</span>
+                </button>
             </div>
         </div>
+
     </div>
 
 </div>
+
+
+<dialog id="payment_dialog" style="color: #1f1a1c" #paymentDialog>
+    <div class="dialog-content">
+        <div class="ima">
+            <img [src]="item.image.urls" alt="">
+        </div>
+        <div class="infoma">
+            <h2>Payment Information</h2>
+            <p>Number of Motocycles: {{ updateQuantity() }}</p>
+            <p>City: {{ selectedCity }}</p>
+            <p>Total Motor: $ {{ item.price * updateQuantity() }}</p>
+            <p>Days: {{selectedDays}}</p>
+            <p>Total Service: $ 5</p>
+            <p>Total Insurance: $ 5</p>
+            <p>Total Rent: ${{totalCost()}}</p>
+            <button (click)="closePaymentDialog()">Close</button>
+            <button (click)="onSubmit(item)">Submit</button>
+            <!-- <button type="onSubmit">Submit</button> -->
+        </div>
+
+
+
+    </div>
+</dialog>
+
+<!---->

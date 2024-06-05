@@ -37,6 +37,7 @@ export class UserService {
           uid: '404 user not found',
           email: '404 user not found',
           password: '404 user not found',
+          confirmPassword: '404 user not found',
           name: '404 user not found',
           avatar: '404 user not found',
           phone: '404 user not found',

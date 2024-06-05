@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+
 import { Reservation } from '../../model/reservation.model';
 
 export const create = createAction(
@@ -43,6 +44,7 @@ export const getOneFailure = createAction(
   props<{ errorMessage: string }>(),
 );
 export const reset = createAction('[reservation] Reset');
+
 export const updateStatus = createAction(
   '[reservation] Update Status',
   props<{ reservation: Reservation }>(),

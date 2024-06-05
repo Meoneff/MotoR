@@ -13,7 +13,7 @@ export const getSuccess = createAction(
   props<{ motorList: Motor[] }>(),
 );
 export const getFailure = createAction(
-  '[car] get all failure',
+  '[Motor] get all failure',
   props<{ getErrMess: any }>(),
 );
 
@@ -97,7 +97,7 @@ export const resetAddSuccess = createAction('[motor] reset is add success');
 
 export const updateAllStatusTrue = createAction(
   '[motor] update status all',
-  props<{ motorId: string[] }>(),
+  props<{ ids: string[] }>(),
 );
 export const updateAllStatusTrueSuccess = createAction(
   '[motor] update status all success',
@@ -110,7 +110,7 @@ export const updateAllStatusTrueFailure = createAction(
 //////////////////////////////////////
 export const updateAllStatusFalse = createAction(
   '[motor] update status false all',
-  props<{ motorId: string[] }>(),
+  props<{ ids: string[] }>(),
 );
 export const updateAllStatusFalseSuccess = createAction(
   '[motor] update status false all success',
