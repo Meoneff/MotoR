@@ -9,7 +9,7 @@ export interface Reservation {
   customerId: User;
   startDate: string;
   city: string;
-  quantityMotor: number;
+  selectedDays: string;
   endDate: string;
   status: boolean;
   total: number;

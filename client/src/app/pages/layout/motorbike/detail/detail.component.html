@@ -45,9 +45,6 @@
                                     <input type="radio" formControlName="numberOfMotorcycles" value="5"> 5
                                 </label>
                             </div>
-
-
-
                         </div>
                         <div id="datetime-reservation">
                             <div class="start">
@@ -59,7 +56,7 @@
                             </div>
                             <div class="end">
                                 <div class="input-motorform">
-                                    <label for="date-checkout">End Date: <span class="star">*</span></label>
+                                    <label for="date-checkout">End Date: <span class="start">*</span></label>
                                     <input #dateCheckout type="date" id="date-checkout" class="date-field" name="">
                                 </div>
                             </div>
@@ -155,7 +152,6 @@
             <p>Total Rent: ${{totalCost()}}</p>
             <button (click)="closePaymentDialog()">Close</button>
             <button (click)="onSubmit(item)">Submit</button>
-            <!-- <button type="onSubmit">Submit</button> -->
         </div>
 
 

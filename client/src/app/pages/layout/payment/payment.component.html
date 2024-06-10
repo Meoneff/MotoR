@@ -1,1 +1,36 @@
-<p>payment works!</p>
+<div id="payment-container">
+    <div id="fs-payment">
+        <h1>Reservation | {{ reservations.length }} MotoR</h1>
+    </div>
+    <div id="payment-reservation">
+        <div id="reser-container-form">
+            <div id="reser-container" *ngFor="let reservation of reservations">
+                <div class="img-reser">
+                    <img *ngFor="let img of reservation.image.urls" [src]="img" alt="" />
+                </div>
+                <div class="detail-reser">
+                    <h2>{{reservation.motorId.name}}</h2>
+                    <p>City Rent: <span>{{reservation.city}}</span></p>
+                    <p>Start Date: <span>{{ formatDateWithComma(reservation.startDate) }}</span></p>
+                    <p>End Date: <span>{{ formatDateWithComma(reservation.startDate) }}</span></p>
+                    <p>Total: <span>$ {{reservation.total}} </span></p>
+                </div>
+                <div class="btn-reser">
+                    <div class="reser-ic">
+                        <tui-svg src="tuiIconCloseLarge"></tui-svg>
+                    </div>
+                    <div>
+                        <button class="reser-pay">
+                            rent
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="payment-form">
+            <div class="tit-payment-form">
+                <h2>Payment Details</h2>
+            </div>
+        </div>
+    </div>
+</div>

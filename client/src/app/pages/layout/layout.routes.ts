@@ -30,13 +30,6 @@ export const LAYOUT_ROUTES: Routes = [
           import('./home/home.routes').then((m) => m.HOME_ROUTES),
         // component: HomeComponent,
       },
-      // {
-      //   path: 'rental/all',
-      //   loadChildren: () =>
-      //     import('./motorbike/motorbike.routes').then(
-      //       (m) => m.MOTORBIKE_ROUTES,
-      //     ),
-      // },
       {
         path: 'automatic/rental',
         loadChildren: () =>
