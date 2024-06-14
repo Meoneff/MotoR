@@ -11,8 +11,9 @@
                 <div class="detail-reser">
                     <h2>{{reservation.motorId.name}}</h2>
                     <p>City Rent: <span>{{reservation.city}}</span></p>
+                    <p>Quantity Motor Rent: <span>{{reservation.quantity}}</span></p>
                     <p>Start Date: <span>{{ formatDateWithComma(reservation.startDate) }}</span></p>
-                    <p>End Date: <span>{{ formatDateWithComma(reservation.startDate) }}</span></p>
+                    <p>End Date: <span>{{ formatDateWithComma(reservation.endDate) }}</span></p>
                     <p>Total: <span>$ {{reservation.total}} </span></p>
                 </div>
                 <div class="btn-reser">
@@ -28,9 +29,45 @@
             </div>
         </div>
         <div id="payment-form">
-            <div class="tit-payment-form">
-                <h2>Payment Details</h2>
+            <div class="form-bill">
+
+                <div class="tit-payment-form">
+                    <h2>Payment Details</h2>
+
+                </div>
+                <div class="rental-price">
+                    <span style="text-decoration: dotted underline;">Rental Price</span>
+                    <span>$ {{ totalAmount }}</span>
+                </div>
+                <div class="hr">
+                    <hr>
+                </div>
+                <div class="total-rent">
+                    <span>Total</span>
+                    <span>$ {{ totalAmount }}</span>
+                </div>
+                <form class="form" [formGroup]="paymentForm">
+                    <tui-select formControlName="paymentMethod" [valueContent]="paymentMethodContent">
+                        Select Payment Method
+                        <tui-data-list-wrapper *tuiDataList [itemContent]="paymentMethodContent"
+                            [items]="paymentMethods"></tui-data-list-wrapper>
+                    </tui-select>
+                </form>
+
+                <ng-template #paymentMethodContent let-item>
+                    <div class="payment-method-item">
+                        <img *ngIf="item.logo" style="height: 20px; width: auto; margin-right: 1em; " [src]="item.logo"
+                            alt="{{ item.name }}" class="payment-method-logo" />
+                        <span class="payment-method-name">{{ item.name }}</span>
+                        <hr style="margin-top:10px">
+                    </div>
+                </ng-template>
+                <div class="btn-payment">
+                    <button class="btn-pay" (click)="generatePDF()">Pay</button>
+                </div>
+
             </div>
+
         </div>
     </div>
 </div>

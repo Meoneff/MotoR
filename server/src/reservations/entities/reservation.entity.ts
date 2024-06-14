@@ -23,6 +23,11 @@ export class Reservation {
   @Prop({
     required: true,
   })
+  quantity: number;
+
+  @Prop({
+    required: true,
+  })
   city: string;
 
   @Prop({ required: true })

@@ -254,56 +254,56 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //khai báo thêm để cho chúng sẵn sàng truy cập và thao tác bổ sung vào
   setupDatePickers(): void {
-    const dateCheckin = this.dateCheckin.nativeElement as HTMLInputElement;
-    const dateCheckout = this.dateCheckout.nativeElement as HTMLInputElement;
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    this.dateCheckin.nativeElement.valueAsDate = today;
-    this.dateCheckout.nativeElement.valueAsDate = tomorrow;
-    console.log('after view init');
-    dateCheckin.addEventListener('change', () => {
-      const selectedDate = new Date(dateCheckin.value);
-      selectedDate.setDate(selectedDate.getDate() + 1);
-      dateCheckout.valueAsDate = selectedDate;
-    });
-    dateCheckout.addEventListener('change', () => {
-      if (dateCheckout.valueAsDate) {
-        const selectedDate = new Date(dateCheckout.value);
-        selectedDate.setDate(selectedDate.getDate() - 1);
-        dateCheckin.valueAsDate = selectedDate;
-      }
-    });
-    this.dateCheckin.nativeElement.min = today.toISOString().split('T')[0];
-    const minDateCheckout = new Date(today);
-    minDateCheckout.setDate(today.getDate() + 1);
-    this.dateCheckout.nativeElement.min = minDateCheckout
-      .toISOString()
-      .split('T')[0];
-    this.dateCheckin.nativeElement.addEventListener('input', () => {
-      this.updateTotalDays();
-      const checkinDate = new Date(this.dateCheckin.nativeElement.value);
-      const checkoutDate = new Date(this.dateCheckout.nativeElement.value);
-      if (checkinDate > checkoutDate) {
-        const newCheckoutDate = new Date(checkinDate);
-        newCheckoutDate.setDate(newCheckoutDate.getDate() + 1);
-        this.dateCheckout.nativeElement.valueAsDate = newCheckoutDate;
-      }
-      const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
-      this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    });
-    this.dateCheckout.nativeElement.addEventListener('input', () => {
-      this.updateTotalDays();
-      const checkinDate = new Date(this.dateCheckin.nativeElement.value);
-      const checkoutDate = new Date(this.dateCheckout.nativeElement.value);
-      if (checkoutDate < checkinDate) {
-        const newCheckinDate = new Date(checkoutDate);
-        newCheckinDate.setDate(newCheckinDate.getDate() - 1);
-        this.dateCheckin.nativeElement.valueAsDate = newCheckinDate;
-      }
-      const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
-      this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    });
+    // const dateCheckin = this.dateCheckin.nativeElement as HTMLInputElement;
+    // const dateCheckout = this.dateCheckout.nativeElement as HTMLInputElement;
+    // const today = new Date();
+    // const tomorrow = new Date(today);
+    // tomorrow.setDate(tomorrow.getDate() + 1);
+    // this.dateCheckin.nativeElement.valueAsDate = today;
+    // this.dateCheckout.nativeElement.valueAsDate = tomorrow;
+    // console.log('after view init');
+    // dateCheckin.addEventListener('change', () => {
+    //   const selectedDate = new Date(dateCheckin.value);
+    //   selectedDate.setDate(selectedDate.getDate() + 1);
+    //   dateCheckout.valueAsDate = selectedDate;
+    // });
+    // dateCheckout.addEventListener('change', () => {
+    //   if (dateCheckout.valueAsDate) {
+    //     const selectedDate = new Date(dateCheckout.value);
+    //     selectedDate.setDate(selectedDate.getDate() - 1);
+    //     dateCheckin.valueAsDate = selectedDate;
+    //   }
+    // });
+    // this.dateCheckin.nativeElement.min = today.toISOString().split('T')[0];
+    // const minDateCheckout = new Date(today);
+    // minDateCheckout.setDate(today.getDate() + 1);
+    // this.dateCheckout.nativeElement.min = minDateCheckout
+    //   .toISOString()
+    //   .split('T')[0];
+    // this.dateCheckin.nativeElement.addEventListener('input', () => {
+    //   this.updateTotalDays();
+    //   const checkinDate = new Date(this.dateCheckin.nativeElement.value);
+    //   const checkoutDate = new Date(this.dateCheckout.nativeElement.value);
+    //   if (checkinDate > checkoutDate) {
+    //     const newCheckoutDate = new Date(checkinDate);
+    //     newCheckoutDate.setDate(newCheckoutDate.getDate() + 1);
+    //     this.dateCheckout.nativeElement.valueAsDate = newCheckoutDate;
+    //   }
+    //   const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
+    //   this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // });
+    // this.dateCheckout.nativeElement.addEventListener('input', () => {
+    //   this.updateTotalDays();
+    //   const checkinDate = new Date(this.dateCheckin.nativeElement.value);
+    //   const checkoutDate = new Date(this.dateCheckout.nativeElement.value);
+    //   if (checkoutDate < checkinDate) {
+    //     const newCheckinDate = new Date(checkoutDate);
+    //     newCheckinDate.setDate(newCheckinDate.getDate() - 1);
+    //     this.dateCheckin.nativeElement.valueAsDate = newCheckinDate;
+    //   }
+    //   const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
+    //   this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // });
   }
   ngOnDestroy(): void {
     this.store.dispatch(ReservationActions.reset());
@@ -394,6 +394,7 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
     status: false,
     total: 0,
     image: '',
+    quantity: '',
     createdAt: '',
   };
 
@@ -496,6 +497,7 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
         total: this.totalCost(),
         city: this.chooseCity.value,
         image: item.image._id,
+        quantity: numberOfMotorcycles,
         createdAt: currentDate.toLocaleString(),
       };
       this.store.dispatch(

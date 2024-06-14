@@ -17,6 +17,7 @@
         flex-direction: row;
         border: 1px solid rgb(225, 221, 221);
         margin-bottom: 1em;
+        border-radius: 0.75em;
 
         .img-reser {
           width: 30%;
@@ -101,6 +102,71 @@
     }
     #payment-form {
       width: 20%;
+      margin-left: 6em;
+      .form-bill {
+        display: flex;
+        flex-direction: column;
+        padding: 0em 5em;
+        padding-bottom: 2em;
+        border: 0.5px solid rgb(225, 221, 221);
+        border-radius: 2em;
+        .tit-payment-form {
+          font-size: 1.5em;
+        }
+        .rental-price {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 1em;
+          span {
+            font-size: 1.25em;
+          }
+        }
+        hr {
+          border: 1px solid rgb(225, 221, 221);
+        }
+        .total-rent {
+          display: flex;
+          justify-content: space-between;
+          margin: 1.5em 0em;
+          span {
+            font-size: 1.25em;
+          }
+        }
+      }
+      .payment-method-item {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .payment-method-logo {
+        width: 20px; /* Adjust the size as needed */
+        height: auto; /* Maintain aspect ratio */
+        margin-right: 8px; /* Space between logo and text */
+      }
+
+      .payment-method-name {
+        font-size: 16px;
+      }
+      .btn-payment {
+        justify-content: center;
+        button {
+          font-family: Arial, sans-serif;
+          font-size: 16px;
+          padding: 10px 20px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+          margin: 10px;
+        }
+        .btn-pay {
+          background-color: #0098a6;
+          color: #f5f3e7;
+          & :hover {
+            background-color: #008394;
+          }
+        }
+      }
     }
   }
 }

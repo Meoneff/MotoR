@@ -12,6 +12,7 @@ export interface Reservation {
   selectedDays: string;
   endDate: string;
   status: boolean;
+  quantity: number;
   total: number;
   image: Storage;
 }
