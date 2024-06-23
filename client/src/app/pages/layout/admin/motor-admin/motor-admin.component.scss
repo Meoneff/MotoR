@@ -1,17 +1,51 @@
 #motor-admin-container {
   height: 100%;
   width: 100%;
+
   #motor-upload {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    .motorForm {
+      width: 100%;
+      .form-upload {
+        width: 50%;
 
-    .form-upload {
-      width: 50%;
-    }
-    .im-upload {
-      width: 50%;
+        .upload-content {
+          width: 100%;
+
+          h2 {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+          }
+
+          .model-content {
+            margin-bottom: 10px;
+
+            label {
+              display: block;
+              width: 100%;
+              margin-bottom: 5px;
+            }
+
+            .content-control {
+              width: 100%;
+
+              input {
+                width: 100%;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+              }
+            }
+          }
+        }
+      }
+      .im-upload {
+        width: 50%;
+      }
     }
   }
 }

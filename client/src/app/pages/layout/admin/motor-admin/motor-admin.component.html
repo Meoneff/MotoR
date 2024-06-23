@@ -1,15 +1,21 @@
 <div id="motor-admin-container">
     <div id="motor-upload">
-        <form [formGroup]="motorForm">
+        <form [formGroup]="motorForm" class="motorForm">
             <div class="form-upload">
                 <div class="upload-content">
                     <h2>Add New Motor</h2>
                     <hr>
                     <div class="model-content">
-                        <tui-input formControlName="testValue" tuiTextfieldSize="s" [tuiTextfieldCleaner]="true">
-                            Type an email
-                            <input autocomplete="email" tuiTextfield type="email" />
-                        </tui-input>
+                        <label for="motorId">Motor ID</label>
+                        <div class="content-control">
+                            <input id="motorId" formControlName="motorId" />
+                        </div>
+                    </div>
+                    <div class="model-content">
+                        <label for="name">Name</label>
+                        <div class="content-control">
+                            <input id="name" formControlName="name" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -17,5 +23,4 @@
         </form>
     </div>
     <div id="motor-list"></div>
-
 </div>
