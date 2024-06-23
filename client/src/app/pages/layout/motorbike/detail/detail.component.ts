@@ -45,7 +45,7 @@ import { TuiAlertService } from '@taiga-ui/core';
 export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
-  city = ['Thành phố Hồ Chí Minh', 'Hà Nội', 'Huế'];
+  city = ['Ho Chi Minh', 'Ha Noi', 'Hue'];
   chooseCity = new FormControl();
   selectedMotor$: Observable<Motor> = this.store.select(
     'motor',

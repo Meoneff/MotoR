@@ -47,7 +47,8 @@
                     <span>$ {{ totalAmount }}</span>
                 </div>
                 <form class="form" [formGroup]="paymentForm">
-                    <tui-select formControlName="paymentMethod" [valueContent]="paymentMethodContent">
+                    <tui-select formControlName="paymentMethod" [valueContent]="paymentMethodContent"
+                        (valueChange)="onPaymentMethodChange($event)">
                         Select Payment Method
                         <tui-data-list-wrapper *tuiDataList [itemContent]="paymentMethodContent"
                             [items]="paymentMethods"></tui-data-list-wrapper>
@@ -56,7 +57,7 @@
 
                 <ng-template #paymentMethodContent let-item>
                     <div class="payment-method-item">
-                        <img *ngIf="item.logo" style="height: 20px; width: auto; margin-right: 1em; " [src]="item.logo"
+                        <img *ngIf="item.logo" style="height: 20px; width: auto; margin-right: 1em;" [src]="item.logo"
                             alt="{{ item.name }}" class="payment-method-logo" />
                         <span class="payment-method-name">{{ item.name }}</span>
                         <hr style="margin-top:10px">

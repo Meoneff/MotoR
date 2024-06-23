@@ -1,29 +1,11 @@
 <div id="admin-container">
-    <div id="admin-slidebar">
-        <!-- slidebar -->
-        <div id="admin-slidebar-container">
-            <div class="manage-motor">
-                <h1>Manage Motor</h1>
-            </div>
-            <div class="change-status">
-                <h1>Change Status</h1>
-            </div>
-            <div class="confirm-reservation">
-                <h1>Confirm Reservation</h1>
-            </div>
-
-        </div>
+    <div class="sidebar">
+        <button (click)="navigateTo('motor')">Motor</button>
+        <button (click)="navigateTo('reservation')">Reservation</button>
+        <button (click)="navigateTo('revenue')">Revenue</button>
+        <button (click)="navigateTo('user')">User</button>
     </div>
-    <div id="admin-application">
-        <div class="mange-motor">
-            <div>motorId</div>
-            <div>name</div>
-            <div>manufacturer</div>
-            <div>category</div>
-            <div>status</div>
-            <div>description</div>
-            <div>price</div>
-            <div>image</div>
-        </div>
+    <div class="main">
+        <router-outlet></router-outlet>
     </div>
 </div>

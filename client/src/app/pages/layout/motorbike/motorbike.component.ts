@@ -58,10 +58,9 @@ export class MotorbikeComponent implements OnDestroy {
       manufacturer: ManufacturerState;
     }>,
   ) {
-    this.store.dispatch(MotorActions.get());
+    this.store.dispatch(MotorActions.get({ isConfirmed: true }));
     this.store.dispatch(CategoryActions.get());
     this.store.dispatch(ManufacturerActions.get());
-    this.store.dispatch(get());
   }
 
   ngOnInit() {

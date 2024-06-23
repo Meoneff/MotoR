@@ -33,7 +33,7 @@ export const MOTORBIKE_ROUTES: Routes = [
           ),
       },
       {
-        path: 'detail',
+        path: 'detail/:id',
         loadChildren: () =>
           import('./detail/detail.component').then((m) => m.DetailComponent),
       },

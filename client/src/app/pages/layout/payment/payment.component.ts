@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
+import { robotoRegular } from '../../../shared/roboto-regular';
 
 @Component({
   selector: 'app-payment',
@@ -33,7 +34,7 @@ export class PaymentComponent implements OnDestroy {
   isCreatePaymentSuccess$ = this.store.select('payment', 'isSuccessful');
   isSelectedReservation: boolean = false;
   totalAmount: number = 0;
-
+  payMethods: any;
   paymentForm: FormGroup;
   paymentMethods = [
     {
@@ -110,60 +111,72 @@ export class PaymentComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.store.dispatch(ResevationActions.reset());
   }
-  generatePDF(): void {
-    const doc = new jsPDF();
+  ngOnInit(): void {
+    this.paymentForm.get('paymentMethod')?.valueChanges.subscribe((value) => {
+      console.log('Payment Method Control Value:', value);
+      this.payMethods = value;
+    });
+  }
+  onPaymentMethodChange(event: any): void {
+    console.log('Payment Method Selected:', event);
+  }
 
-    // Title
+  generatePDF(): void {
+    const paymentMethodValue = this.paymentForm.get('paymentMethod')?.value;
+    console.log('Payment Method Value:', paymentMethodValue); // Log the payment method value
+
+    const paymentMethod = this.paymentMethods.find(
+      (method) => method.value === paymentMethodValue,
+    );
+
+    this.paymentForm.get('paymentMethod')?.valueChanges.subscribe((value) => {
+      this.payMethods = value;
+      console.log('Payment Method Control Value:', this.payMethods);
+    });
+    const doc = new jsPDF();
+    doc.addFileToVFS('Roboto-Regular.ttf', robotoRegular);
+    doc.addFont('Roboto-Regular.ttf', 'RobotoRegular', 'normal');
+    doc.setFont('RobotoRegular');
+
     doc.setFontSize(16);
     doc.text('Reservation Details', 10, 10);
     doc.setFontSize(12);
 
-    // Data for table
     const tableData = this.reservations.map((reservation) => [
       reservation.motorId.name,
       reservation.city,
+      reservation.quantity,
       this.formatDateWithComma(reservation.startDate),
       this.formatDateWithComma(reservation.endDate),
       `$${reservation.total}`,
     ]);
 
-    // Table columns
     const tableColumns = [
       'Motor',
       'City Rent',
+      'Quantity',
       'Start Date',
       'End Date',
       'Total',
     ];
 
-    // Add the table to the PDF
     (doc as any).autoTable({
       startY: 20,
       head: [tableColumns],
       body: tableData,
     });
 
-    // Calculate Y position for summary
     const finalY = (doc as any).lastAutoTable.finalY + 10;
 
-    // Summary section
     doc.setFontSize(16);
     doc.text('Summary', 10, finalY);
     doc.setFontSize(12);
     doc.text(`Total Amount: $${this.totalAmount}`, 10, finalY + 10);
-
-    const paymentMethod = this.paymentMethods.find(
-      (method) => method.value === this.paymentForm.value.paymentMethod,
-    );
-    const paymentMethodName = paymentMethod
-      ? paymentMethod.name
-      : 'Not Selected';
-    doc.text(`Payment Method: ${paymentMethodName}`, 10, finalY + 20);
-
+    doc.text(`Payment Method: ${this.payMethods.name}`, 10, finalY + 20);
+    console.log('Payment Method Name:', this.payMethods); // Log the payment method name
     const currentDate = new Date().toLocaleDateString();
     doc.text(`Date: ${currentDate}`, 10, finalY + 30);
 
-    // Save the PDF
     doc.save('reservation-details.pdf');
   }
 

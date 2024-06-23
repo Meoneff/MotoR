@@ -1,0 +1,17 @@
+#motor-admin-container {
+  height: 100%;
+  width: 100%;
+  #motor-upload {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    .form-upload {
+      width: 50%;
+    }
+    .im-upload {
+      width: 50%;
+    }
+  }
+}

@@ -58,6 +58,37 @@ export const LAYOUT_ROUTES: Routes = [
             (m) => m.DETAIL_ROUTES,
           ),
       },
+      {
+        path: 'admin/motor',
+        loadChildren: () =>
+          import('./admin/motor-admin/motor-admin.routes').then(
+            (m) => m.MOTORADMIN_ROUTES,
+          ),
+      },
+      {
+        path: 'admin/user',
+        loadChildren: () =>
+          import('./admin/user/user.routes').then((m) => m.USER_ROUTES),
+      },
+      {
+        path: 'admin/reservation',
+        loadChildren: () =>
+          import('./admin/reservation/reservation.routes').then(
+            (m) => m.RESERVATION_ROUTES,
+          ),
+      },
+      {
+        path: 'admin/revenue',
+        loadChildren: () =>
+          import('./admin/revenue/revenue.routes').then(
+            (m) => m.REVENUE_ROUTES,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'home',
+      },
     ],
   },
 ];
