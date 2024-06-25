@@ -8,13 +8,25 @@
                     <div class="model-content">
                         <label for="motorId">Motor ID</label>
                         <div class="content-control">
-                            <input id="motorId" formControlName="motorId" />
+                            <tui-input tuiTextfieldSize="l" formControlName="motorId" [tuiTextfieldCleaner]="true">
+                                <input tuiTextfield type="text" placeholder="ex: HV01" />
+                            </tui-input>
                         </div>
                     </div>
                     <div class="model-content">
                         <label for="name">Name</label>
                         <div class="content-control">
-                            <input id="name" formControlName="name" />
+                            <tui-input tuiTextfieldSize="l" formControlName="name" [tuiTextfieldCleaner]="true">
+                                <input tuiTextfield type="text" placeholder="Honda Vision" />
+                            </tui-input>
+                        </div>
+                    </div>
+                    <div class="model-content">
+                        <label for="model">Model</label>
+                        <div class="content-control">
+                            <tui-input tuiTextfieldSize="l" formControlName="model" [tuiTextfieldCleaner]="true">
+                                <input tuiTextfield type="text" placeholder="2024" />
+                            </tui-input>
                         </div>
                     </div>
                 </div>
