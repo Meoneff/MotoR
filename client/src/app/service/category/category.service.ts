@@ -12,7 +12,7 @@ export class CategoryService {
       'http://localhost:3000/category/get/all',
     );
   }
-  getCategoryById(id: string) {
+  getCategoryById(categoryId: string) {
     return this.httpClient.get<Category>(
       'http://localhost:3000/category/get/id?categoryId=${categoryId}',
     );

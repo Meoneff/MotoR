@@ -21,17 +21,90 @@
                             </tui-input>
                         </div>
                     </div>
+                    <div class="model-quantity">
+                        <div class="model-content">
+                            <label for="model">Model</label>
+                            <div class="content-control">
+                                <tui-input tuiTextfieldSize="l" formControlName="model" [tuiTextfieldCleaner]="true">
+                                    <input tuiTextfield type="text" placeholder="2024" />
+                                </tui-input>
+                            </div>
+                        </div>
+
+                        <div class="model-content">
+                            <label for="quantity">Quantity</label>
+                            <div class="content-control">
+                                <tui-input tuiTextfieldSize="l" formControlName="quantity" [tuiTextfieldCleaner]="true">
+                                    <input tuiTextfield type="text" placeholder="100" />
+                                </tui-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cate-manu">
+                        <div class="model-content">
+                            <label for="category">Category</label>
+                            <div class="content-control">
+                                <select class="category" formControlName="categoryId">
+                                    <option *ngFor="let category of categories" [value]="category._id">
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="model-content">
+                            <label for="manufacturer">Manufacturer</label>
+                            <div class="content-control">
+                                <select class="manufacturer" formControlName="manufacturerId">
+                                    <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer._id">
+                                        {{ manufacturer.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="model-content">
-                        <label for="model">Model</label>
+                        <label for="price">Price</label>
                         <div class="content-control">
-                            <tui-input tuiTextfieldSize="l" formControlName="model" [tuiTextfieldCleaner]="true">
-                                <input tuiTextfield type="text" placeholder="2024" />
+                            <tui-input tuiTextfieldSize="l" formControlName="price" [tuiTextfieldCleaner]="true">
+                                <input tuiTextfield type="text" placeholder="10000000" />
+                            </tui-input>
+                        </div>
+                    </div>
+                    <div class="model-content">
+                        <label for="description">Description</label>
+                        <div class="content-control">
+                            <tui-input tuiTextfieldSize="l" formControlName="description" [tuiTextfieldCleaner]="true">
+                                <input tuiTextfield type="text" placeholder="Description" />
                             </tui-input>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="im-upload"></div>
+            <div class="im-upload">
+                <div class="card">
+                    <h2>Upload Image</h2>
+                    <div class="drop_box">
+                        <input type="file" accept="image/*" style="display: none" (change)="onFileSelected($event)"
+                            #fileInput formControlName="image" />
+                        <button class="btn" (click)="fileInput.click()">Choose File</button>
+                        <div class="img-file" *ngIf="file">
+                            <img [src]="selectedImage" alt="Selected Image"
+                                style="width: 120px;height: 120px; margin-top: 1rem;" />
+                        </div>
+                    </div>
+                    <!-- <div class="btn-create-update">
+                            <button appearance="secondary" style="margin-left: 1rem;" tuiButton type="submit"
+                                (click)="createDish()">
+                                Create
+                            </button>
+                            <button appearance="secondary" style="margin-left: 1rem;" tuiButton type="submit"
+                                (click)="onUpdateDish()">
+                                Update
+                            </button>
+                        </div> -->
+                </div>
+            </div>
         </form>
     </div>
     <div id="motor-list"></div>

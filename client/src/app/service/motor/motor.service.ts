@@ -39,9 +39,9 @@ export class MotorService {
       motor,
     );
   }
-  deleteMotor(id: number) {
-    return this.httpClient.delete<number | any>(
-      `http://localhost:3000/motor/delete?id=${id}`,
+  deleteMotor(motorId: string) {
+    return this.httpClient.delete<string | any>(
+      `http://localhost:3000/motor/delete?id=${motorId}`,
     );
   }
   ///////////////////////////////////////////////////

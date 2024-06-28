@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { ShareModule } from '../../../../shared/share.module';
 import { TaigaModule } from '../../../../shared/taiga.module';
 import { Router } from '@angular/router';
@@ -10,10 +10,13 @@ import { MotorState } from '../../../../nrgx/motor/motor.state';
 import { StorageState } from '../../../../nrgx/storage/storage.state';
 import { ManufacturerState } from '../../../../nrgx/manufacturer/manufacturer.state';
 import * as CategoryAction from '../../../../nrgx/category/category.actions';
+import * as ManufacturerAction from '../../../../nrgx/manufacturer/manufacturer.actions';
 import * as StorageAction from '../../../../nrgx/storage/storage.actions';
 import * as MotorAction from '../../../../nrgx/motor/motor.actions';
 import { Subscription } from 'rxjs';
 import { Motor } from '../../../../model/motor.model';
+import { Manufacturer } from '../../../../model/manufacturer.model';
+import { TuiAlertService } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-motor-admin',
@@ -23,21 +26,26 @@ import { Motor } from '../../../../model/motor.model';
   styleUrl: './motor-admin.component.scss',
 })
 export class MotorAdminComponent {
-  motorList: Motor[] = [];
-
   motor$ = this.store.select('motor', 'motorList');
-
   isCreateMotor$ = this.store.select('motor', 'isCreateSuccess');
-
   isRemoveMotor$ = this.store.select('motor', 'isDeleteSuccess');
-
   isUpdateMotor$ = this.store.select('motor', 'isUpdateSuccess');
+  isCreateImage$ = this.store.select('storage', 'isCreateSuccess');
+
+  isChangeFile: boolean = false;
+  updateMotor: boolean = false;
+  motoDataToUpdate: any = {};
+  motorList: Motor[] = [];
 
   categories = <Category[]>[];
 
+  manufacturers = <Manufacturer[]>[];
+
   subscriptions: Subscription[] = [];
 
-  isCreateImage$ = this.store.select('storage', 'isCreateSuccess');
+  selectedImage: string | ArrayBuffer | null = null;
+
+  fileName: string = '';
 
   motorForm = new FormGroup({
     motorId: new FormControl('', Validators.required),
@@ -55,6 +63,8 @@ export class MotorAdminComponent {
     name: '',
     model: '',
     description: '',
+    category: '',
+    manufacturer: '',
     quantity: 0,
     price: '',
     status: false,
@@ -62,6 +72,8 @@ export class MotorAdminComponent {
   };
 
   constructor(
+    @Inject(TuiAlertService)
+    private readonly alerts: TuiAlertService,
     private router: Router,
     private store: Store<{
       category: categoryState;
@@ -71,8 +83,15 @@ export class MotorAdminComponent {
     }>,
   ) {
     this.store.dispatch(CategoryAction.get());
+    this.store.dispatch(ManufacturerAction.get());
     this.store.dispatch(MotorAction.get({ isConfirmed: true }));
     this.subscriptions.push(
+      this.store.select('manufacturer', 'manufacturers').subscribe((val) => {
+        if (val != null && val != undefined) {
+          console.log(this.manufacturers);
+          this.manufacturers = val;
+        }
+      }),
       this.store.select('category', 'categories').subscribe((val) => {
         if (val != null && val != undefined) {
           this.categories = val;
@@ -80,9 +99,102 @@ export class MotorAdminComponent {
       }),
       this.store.select('motor').subscribe((val) => {
         if (val != null && val != undefined) {
-          this.addMotorData.motorId = val.motorList.length + 1;
+          this.motorList = val.motorList;
+        }
+      }),
+      this.isCreateImage$.subscribe((val) => {
+        console.log(val);
+        if (val) {
+          console.log(val);
+          this.store.dispatch(
+            StorageAction.get({
+              fileName: this.fileName,
+            }),
+          );
+        }
+      }),
+      this.store.select('storage').subscribe((val) => {
+        if (val?.isGetSuccess) {
+          console.log(val);
+          if (this.updateMotor) {
+            this.motoDataToUpdate.image = val?.storage._id;
+            console.log(this.motoDataToUpdate);
+            this.store.dispatch(
+              MotorAction.updateMotor({ motor: this.motoDataToUpdate }),
+            );
+          }
+        }
+      }),
+      this.isCreateMotor$.subscribe((create) => {
+        if (create) {
+          console.log(create);
+          this.alerts
+            .open('Basic <strong>HTML</strong>', { label: 'With a heading!' })
+            .subscribe();
+          this.addMotorData = {
+            motorId: '',
+            name: '',
+            model: '',
+            manufacturer: '',
+            category: '',
+            description: '',
+            quantity: 0,
+            price: '',
+            status: false,
+            image: '',
+          };
+          this.addMotorData.reset();
+          this.store.dispatch(MotorAction.get({ isConfirmed: true }));
+          this.updateMotor = false;
+        }
+      }),
+      this.isUpdateMotor$.subscribe((update) => {
+        if (update) {
+          console.log(update);
+          this.alerts
+            .open('Basic <strong>HTML</strong>', { label: 'With a heading!' })
+            .subscribe();
+          this.addMotorData = {
+            motorId: '',
+            name: '',
+            model: '',
+            description: '',
+            manufacturer: '',
+            category: '',
+            quantity: 0,
+            price: '',
+            status: false,
+            image: '',
+          };
+          this.addMotorData.reset();
+          this.store.dispatch(MotorAction.get({ isConfirmed: true }));
+          this.updateMotor = false;
         }
       }),
     );
+  }
+
+  formData: FormData = new FormData();
+  file: any;
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.formData.append('image', file, file.name);
+    this.file = file;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.selectedImage = reader.result;
+    };
+    this.isChangeFile = true;
+    console.log(this.file);
+  }
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

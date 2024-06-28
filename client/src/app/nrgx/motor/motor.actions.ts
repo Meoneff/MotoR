@@ -39,7 +39,7 @@ export const create = createAction(
 );
 export const createMotor = createAction(
   '[Motor] Create Motor',
-  props<{ motor: Motor }>(),
+  props<{ motor: any }>(),
 );
 export const createMotorSuccess = createAction(
   '[Motor] Create Motor Success',
@@ -54,7 +54,7 @@ export const createMotorFailure = createAction(
 
 export const updateMotor = createAction(
   '[Motor] Update Motor',
-  props<{ motor: Motor }>(),
+  props<{ motor: any }>(),
 );
 export const updateMotorSuccess = createAction(
   '[Motor] Update Motor Success',
@@ -69,11 +69,11 @@ export const updateMotorFailure = createAction(
 
 export const deleteMotor = createAction(
   '[Motor] Delete Motor',
-  props<{ motorId: number }>(),
+  props<{ motorId: string }>(),
 );
 export const deleteMotorSuccess = createAction(
   '[Motor] Delete Motor Success',
-  props<{ motorId: number }>(),
+  props<{ motorId: string }>(),
 );
 export const deleteMotorFailure = createAction(
   '[Motor] Delete Motor Failure',
@@ -164,3 +164,7 @@ export const getMotorByIdFailure = createAction(
   '[Motor] get by id failure',
   props<{ getErrMess: any }>(),
 );
+
+////////////////////////////////
+//resetAddSuccess
+export const resetAddSuccessMotor = createAction('[Motor] reset add success');

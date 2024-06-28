@@ -11,25 +11,6 @@ export class MotorEffects {
     private action$: Actions,
   ) {}
 
-  // getMotor$ = createEffect(() =>
-  //   this.action$.pipe(
-  //     ofType(MotorActions.get),
-  //     exhaustMap(() =>
-  //       this.motorService.getMotor().pipe(
-  //         map((items) => {
-  //           if (items.length > 0) {
-  //             // console.log(items);
-  //             return MotorActions.getSuccess({ motorList: items });
-  //           } else {
-  //             return MotorActions.getFailure({ getErrMess: 'No dish found' });
-  //           }
-  //         }),
-  //         catchError((err) => of(MotorActions.getFailure({ getErrMess: err }))),
-  //       ),
-  //     ),
-  //   ),
-  // );
-
   getMotor$ = createEffect(() =>
     this.action$.pipe(
       ofType(MotorActions.get),

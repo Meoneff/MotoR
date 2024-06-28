@@ -9,7 +9,12 @@ export class ManufacturerService {
   constructor(private httpClient: HttpClient) {}
   getManufacturers() {
     return this.httpClient.get<Manufacturer[]>(
-      'http://localhost:3000/manufacturer/all',
+      'http://localhost:3000/manufacturer/get/all',
+    );
+  }
+  getManufacturerById(manufacturerId: string) {
+    return this.httpClient.get<Manufacturer>(
+      'http://localhost:3000/manufacturer/get/id?manufacturerId=${manufacturerId}',
     );
   }
 }

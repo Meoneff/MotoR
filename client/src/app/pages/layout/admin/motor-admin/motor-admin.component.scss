@@ -10,12 +10,17 @@
 
     .motorForm {
       width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
       .form-upload {
         width: 50%;
-
+        display: flex;
+        flex-direction: column;
+        margin-right: 7em;
         .upload-content {
-          width: 100%;
+          width: 70%;
 
           h2 {
             width: 100%;
@@ -49,11 +54,66 @@
               }
             }
           }
+          .model-quantity {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+            .model-content {
+              width: 45%;
+            }
+          }
+          .cate-manu {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .model-content {
+              width: 45%;
+            }
+          }
         }
       }
 
       .im-upload {
         width: 50%;
+
+        .card {
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .drop_box {
+          border: 2px dashed #ccc;
+          padding: 20px;
+          text-align: center;
+          margin-bottom: 20px;
+          position: relative;
+        }
+
+        .drop_box p {
+          margin: 0;
+          color: #999;
+        }
+
+        .drop_box button.btn {
+          margin-top: 10px;
+        }
+
+        .img-file img {
+          display: block;
+          margin: 0 auto;
+        }
+
+        video {
+          display: block;
+          margin: 0 auto;
+          max-width: 100%;
+        }
+
+        canvas {
+          display: none;
+          margin: 0 auto;
+        }
       }
     }
   }

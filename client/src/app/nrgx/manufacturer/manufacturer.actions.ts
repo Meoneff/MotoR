@@ -12,3 +12,18 @@ export const getFailure = createAction(
   '[manufacturer] Get Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const getById = createAction(
+  '[manufaturer] Get By manufacturerId',
+  props<{ manufacturerId: string }>(),
+);
+
+export const getByIdSuccess = createAction(
+  '[manufaturer] Get By Id Success',
+  props<{ manufaturer: Manufacturer }>(),
+);
+
+export const getByIdFailure = createAction(
+  '[manufaturer] Get By Id Failure',
+  props<{ errorMessage: string }>(),
+);
