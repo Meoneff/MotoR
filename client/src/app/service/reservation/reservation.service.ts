@@ -39,4 +39,10 @@ export class ReservationService {
       `http://localhost:3000/reservation/byEndDate?endDate=${endDate}`,
     );
   }
+  //delete
+  deleteReservationById(reservationId: string) {
+    return this.httpClient.delete<Reservation>(
+      `http://localhost:3000/reservation/delete?id=${reservationId}`,
+    );
+  }
 }

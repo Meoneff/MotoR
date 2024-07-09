@@ -6,6 +6,15 @@ export interface PaymentState {
   isSuccessful: boolean;
   createErrorMessage: string;
   isGetSuccess: boolean;
-  isgetting: boolean;
+  isGetting: boolean;
   getErrorMessage: string;
+  isUpdateSuccess: boolean;
+  isUpdating: boolean;
+  updateErrorMessage: string;
+  isUpdatePaymentMethodSuccess: boolean;
+  isUpdatingPaymentMethod: boolean;
+  updatePaymentMethodErrorMessage: string;
+  isDeleteSuccess: boolean;
+  isDeleting: boolean;
+  deleteErrorMessage: string;
 }

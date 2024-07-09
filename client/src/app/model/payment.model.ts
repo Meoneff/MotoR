@@ -6,4 +6,8 @@ export interface Payment {
   dayPayment: string;
   reservationId: Reservation;
   customerId: User;
+  status: boolean;
+  isPaid: boolean;
+  amount: number;
+  paymentMethod: string;
 }

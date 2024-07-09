@@ -1,11 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../../model/user.model';
 import { Reservation } from '../../../model/reservation.model';
+import { Payment } from '../../../model/payment.model';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../nrgx/user/user.state';
 import { ReservationState } from '../../../nrgx/reservation/reservation.state';
 import { PaymentState } from '../../../nrgx/payment/payment.state';
-import * as ResevationActions from '../../../nrgx/reservation/reservation.actions';
+import * as ReservationActions from '../../../nrgx/reservation/reservation.actions';
 import * as UserActions from '../../../nrgx/user/user.actions';
 import * as PaymentActions from '../../../nrgx/payment/payment.actions';
 import { Motor } from '../../../model/motor.model';
@@ -23,9 +24,9 @@ import { robotoRegular } from '../../../shared/roboto-regular';
   standalone: true,
   imports: [ShareModule, TaigaModule],
   templateUrl: './payment.component.html',
-  styleUrl: './payment.component.scss',
+  styleUrls: ['./payment.component.scss'],
 })
-export class PaymentComponent implements OnDestroy {
+export class PaymentComponent implements OnDestroy, OnInit {
   user: User = <User>{};
   user$ = this.store.select('user', 'user');
   reservation$ = this.store.select('reservation', 'reservationList');
@@ -59,10 +60,10 @@ export class PaymentComponent implements OnDestroy {
     },
     {
       name: 'Direct Cash',
-      // logo: '../../../../',
       value: 'Direct Cash',
     },
   ];
+
   selectedReservation: Reservation = {
     _id: '',
     reservationId: '',
@@ -76,6 +77,18 @@ export class PaymentComponent implements OnDestroy {
     city: '',
     image: <Storage>{},
     total: 0,
+  };
+
+  paymentData = {
+    paymentId: '',
+    dayPayment: '',
+    reservationId: '',
+    customerId: '',
+    motorId: '',
+    status: true,
+    isPaid: true,
+    amount: 0,
+    paymentMethod: '',
   };
 
   constructor(
@@ -92,7 +105,7 @@ export class PaymentComponent implements OnDestroy {
     this.user$.subscribe((user) => {
       if (user._id != null && user._id != undefined) {
         console.log(user);
-        this.store.dispatch(ResevationActions.get({ customerId: user._id }));
+        this.store.dispatch(ReservationActions.get({ customerId: user._id }));
         this.user = user;
       } else {
         const userAsJson = sessionStorage.getItem('user');
@@ -108,20 +121,23 @@ export class PaymentComponent implements OnDestroy {
       console.log(this.reservations);
     });
   }
+
   ngOnDestroy(): void {
-    this.store.dispatch(ResevationActions.reset());
+    this.store.dispatch(ReservationActions.reset());
   }
+
   ngOnInit(): void {
     this.paymentForm.get('paymentMethod')?.valueChanges.subscribe((value) => {
       console.log('Payment Method Control Value:', value);
       this.payMethods = value;
     });
   }
+
   onPaymentMethodChange(event: any): void {
     console.log('Payment Method Selected:', event);
   }
 
-  generatePDF(): void {
+  rentPay(): void {
     const paymentMethodValue = this.paymentForm.get('paymentMethod')?.value;
     console.log('Payment Method Value:', paymentMethodValue); // Log the payment method value
 
@@ -129,10 +145,30 @@ export class PaymentComponent implements OnDestroy {
       (method) => method.value === paymentMethodValue,
     );
 
-    this.paymentForm.get('paymentMethod')?.valueChanges.subscribe((value) => {
-      this.payMethods = value;
-      console.log('Payment Method Control Value:', this.payMethods);
-    });
+    const currentDate = new Date().toISOString();
+
+    this.paymentData = {
+      paymentId: this.generateRandomId(10),
+      dayPayment: currentDate,
+      reservationId: this.selectedReservation._id,
+      customerId: this.user._id,
+      motorId: this.selectedReservation.motorId._id,
+      status: true,
+      isPaid: true,
+      amount: this.totalAmount,
+      paymentMethod: paymentMethodValue,
+    };
+
+    // Dispatch create payment action
+    this.store.dispatch(PaymentActions.create({ payment: this.paymentData }));
+
+    // Dispatch delete reservation action
+    this.store.dispatch(
+      ReservationActions.deleteReservation({
+        reservationId: this.selectedReservation._id,
+      }),
+    );
+
     const doc = new jsPDF();
     doc.addFileToVFS('Roboto-Regular.ttf', robotoRegular);
     doc.addFont('Roboto-Regular.ttf', 'RobotoRegular', 'normal');
@@ -174,10 +210,17 @@ export class PaymentComponent implements OnDestroy {
     doc.text(`Total Amount: $${this.totalAmount}`, 10, finalY + 10);
     doc.text(`Payment Method: ${this.payMethods.name}`, 10, finalY + 20);
     console.log('Payment Method Name:', this.payMethods); // Log the payment method name
-    const currentDate = new Date().toLocaleDateString();
-    doc.text(`Date: ${currentDate}`, 10, finalY + 30);
+    const currentDateFormatted = new Date().toLocaleDateString();
+    doc.text(`Date: ${currentDateFormatted}`, 10, finalY + 30);
 
     doc.save('reservation-details.pdf');
+
+    this.clearReservations();
+  }
+
+  clearReservations(): void {
+    this.reservations = [];
+    this.calculateTotalAmount();
   }
 
   generateRandomId(length: number): string {
@@ -186,14 +229,8 @@ export class PaymentComponent implements OnDestroy {
     for (let i = 0; i < length; i++) {
       result[i] = chars.charAt(Math.floor(Math.random() * chars.length));
     }
-
     return result.join('');
   }
-
-  // formatDate(dateString: string): string {
-  //   const date = new Date(dateString);
-  //   return date.toDateString(); // "Thu, 20 Jun 2024"
-  // }
 
   calculateTotalAmount(): void {
     this.totalAmount = this.reservations.reduce(

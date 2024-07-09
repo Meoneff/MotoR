@@ -13,6 +13,16 @@ export const LAYOUT_ROUTES: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'login',
+        loadChildren: () =>
+          import('../login/login.routes').then((m) => m.LOGIN_ROUTES),
+      },
+      {
+        path: 'register',
+        loadChildren: () =>
+          import('../register/register.routes').then((m) => m.REGISTER_ROUTES),
+      },
+      {
         path: 'payment',
         loadChildren: () =>
           import('./payment/payment.routes').then((m) => m.PAYMENT_ROUTES),

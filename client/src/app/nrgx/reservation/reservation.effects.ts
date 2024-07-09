@@ -129,4 +129,24 @@ export class ReservationEffects {
       ),
     ),
   );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReservationActions.deleteReservation),
+      exhaustMap((action) =>
+        this.reservationService
+          .deleteReservationById(action.reservationId)
+          .pipe(
+            map(() => ReservationActions.deleteReservationSuccess()),
+            catchError((error) =>
+              of(
+                ReservationActions.deleteReservationFailure({
+                  errorMessage: error,
+                }),
+              ),
+            ),
+          ),
+      ),
+    ),
+  );
 }

@@ -29,10 +29,7 @@ import { paymentReducer } from './nrgx/payment/payment.reducer';
 import { ManufacturerEffects } from './nrgx/manufacturer/manufacturer.effects';
 import { ReservationEffects } from './nrgx/reservation/reservation.effects';
 import { StorageEffects } from './nrgx/storage/storage.effects';
-// import { candidateReducer } from './ngrx/reducers/candidate.reducer';
-// import { CandidateEffects } from './ngrx/effects/candidate.effects';
-// import { jobReducer } from './ngrx/reducers/job.reducer';
-// import { JobEffects } from './ngrx/effects/job.effects';
+import { PaymentEffects } from './nrgx/payment/payment.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -63,6 +60,7 @@ export const appConfig: ApplicationConfig = {
       UserEffects,
       MotorEffects,
       CategoryEffects,
+      PaymentEffects,
       ManufacturerEffects,
       ReservationEffects,
       StorageEffects,

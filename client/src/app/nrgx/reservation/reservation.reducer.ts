@@ -246,4 +246,17 @@ export const reservationReducer = createReducer(
     };
     return newState;
   }),
+
+  //delete
+  on(ReservationActions.deleteReservation, (state, action) => {
+    console.log(action.type);
+
+    let newState = {
+      ...state,
+      isRemoveLoading: true,
+      isRemoveSuccess: false,
+      removeErrMess: '',
+    };
+    return newState;
+  }),
 );

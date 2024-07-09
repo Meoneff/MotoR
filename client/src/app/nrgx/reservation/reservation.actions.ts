@@ -79,3 +79,16 @@ export const getReservationByEndDateFailure = createAction(
   '[reservation] Get By End Date Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const deleteReservation = createAction(
+  '[Reservation] Delete',
+  props<{ reservationId: string }>(),
+);
+
+export const deleteReservationSuccess = createAction(
+  '[Reservation] Delete Success',
+);
+export const deleteReservationFailure = createAction(
+  '[Reservation] Delete Failure',
+  props<{ errorMessage: string }>(),
+);
