@@ -33,7 +33,6 @@ export class PaymentComponent implements OnDestroy, OnInit {
   payment$ = this.store.select('payment', 'payment');
   reservations: Reservation[] = [];
   isCreatePaymentSuccess$ = this.store.select('payment', 'isSuccessful');
-  isSelectedReservation: boolean = false;
   totalAmount: number = 0;
   payMethods: any;
   paymentForm: FormGroup;
@@ -64,27 +63,11 @@ export class PaymentComponent implements OnDestroy, OnInit {
     },
   ];
 
-  selectedReservation: Reservation = {
-    _id: '',
-    reservationId: '',
-    motorId: <Motor>{},
-    customerId: <User>{},
-    startDate: '',
-    endDate: '',
-    status: false,
-    selectedDays: '',
-    quantity: 0,
-    city: '',
-    image: <Storage>{},
-    total: 0,
-  };
-
   paymentData = {
     paymentId: '',
     dayPayment: '',
     reservationId: '',
     customerId: '',
-    motorId: '',
     status: true,
     isPaid: true,
     amount: 0,
@@ -147,27 +130,30 @@ export class PaymentComponent implements OnDestroy, OnInit {
 
     const currentDate = new Date().toISOString();
 
-    this.paymentData = {
-      paymentId: this.generateRandomId(10),
-      dayPayment: currentDate,
-      reservationId: this.selectedReservation._id,
-      customerId: this.user._id,
-      motorId: this.selectedReservation.motorId._id,
-      status: true,
-      isPaid: true,
-      amount: this.totalAmount,
-      paymentMethod: paymentMethodValue,
-    };
+    this.reservations.forEach((reservation) => {
+      const paymentData = {
+        paymentId: this.generateRandomId(10),
+        dayPayment: currentDate,
+        reservationId: reservation._id,
+        customerId: this.user._id,
+        status: true,
+        isPaid: true,
+        amount: reservation.total,
+        paymentMethod: paymentMethodValue,
+      };
 
-    // Dispatch create payment action
-    this.store.dispatch(PaymentActions.create({ payment: this.paymentData }));
+      console.log('Payment Data:', paymentData); // Log dữ liệu thanh toán trước khi gửi
 
-    // Dispatch delete reservation action
-    this.store.dispatch(
-      ReservationActions.deleteReservation({
-        reservationId: this.selectedReservation._id,
-      }),
-    );
+      // Dispatch create payment action
+      this.store.dispatch(PaymentActions.create({ payment: paymentData }));
+
+      // Dispatch delete reservation action
+      this.store.dispatch(
+        ReservationActions.deleteReservation({
+          reservationId: reservation._id,
+        }),
+      );
+    });
 
     const doc = new jsPDF();
     doc.addFileToVFS('Roboto-Regular.ttf', robotoRegular);
