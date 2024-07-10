@@ -3,12 +3,12 @@ import { User } from '../../../model/user.model';
 import { Reservation } from '../../../model/reservation.model';
 import { Payment } from '../../../model/payment.model';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../../nrgx/user/user.state';
-import { ReservationState } from '../../../nrgx/reservation/reservation.state';
-import { PaymentState } from '../../../nrgx/payment/payment.state';
-import * as ReservationActions from '../../../nrgx/reservation/reservation.actions';
-import * as UserActions from '../../../nrgx/user/user.actions';
-import * as PaymentActions from '../../../nrgx/payment/payment.actions';
+import { UserState } from '../../../ngrx/user/user.state';
+import { ReservationState } from '../../../ngrx/reservation/reservation.state';
+import { PaymentState } from '../../../ngrx/payment/payment.state';
+import * as ReservationActions from '../../../ngrx/reservation/reservation.actions';
+import * as UserActions from '../../../ngrx/user/user.actions';
+import * as PaymentActions from '../../../ngrx/payment/payment.actions';
 import { Motor } from '../../../model/motor.model';
 import { Storage } from '../../../model/storage.model';
 import { ShareModule } from '../../../shared/share.module';
@@ -66,7 +66,7 @@ export class PaymentComponent implements OnDestroy, OnInit {
   paymentData = {
     paymentId: '',
     dayPayment: '',
-    reservationId: '',
+    reservationIds: [] as string[], // Change to array of strings
     customerId: '',
     status: true,
     isPaid: true,
@@ -130,30 +130,25 @@ export class PaymentComponent implements OnDestroy, OnInit {
 
     const currentDate = new Date().toISOString();
 
-    this.reservations.forEach((reservation) => {
-      const paymentData = {
-        paymentId: this.generateRandomId(10),
-        dayPayment: currentDate,
-        reservationId: reservation._id,
-        customerId: this.user._id,
-        status: true,
-        isPaid: true,
-        amount: reservation.total,
-        paymentMethod: paymentMethodValue,
-      };
+    const reservationIds = this.reservations.map(
+      (reservation) => reservation._id,
+    );
 
-      console.log('Payment Data:', paymentData); // Log dữ liệu thanh toán trước khi gửi
+    this.paymentData = {
+      paymentId: this.generateRandomId(10),
+      dayPayment: currentDate,
+      reservationIds: reservationIds,
+      customerId: this.user._id,
+      status: true,
+      isPaid: true,
+      amount: this.totalAmount,
+      paymentMethod: paymentMethodValue,
+    };
 
-      // Dispatch create payment action
-      this.store.dispatch(PaymentActions.create({ payment: paymentData }));
+    console.log('Payment Data:', this.paymentData); // Log dữ liệu thanh toán trước khi gửi
 
-      // Dispatch delete reservation action
-      this.store.dispatch(
-        ReservationActions.deleteReservation({
-          reservationId: reservation._id,
-        }),
-      );
-    });
+    // Dispatch create payment action
+    this.store.dispatch(PaymentActions.create({ payment: this.paymentData }));
 
     const doc = new jsPDF();
     doc.addFileToVFS('Roboto-Regular.ttf', robotoRegular);

@@ -18,6 +18,7 @@ export class PaymentController {
 
   @Post('create')
   async create(@Body() createPaymentDto: CreatePaymentDto) {
+    console.log('Received Payment Data:', createPaymentDto);
     try {
       const newPayment = await this.paymentService.create(createPaymentDto);
       return newPayment;

@@ -11,12 +11,17 @@ export class Payment {
   @Prop({ required: true })
   dayPayment: string;
 
+  // @Prop({
+  //   required: true,
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Reservation',
+  // })
+  // reservationIds: string;
   @Prop({
     required: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reservation',
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],
   })
-  reservationId: string;
+  reservationIds: mongoose.Schema.Types.ObjectId[];
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   customerId: string;
@@ -30,8 +35,19 @@ export class Payment {
   @Prop({ required: true })
   amount: number;
 
-  @Prop({ required: true })
-  paymentMethod: string;
+  @Prop({
+    required: true,
+    type: {
+      name: { type: String, required: true },
+      logo: { type: String, required: true },
+      value: { type: String, required: true },
+    },
+  })
+  paymentMethod: {
+    name: string;
+    logo: string;
+    value: string;
+  };
 }
 
 export const PaymentSchema = SchemaFactory.createForClass(Payment);

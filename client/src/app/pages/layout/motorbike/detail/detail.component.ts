@@ -20,17 +20,17 @@ import {
 } from '@angular/forms';
 
 import { Store, select } from '@ngrx/store';
-import { MotorState } from '../../../../nrgx/motor/motor.state';
-import { AuthState } from '../../../../nrgx/auth/auth.state';
-import { UserState } from '../../../../nrgx/user/user.state';
-import { ReservationState } from '../../../../nrgx/reservation/reservation.state';
-import { PaymentState } from '../../../../nrgx/payment/payment.state';
+import { MotorState } from '../../../../ngrx/motor/motor.state';
+import { AuthState } from '../../../../ngrx/auth/auth.state';
+import { UserState } from '../../../../ngrx/user/user.state';
+import { ReservationState } from '../../../../ngrx/reservation/reservation.state';
+import { PaymentState } from '../../../../ngrx/payment/payment.state';
 import { Motor } from '../../../../model/motor.model';
 import { User } from '../../../../model/user.model';
 import { Reservation } from '../../../../model/reservation.model';
-import * as UserActions from '../../../../nrgx/user/user.actions';
-import * as ReservationActions from '../../../../nrgx/reservation/reservation.actions';
-import * as MotorActions from '../../../../nrgx/motor/motor.actions';
+import * as UserActions from '../../../../ngrx/user/user.actions';
+import * as ReservationActions from '../../../../ngrx/reservation/reservation.actions';
+import * as MotorActions from '../../../../ngrx/motor/motor.actions';
 import { Observable, Subscription } from 'rxjs';
 import { MotorService } from '../../../../service/motor/motor.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';

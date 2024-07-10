@@ -4,14 +4,14 @@ import { ShareModule } from '../../shared/share.module';
 import { TaigaModule } from '../../shared/taiga.module';
 import { Auth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
-import { AuthState } from '../../nrgx/auth/auth.state';
-import { UserState } from '../../nrgx/user/user.state';
+import { AuthState } from '../../ngrx/auth/auth.state';
+import { UserState } from '../../ngrx/user/user.state';
 import { userFirebase } from '../../model/userFirebase.model';
 import { onAuthStateChanged } from '@firebase/auth';
-import * as UserActions from '../../nrgx/user/user.actions';
+import * as UserActions from '../../ngrx/user/user.actions';
 import { User } from '../../model/user.model';
 import { FormControl, FormGroup } from '@angular/forms';
-import * as AuthActions from '../../nrgx/auth/auth.actions';
+import * as AuthActions from '../../ngrx/auth/auth.actions';
 
 @Component({
   selector: 'app-login',

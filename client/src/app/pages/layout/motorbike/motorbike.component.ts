@@ -8,16 +8,16 @@ import { Motor } from '../../../model/motor.model';
 import { Category } from '../../../model/category.model';
 import { Manufacturer } from '../../../model/manufacturer.model';
 import { Subscription } from 'rxjs';
-import { MotorState } from '../../../nrgx/motor/motor.state';
-import { AuthState } from '../../../nrgx/auth/auth.state';
-import { UserState } from '../../../nrgx/user/user.state';
-import { categoryState } from '../../../nrgx/category/category.state';
-import { ManufacturerState } from '../../../nrgx/manufacturer/manufacturer.state';
+import { MotorState } from '../../../ngrx/motor/motor.state';
+import { AuthState } from '../../../ngrx/auth/auth.state';
+import { UserState } from '../../../ngrx/user/user.state';
+import { categoryState } from '../../../ngrx/category/category.state';
+import { ManufacturerState } from '../../../ngrx/manufacturer/manufacturer.state';
 import { Reservation } from '../../../model/reservation.model';
-import { get } from '../../../nrgx/motor/motor.actions';
-import * as MotorActions from '../../../nrgx/motor/motor.actions';
-import * as CategoryActions from '../../../nrgx/category/category.actions';
-import * as ManufacturerActions from '../../../nrgx/manufacturer/manufacturer.actions';
+import { get } from '../../../ngrx/motor/motor.actions';
+import * as MotorActions from '../../../ngrx/motor/motor.actions';
+import * as CategoryActions from '../../../ngrx/category/category.actions';
+import * as ManufacturerActions from '../../../ngrx/manufacturer/manufacturer.actions';
 @Component({
   selector: 'app-motorbike',
   standalone: true,

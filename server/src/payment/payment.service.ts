@@ -4,9 +4,9 @@ import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Model } from 'mongoose';
 import { Payment } from './entities/payment.entity';
-import { Storage } from 'src/storage/entities/storage.entity';
+
 import { User } from 'src/user/entities/user.entity';
-import { Motor } from 'src/motor/entities/motor.entity';
+
 import { Reservation } from 'src/reservations/entities/reservation.entity';
 
 @Injectable()
@@ -16,16 +16,16 @@ export class PaymentService {
     @InjectModel(Reservation.name)
     private readonly reservationModel: Model<Reservation>,
     @InjectModel(User.name) private readonly userModel: Model<User>,
-    @InjectModel(Motor.name) private readonly motorModel: Model<Motor>,
-    @InjectModel(Storage.name) private readonly storageModel: Model<Storage>,
   ) {}
 
   async create(createPaymentDto: CreatePaymentDto) {
     try {
       const createPayment = new this.paymentModel(createPaymentDto);
+      console.log('Creating Payment with Data:', createPaymentDto);
       return await createPayment.save();
     } catch (err) {
-      throw new NotFoundException(err.message);
+      console.error('Error saving payment:', err);
+      throw new HttpException(err.message, err.status);
     }
   }
 
@@ -33,7 +33,7 @@ export class PaymentService {
     try {
       const payments = await this.paymentModel
         .find()
-        .populate('reservationId', 'reservationId', this.reservationModel)
+        .populate('reservationIds', 'reservationId', this.reservationModel)
         .populate('customerId', 'name', this.userModel)
         .exec();
       return payments;
@@ -46,7 +46,7 @@ export class PaymentService {
     try {
       const payments = await this.paymentModel
         .find({ customerId: customerId })
-        .populate('reservationId', 'reservationId', this.reservationModel)
+        .populate('reservationIds', 'reservationId', this.reservationModel)
         .populate('customerId', 'name', this.userModel)
         .exec();
       return payments;
@@ -58,8 +58,8 @@ export class PaymentService {
   async findPaymentsByReservationId(reservationId: string) {
     try {
       const payments = await this.paymentModel
-        .find({ reservationId: reservationId })
-        .populate('reservationId', 'reservationId', this.reservationModel)
+        .find({ reservationIds: reservationId })
+        .populate('reservationIds', 'reservationId', this.reservationModel)
         .populate('customerId', 'name', this.userModel)
         .exec();
       return payments;
@@ -72,7 +72,7 @@ export class PaymentService {
     try {
       const payment = await this.paymentModel
         .findOne({ paymentId: id })
-        .populate('reservationId', 'reservationId', this.reservationModel)
+        .populate('reservationIds', 'reservationId', this.reservationModel)
         .populate('customerId', 'name', this.userModel)
         .exec();
       if (!payment) {

@@ -11,11 +11,11 @@ import { TaigaModule } from '../../taiga.module';
 import { TuiDialogService } from '@taiga-ui/core';
 import { ShareModule } from '../../share.module';
 import { Store } from '@ngrx/store';
-import { AuthState } from '../../../nrgx/auth/auth.state';
+import { AuthState } from '../../../ngrx/auth/auth.state';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import * as AuthActions from '../../../nrgx/auth/auth.actions';
-import * as UserAction from '../../../nrgx/user/user.actions';
-import { UserState } from '../../../nrgx/user/user.state';
+import * as AuthActions from '../../../ngrx/auth/auth.actions';
+import * as UserAction from '../../../ngrx/user/user.actions';
+import { UserState } from '../../../ngrx/user/user.state';
 import { User } from '../../../model/user.model';
 import { combineLatest } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -67,7 +67,7 @@ export class NavbarComponent {
           password: '',
           confirmPassword: '',
           phone: '',
-          gender: '',
+
           // dateOfBirth: '',
         };
       }
