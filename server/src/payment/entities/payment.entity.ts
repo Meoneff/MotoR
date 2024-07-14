@@ -11,17 +11,11 @@ export class Payment {
   @Prop({ required: true })
   dayPayment: string;
 
-  // @Prop({
-  //   required: true,
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Reservation',
-  // })
-  // reservationIds: string;
   @Prop({
     required: true,
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],
   })
-  reservationIds: mongoose.Schema.Types.ObjectId[];
+  reservationIds: string[];
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   customerId: string;
@@ -39,13 +33,13 @@ export class Payment {
     required: true,
     type: {
       name: { type: String, required: true },
-      logo: { type: String, required: true },
+      logo: { type: String, required: false },
       value: { type: String, required: true },
     },
   })
   paymentMethod: {
     name: string;
-    logo: string;
+    logo?: string;
     value: string;
   };
 }

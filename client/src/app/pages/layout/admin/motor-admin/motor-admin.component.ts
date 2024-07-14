@@ -88,7 +88,6 @@ export class MotorAdminComponent {
     this.subscriptions.push(
       this.store.select('manufacturer', 'manufacturers').subscribe((val) => {
         if (val != null && val != undefined) {
-          console.log(this.manufacturers);
           this.manufacturers = val;
         }
       }),
@@ -103,9 +102,7 @@ export class MotorAdminComponent {
         }
       }),
       this.isCreateImage$.subscribe((val) => {
-        console.log(val);
         if (val) {
-          console.log(val);
           this.store.dispatch(
             StorageAction.get({
               fileName: this.fileName,
@@ -115,10 +112,8 @@ export class MotorAdminComponent {
       }),
       this.store.select('storage').subscribe((val) => {
         if (val?.isGetSuccess) {
-          console.log(val);
           if (this.updateMotor) {
             this.motoDataToUpdate.image = val?.storage._id;
-            console.log(this.motoDataToUpdate);
             this.store.dispatch(
               MotorAction.updateMotor({ motor: this.motoDataToUpdate }),
             );
@@ -127,48 +122,30 @@ export class MotorAdminComponent {
       }),
       this.isCreateMotor$.subscribe((create) => {
         if (create) {
-          console.log(create);
           this.alerts
-            .open('Basic <strong>HTML</strong>', { label: 'With a heading!' })
+            .open('Motor created successfully', { label: 'Success' })
             .subscribe();
-          this.addMotorData = {
-            motorId: '',
-            name: '',
-            model: '',
-            manufacturer: '',
-            category: '',
-            description: '',
-            quantity: 0,
-            price: '',
-            status: false,
-            image: '',
-          };
-          this.addMotorData.reset();
+          this.resetForm();
           this.store.dispatch(MotorAction.get({ isConfirmed: true }));
           this.updateMotor = false;
         }
       }),
       this.isUpdateMotor$.subscribe((update) => {
         if (update) {
-          console.log(update);
           this.alerts
-            .open('Basic <strong>HTML</strong>', { label: 'With a heading!' })
+            .open('Motor updated successfully', { label: 'Success' })
             .subscribe();
-          this.addMotorData = {
-            motorId: '',
-            name: '',
-            model: '',
-            description: '',
-            manufacturer: '',
-            category: '',
-            quantity: 0,
-            price: '',
-            status: false,
-            image: '',
-          };
-          this.addMotorData.reset();
+          this.resetForm();
           this.store.dispatch(MotorAction.get({ isConfirmed: true }));
           this.updateMotor = false;
+        }
+      }),
+      this.isRemoveMotor$.subscribe((remove) => {
+        if (remove) {
+          this.alerts
+            .open('Motor deleted successfully', { label: 'Success' })
+            .subscribe();
+          this.store.dispatch(MotorAction.get({ isConfirmed: true }));
         }
       }),
     );
@@ -189,12 +166,63 @@ export class MotorAdminComponent {
       this.selectedImage = reader.result;
     };
     this.isChangeFile = true;
-    console.log(this.file);
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  onEditMotor(motor: Motor) {
+    // this.motorForm.patchValue({
+    //   motorId: motor.motorId,
+    //   name: motor.name,
+    //   model: motor.model,
+    //   categoryId: motor.categoryId._id,
+    //   manufacturerId: motor.manufacturerId._id,
+    //   quantity: motor.quantity,
+    //   price: motor.price,
+    //   description: motor.description,
+    // });
+    // this.selectedImage = motor.image.urls[0];
+    // this.updateMotor = true;
+    // this.motoDataToUpdate = motor;
+  }
+
+  onDeleteMotor(motorId: string) {
+    this.store.dispatch(MotorAction.deleteMotor({ motorId }));
+  }
+
+  resetForm() {
+    this.motorForm.reset();
+    this.selectedImage = null;
+    this.updateMotor = false;
+    this.motoDataToUpdate = {};
+  }
+
+  createMotor() {
+    // if (this.motorForm.valid) {
+    //   if (this.isChangeFile) {
+    //     this.fileName = `${this.motorForm.value.motorId}-${Date.now()}`;
+    //     this.formData.append('fileName', this.fileName);
+    //     this.store.dispatch(StorageAction.upload({ formData: this.formData }));
+    //   } else {
+    //     this.store.dispatch(MotorAction.createMotor({ motor: this.motorForm.value }));
+    //   }
+    // }
+  }
+
+  onUpdateMotor() {
+    // if (this.motorForm.valid && this.updateMotor) {
+    //   this.motoDataToUpdate = { ...this.motoDataToUpdate, ...this.motorForm.value };
+    //   if (this.isChangeFile) {
+    //     this.fileName = `${this.motorForm.value.motorId}-${Date.now()}`;
+    //     this.formData.append('fileName', this.fileName);
+    //     this.store.dispatch(StorageAction.upload({ formData: this.formData }));
+    //   } else {
+    //     this.store.dispatch(MotorAction.updateMotor({ motor: this.motoDataToUpdate }));
+    //   }
+    // }
   }
 }

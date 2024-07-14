@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-
 import { Reservation } from '../../model/reservation.model';
 
 export const create = createAction(
@@ -43,11 +42,22 @@ export const getOneFailure = createAction(
   '[reservation] Get One Failure',
   props<{ errorMessage: string }>(),
 );
+
 export const reset = createAction('[reservation] Reset');
 
 export const updateStatus = createAction(
   '[reservation] Update Status',
+  props<{ reservationId: string; status: boolean }>(),
+);
+
+export const updateStatusSuccess = createAction(
+  '[reservation] Update Status Success',
   props<{ reservation: Reservation }>(),
+);
+
+export const updateStatusFailure = createAction(
+  '[reservation] Update Status Failure',
+  props<{ errorMessage: string }>(),
 );
 
 export const getReservationByStartDate = createAction(
@@ -88,6 +98,7 @@ export const deleteReservation = createAction(
 export const deleteReservationSuccess = createAction(
   '[Reservation] Delete Success',
 );
+
 export const deleteReservationFailure = createAction(
   '[Reservation] Delete Failure',
   props<{ errorMessage: string }>(),

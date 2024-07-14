@@ -11,6 +11,7 @@ export const ADMIN_ROUTES: Routes = [
         redirectTo: 'admin',
         pathMatch: 'full',
       },
+
       {
         path: 'motor',
         loadChildren: () =>

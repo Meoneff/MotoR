@@ -5,6 +5,8 @@ import { Payment } from '../../model/payment.model';
 
 export const initialState: PaymentState = {
   payment: <Payment>{},
+  paymentList: [],
+  errorMessage: null,
   isLoading: false,
   isSuccessful: false,
   createErrorMessage: '',
@@ -24,6 +26,16 @@ export const initialState: PaymentState = {
 
 export const paymentReducer = createReducer(
   initialState,
+
+  on(PaymentActions.getAllSuccess, (state, { paymentList }) => ({
+    ...state,
+    paymentList,
+    errorMessage: null,
+  })),
+  on(PaymentActions.getAllFailure, (state, { errorMessage }) => ({
+    ...state,
+    errorMessage,
+  })),
 
   // Create Payment
   on(PaymentActions.create, (state, action) => ({

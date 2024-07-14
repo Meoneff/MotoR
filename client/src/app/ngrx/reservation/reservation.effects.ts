@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ReservationService } from '../../service/reservation/reservation.service';
-import { catchError, of, map, switchMap, exhaustMap } from 'rxjs';
+import { catchError, of, map, exhaustMap } from 'rxjs';
 import * as ReservationActions from './reservation.actions';
+import { Reservation } from '../../model/reservation.model';
 
 @Injectable()
 export class ReservationEffects {
@@ -16,8 +17,8 @@ export class ReservationEffects {
       ofType(ReservationActions.create),
       exhaustMap((action) =>
         this.reservationService.create(action.reservation).pipe(
-          map((item) => {
-            if (item != undefined || item != null) {
+          map((item: Reservation) => {
+            if (item != undefined && item != null) {
               return ReservationActions.createSuccess();
             } else {
               return ReservationActions.createFailure({
@@ -26,20 +27,24 @@ export class ReservationEffects {
             }
           }),
           catchError((error) =>
-            of(ReservationActions.createFailure({ errorMessage: error })),
+            of(
+              ReservationActions.createFailure({ errorMessage: error.message }),
+            ),
           ),
         ),
       ),
     ),
   );
+
   get$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ReservationActions.get),
       exhaustMap((action) =>
-        this.reservationService.get(action.customerId).pipe(
-          map((item) => {
-            if (item != undefined || item != null) {
-              return ReservationActions.getSuccess({ reservations: item });
+        this.reservationService.get(action.customerId, false).pipe(
+          // Truyền tham số status = false
+          map((items: Reservation[]) => {
+            if (items != undefined && items != null) {
+              return ReservationActions.getSuccess({ reservations: items });
             } else {
               return ReservationActions.getFailure({
                 errorMessage: 'Reservation is undefined or null',
@@ -47,7 +52,7 @@ export class ReservationEffects {
             }
           }),
           catchError((error) =>
-            of(ReservationActions.getFailure({ errorMessage: error })),
+            of(ReservationActions.getFailure({ errorMessage: error.message })),
           ),
         ),
       ),
@@ -59,8 +64,8 @@ export class ReservationEffects {
       ofType(ReservationActions.getOne),
       exhaustMap((action) =>
         this.reservationService.getOne(action.reservationId).pipe(
-          map((item) => {
-            if (item != undefined || item != null) {
+          map((item: Reservation) => {
+            if (item != undefined && item != null) {
               return ReservationActions.getOneSuccess({ reservation: item });
             } else {
               return ReservationActions.getOneFailure({
@@ -69,21 +74,24 @@ export class ReservationEffects {
             }
           }),
           catchError((error) =>
-            of(ReservationActions.getOneFailure({ errorMessage: error })),
+            of(
+              ReservationActions.getOneFailure({ errorMessage: error.message }),
+            ),
           ),
         ),
       ),
     ),
   );
+
   getBystartDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ReservationActions.getReservationByStartDate),
       exhaustMap((action) =>
         this.reservationService.getByStartDate(action.startDate).pipe(
-          map((item) => {
-            if (item != undefined || item != null) {
+          map((items: Reservation[]) => {
+            if (items != undefined && items != null) {
               return ReservationActions.getReservationByStartDateSuccess({
-                reservations: item,
+                reservations: items,
               });
             } else {
               return ReservationActions.getReservationByStartDateFailure({
@@ -94,7 +102,7 @@ export class ReservationEffects {
           catchError((error) =>
             of(
               ReservationActions.getReservationByStartDateFailure({
-                errorMessage: error,
+                errorMessage: error.message,
               }),
             ),
           ),
@@ -102,15 +110,16 @@ export class ReservationEffects {
       ),
     ),
   );
+
   getByendDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ReservationActions.getReservationByEndDate),
       exhaustMap((action) =>
         this.reservationService.getByEndDate(action.endDate).pipe(
-          map((item) => {
-            if (item != undefined || item != null) {
+          map((items: Reservation[]) => {
+            if (items != undefined && items != null) {
               return ReservationActions.getReservationByEndDateSuccess({
-                reservations: item,
+                reservations: items,
               });
             } else {
               return ReservationActions.getReservationByEndDateFailure({
@@ -121,11 +130,41 @@ export class ReservationEffects {
           catchError((error) =>
             of(
               ReservationActions.getReservationByEndDateFailure({
-                errorMessage: error,
+                errorMessage: error.message,
               }),
             ),
           ),
         ),
+      ),
+    ),
+  );
+
+  updateStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReservationActions.updateStatus),
+      exhaustMap((action) =>
+        this.reservationService
+          .updateReservationStatus(action.reservationId, action.status)
+          .pipe(
+            map((item: Reservation) => {
+              if (item != undefined && item != null) {
+                return ReservationActions.updateStatusSuccess({
+                  reservation: item,
+                });
+              } else {
+                return ReservationActions.updateStatusFailure({
+                  errorMessage: 'Reservation is undefined or null',
+                });
+              }
+            }),
+            catchError((error) =>
+              of(
+                ReservationActions.updateStatusFailure({
+                  errorMessage: error.message,
+                }),
+              ),
+            ),
+          ),
       ),
     ),
   );
@@ -141,7 +180,7 @@ export class ReservationEffects {
             catchError((error) =>
               of(
                 ReservationActions.deleteReservationFailure({
-                  errorMessage: error,
+                  errorMessage: error.message,
                 }),
               ),
             ),

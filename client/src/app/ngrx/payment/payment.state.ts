@@ -2,6 +2,8 @@ import { Payment } from '../../model/payment.model';
 
 export interface PaymentState {
   payment: Payment;
+  paymentList: Payment[];
+  errorMessage: string | null;
   isLoading: boolean;
   isSuccessful: boolean;
   createErrorMessage: string;

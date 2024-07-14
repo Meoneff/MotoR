@@ -11,6 +11,28 @@ export class PaymentEffects {
     private paymentService: PaymentService,
   ) {}
 
+  getAllPayment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PaymentActions.getAll),
+      exhaustMap(() =>
+        this.paymentService.getAll().pipe(
+          map((items) => {
+            if (items) {
+              return PaymentActions.getAllSuccess({ paymentList: items });
+            } else {
+              return PaymentActions.getAllFailure({
+                errorMessage: 'Payments are undefined or null',
+              });
+            }
+          }),
+          catchError((error) =>
+            of(PaymentActions.getAllFailure({ errorMessage: error.message })),
+          ),
+        ),
+      ),
+    ),
+  );
+
   createPayment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PaymentActions.create),

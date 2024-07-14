@@ -166,16 +166,30 @@ export const reservationReducer = createReducer(
     };
     return newState;
   }),
-  on(ReservationActions.updateStatus, (state, { reservation }) => {
-    if (!state) {
-      return state;
-    }
-
+  on(ReservationActions.updateStatus, (state) => {
     return {
       ...state,
-      reservationList: (state.reservationList || []).map((res: Reservation) =>
-        res._id === reservation._id ? { ...res, status: true } : res,
+      isUpdateLoading: true,
+      isUpdateSuccess: false,
+      updateErrMess: '',
+    };
+  }),
+  on(ReservationActions.updateStatusSuccess, (state, action) => {
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: true,
+      reservationList: state.reservationList.map((res) =>
+        res._id === action.reservation._id ? action.reservation : res,
       ),
+    };
+  }),
+  on(ReservationActions.updateStatusFailure, (state, action) => {
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: false,
+      updateErrMess: action.errorMessage,
     };
   }),
   on(ReservationActions.getReservationByStartDate, (state, action) => {

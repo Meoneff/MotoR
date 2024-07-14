@@ -18,6 +18,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
 import { robotoRegular } from '../../../shared/roboto-regular';
+import { ReservationService } from '../../../service/reservation/reservation.service';
 
 @Component({
   selector: 'app-payment',
@@ -81,6 +82,7 @@ export class PaymentComponent implements OnDestroy, OnInit {
       reservation: ReservationState;
       payment: PaymentState;
     }>,
+    private reservationService: ReservationService,
   ) {
     this.paymentForm = this.fb.group({
       paymentMethod: [''],
@@ -110,10 +112,25 @@ export class PaymentComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    this.paymentForm = this.fb.group({
+      paymentMethod: [''],
+    });
+
+    this.loadReservations();
+
     this.paymentForm.get('paymentMethod')?.valueChanges.subscribe((value) => {
       console.log('Payment Method Control Value:', value);
       this.payMethods = value;
     });
+  }
+
+  loadReservations() {
+    this.reservationService
+      .get(this.user._id, false)
+      .subscribe((reservations: Reservation[]) => {
+        this.reservations = reservations;
+        this.calculateTotalAmount();
+      });
   }
 
   onPaymentMethodChange(event: any): void {
@@ -200,6 +217,11 @@ export class PaymentComponent implements OnDestroy, OnInit {
   }
 
   clearReservations(): void {
+    this.reservations.forEach((reservation) => {
+      this.reservationService
+        .updateReservationStatus(reservation._id, true)
+        .subscribe();
+    });
     this.reservations = [];
     this.calculateTotalAmount();
   }

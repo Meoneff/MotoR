@@ -136,27 +136,29 @@
 </div>
 
 
-<dialog id="payment_dialog" style="color: #1f1a1c" #paymentDialog>
+<dialog id="payment_dialog" #paymentDialog>
     <div class="dialog-content">
         <div class="ima">
-            <img [src]="item.image.urls" alt="">
+            <img [src]="item.image.urls" alt="Motor Image">
         </div>
         <div class="infoma">
             <h2>Payment Information</h2>
-            <p>Number of Motocycles: {{ updateQuantity() }}</p>
-            <p>City: {{ selectedCity }}</p>
-            <p>Total Motor: $ {{ item.price * updateQuantity() }}</p>
-            <p>Days: {{selectedDays}}</p>
-            <p>Total Service: $ 5</p>
-            <p>Total Insurance: $ 5</p>
-            <p>Total Rent: ${{totalCost()}}</p>
-            <button (click)="closePaymentDialog()">Close</button>
-            <button (click)="onSubmit(item)">Submit</button>
+            <p>Number of Motorcycles: <span>{{ updateQuantity() }}</span></p>
+            <p>City: <span>{{ selectedCity }}</span></p>
+            <p>Total Motor: <span>$ {{ item.price * updateQuantity() }}</span></p>
+            <p>Days: <span>{{ selectedDays }} days</span></p>
+            <p>Total Service: <span>$ 5</span></p>
+            <p>Total Insurance: <span>$ 5</span></p>
+            <p>Total Rent: <span>$ {{ totalCost() }}</span></p>
+            <div class="button-group">
+                <button (click)="closePaymentDialog()">Close</button>
+                <button (click)="onSubmit(item)">Submit</button>
+            </div>
         </div>
-
-
-
     </div>
 </dialog>
+
+
+
 
 <!---->

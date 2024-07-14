@@ -13,6 +13,19 @@ export const createFailure = createAction(
   props<{ errorMessage: string }>(),
 );
 
+//getall
+export const getAll = createAction('[Payment] Get All');
+
+export const getAllSuccess = createAction(
+  '[Payment] Create Failure',
+  props<{ paymentList: Payment[] }>(),
+);
+
+export const getAllFailure = createAction(
+  '[Payment] Get All Failure',
+  props<{ errorMessage: string }>(),
+);
+
 export const getById = createAction(
   '[Payment] Get By PaymentId',
   props<{ paymentId: string }>(),

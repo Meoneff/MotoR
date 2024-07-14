@@ -6,7 +6,7 @@
         <div id="reser-container-form">
             <div id="reser-container" *ngFor="let reservation of reservations">
                 <div class="img-reser">
-                    <img *ngFor="let img of reservation.image.urls" [src]="img" alt="" />
+                    <img *ngFor="let img of reservation.image?.urls" [src]="img" alt="" />
                 </div>
                 <div class="detail-reser">
                     <h2>{{reservation.motorId.name}}</h2>

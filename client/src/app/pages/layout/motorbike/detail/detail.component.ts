@@ -407,6 +407,13 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openPaymentDialog();
   }
   onSubmit(item: Motor): void {
+    if (this.motorcycleForm.invalid) {
+      // Hiển thị cảnh báo cho người dùng biết các trường còn trống
+      this.alerts
+        .open('Please fill in all required fields.', { label: 'Warning!' })
+        .subscribe();
+      return;
+    }
     const dateCheckin = document.getElementById(
       'date-checkin',
     ) as HTMLInputElement;
@@ -452,6 +459,7 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(
         ReservationActions.create({ reservation: this.reservationData }),
       );
+      this.closePaymentDialog();
     } else {
       console.log('Ngày không hợp lệ');
     }

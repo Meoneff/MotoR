@@ -9,6 +9,6 @@ export class CreateReservationDto {
     public endDate: Date,
     public quantity: number,
     public total: number,
-    public status: string,
+    public status: boolean,
   ) {}
 }

@@ -46,10 +46,16 @@ export class ReservationsController {
   }
 
   @Get('byCustomerId')
-  async findReservationsByCustomerId(@Query('customerId') customerId: string) {
+  async findReservationsByCustomerId(
+    @Query('customerId') customerId: string,
+    @Query('status') status: boolean,
+  ) {
     try {
       const reservations =
-        await this.reservationsService.findReservationsByCustomerId(customerId);
+        await this.reservationsService.findReservationsByCustomerId(
+          customerId,
+          status,
+        );
       return reservations;
     } catch (err) {
       throw err;
@@ -112,6 +118,17 @@ export class ReservationsController {
         id,
         updateReservationDto,
       );
+      return updatedReservation;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Put('updateStatus')
+  async updateStatus(@Query('id') id: string) {
+    try {
+      const updatedReservation =
+        await this.reservationsService.updateStatus(id);
       return updatedReservation;
     } catch (err) {
       throw err;

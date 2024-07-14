@@ -9,7 +9,7 @@ export class CreatePaymentDto {
     public amount: number,
     public paymentMethod: {
       name: string;
-      logo: string;
+      logo?: string;
       value: string;
     },
   ) {}

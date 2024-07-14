@@ -4,7 +4,7 @@
             <div class="form-upload">
                 <div class="upload-content">
                     <h2>Add New Motor</h2>
-                    <hr>
+                    <hr />
                     <div class="model-content">
                         <label for="motorId">Motor ID</label>
                         <div class="content-control">
@@ -45,9 +45,8 @@
                             <label for="category">Category</label>
                             <div class="content-control">
                                 <select class="category" formControlName="categoryId">
-                                    <option *ngFor="let category of categories" [value]="category._id">
-                                        {{ category.name }}
-                                    </option>
+                                    <option *ngFor="let category of categories" [value]="category._id">{{ category.name
+                                        }}</option>
                                 </select>
                             </div>
                         </div>
@@ -55,9 +54,8 @@
                             <label for="manufacturer">Manufacturer</label>
                             <div class="content-control">
                                 <select class="manufacturer" formControlName="manufacturerId">
-                                    <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer._id">
-                                        {{ manufacturer.name }}
-                                    </option>
+                                    <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer._id">{{
+                                        manufacturer.name }}</option>
                                 </select>
                             </div>
                         </div>
@@ -93,19 +91,47 @@
                                 style="width: 120px;height: 120px; margin-top: 1rem;" />
                         </div>
                     </div>
-                    <!-- <div class="btn-create-update">
-                            <button appearance="secondary" style="margin-left: 1rem;" tuiButton type="submit"
-                                (click)="createDish()">
-                                Create
-                            </button>
-                            <button appearance="secondary" style="margin-left: 1rem;" tuiButton type="submit"
-                                (click)="onUpdateDish()">
-                                Update
-                            </button>
-                        </div> -->
                 </div>
             </div>
         </form>
     </div>
-    <div id="motor-list"></div>
+    <div id="motor-list">
+        <h2>MOTOR LIST</h2>
+        <table class="motor-table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let motor of motorList; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <div class="motor-image">
+                            <img *ngIf="motor.image.urls.length > 0" [src]="motor.image.urls[0]"
+                                alt="{{ motor.name }}" />
+                        </div>
+                    </td>
+                    <td>{{ motor.name }}</td>
+                    <td>{{ motor.categoryId.name }}</td>
+                    <td>{{ motor.manufacturerId.name }}</td>
+                    <td class="description">{{ motor.description }}</td>
+                    <td class="actions">
+                        <button tuiButton appearance="icon" (click)="onEditMotor(motor)">
+                            <tui-svg src="tuiIconEdit"></tui-svg> Edit
+                        </button>
+                        <button tuiButton appearance="icon" (click)="onDeleteMotor(motor._id)">
+                            <tui-svg src="tuiIconTrash"></tui-svg> Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

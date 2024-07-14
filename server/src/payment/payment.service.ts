@@ -20,6 +20,12 @@ export class PaymentService {
 
   async create(createPaymentDto: CreatePaymentDto) {
     try {
+      // Ensure 'Direct Cash' payment method does not require a logo
+      if (createPaymentDto.paymentMethod.name === 'Direct Cash') {
+        createPaymentDto.paymentMethod.logo =
+          createPaymentDto.paymentMethod.logo || ''; // Set logo to empty string if not provided
+      }
+
       const createPayment = new this.paymentModel(createPaymentDto);
       console.log('Creating Payment with Data:', createPaymentDto);
       return await createPayment.save();

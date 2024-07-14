@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ShareModule } from '../../../shared/share.module';
 import { TaigaModule } from '../../../shared/taiga.module';
 import { Router, RouterOutlet } from '@angular/router';
+import { User } from '../../../model/user.model';
 
 @Component({
   selector: 'app-admin',
@@ -11,6 +12,7 @@ import { Router, RouterOutlet } from '@angular/router';
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent {
+  user: User = <User>{};
   constructor(private router: Router) {}
 
   navigateTo(path: string) {

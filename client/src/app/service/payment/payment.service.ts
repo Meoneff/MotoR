@@ -8,6 +8,10 @@ import { Payment } from '../../model/payment.model';
 export class PaymentService {
   constructor(private httpClient: HttpClient) {}
 
+  getAll() {
+    return this.httpClient.get<Payment[]>('http://localhost:3000/payment/all');
+  }
+
   create(payment: any) {
     console.log(payment);
     return this.httpClient.post<Payment>(

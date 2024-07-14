@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { Motor } from 'src/motor/entities/motor.entity';
@@ -40,10 +40,14 @@ export class ReservationsService {
     }
   }
 
-  async findReservationsByCustomerId(customerId: string) {
+  async findReservationsByCustomerId(customerId: string, status?: boolean) {
     try {
+      const query = { customerId };
+      if (status !== undefined) {
+        query['status'] = status;
+      }
       const reservations = await this.reservationModel
-        .find({ customerId: customerId })
+        .find(query)
         .populate('motorId', 'name motorID image', this.motorModel)
         .populate('customerId', 'name', this.userModel)
         .populate('image', 'urls', this.storageModel)
@@ -122,13 +126,14 @@ export class ReservationsService {
     }
   }
 
-  async updateStatus(id: string) {
+  async updateStatus(id: string): Promise<Reservation> {
     try {
-      const updatedReservation = await this.reservationModel.findByIdAndUpdate(
-        id,
-        { status: true },
-        { name: true },
-      );
+      const updatedReservation = await this.reservationModel
+        .findByIdAndUpdate(id, { status: true }, { new: true })
+        .exec();
+      if (!updatedReservation) {
+        throw new NotFoundException(`Reservation with ID ${id} not found`);
+      }
       return updatedReservation;
     } catch (err) {
       throw new HttpException(err.message, err.status);
