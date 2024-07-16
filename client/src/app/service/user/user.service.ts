@@ -33,12 +33,4 @@ export class UserService {
   getUserByEmail(email: string) {
     return this.httpClient.get<User>(environment.host_url + `user/${email}`);
   }
-
-  getUser(uid: string, idToken: string) {
-    return this.httpClient.get<User>(environment.host_url + `user/${uid}`, {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${idToken}`,
-      }),
-    });
-  }
 }

@@ -39,6 +39,9 @@ export class Motor {
   price: number;
 
   @Prop({ required: true })
+  quantity: number;
+
+  @Prop({ required: true })
   description: string;
 
   @Prop({

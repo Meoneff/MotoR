@@ -1,7 +1,9 @@
 #home-container {
   height: 100vh;
   width: 100vw;
+
   #bg-container {
+    position: relative;
     height: 80%;
     width: 100%;
     background-image: url(../../../../assets/images/layout2.jpg);
@@ -9,10 +11,6 @@
     background-size: cover;
     background-attachment: fixed;
 
-    // .bg-ima {
-    //   height: auto;
-    //   max-width: 100%;
-    // }
     .bg-txt {
       position: absolute;
       top: 30%;
@@ -26,33 +24,52 @@
       z-index: 1;
       text-shadow: 2px 2px 4px #000000;
     }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2); /* Semi-transparent overlay */
+      z-index: 0;
+      filter: blur(3px); /* Apply blur to the background image */
+    }
   }
+
   #center-container {
     max-width: 100%;
     padding: 0% 15%;
     display: flex;
     flex-direction: column;
     margin: 5rem 0rem;
+
     #first-center {
       height: 100%;
       width: 100%;
       display: flex;
       justify-content: center;
       flex-direction: row;
+
       .intro-bg {
         .bg-im {
           height: 25rem;
           width: auto;
           border-radius: 2%;
+          filter: brightness(70%); /* Adjust brightness */
         }
       }
+
       .intro-txt {
         margin-left: 5rem;
+
         .txt-top {
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: column;
+
           span {
             text-align: justify;
             white-space: normal;
@@ -62,11 +79,13 @@
             -webkit-line-break: normal;
           }
         }
+
         .txt-bottom {
           margin-top: 4rem;
           display: flex;
           flex-direction: row;
           justify-content: center;
+
           .bottom-item {
             margin-right: 5rem;
             text-align: center;
@@ -74,6 +93,7 @@
         }
       }
     }
+
     #sec-center {
       width: 100%;
       display: flex;
@@ -81,22 +101,25 @@
       align-items: center;
       position: relative;
       margin: 5rem 0rem;
+
       .sec-bg {
-        position: relative; /* Thêm dòng này để tạo một khung cho hover */
+        position: relative; /* Create a frame for hover */
         overflow: hidden;
         border-radius: 2rem;
+
         img {
           width: 70rem;
           max-height: 30rem;
           border-radius: 2rem;
-          transition: transform 1.5s ease; /* Áp dụng hiệu ứng chuyển động cho hình ảnh */
-          // opacity: 0.8;
-          filter: brightness(50%); //tăng độ đậm màu
+          transition: transform 1.5s ease; /* Apply transition effect */
+          filter: brightness(50%); /* Increase image darkness */
         }
+
         &:hover img {
-          transform: scale(1.5); /* Scale hình ảnh lên 110% khi hover */
+          transform: scale(1.5); /* Scale image up on hover */
         }
       }
+
       .sec-txt {
         position: absolute;
         color: #ffffff;
@@ -104,10 +127,12 @@
         left: 35%;
         transform: translate(-50%, -50%);
         z-index: 1;
-        transition: transform 1.5s ease; /* Áp dụng hiệu ứng chuyển động cho hình ảnh */
+        transition: transform 1.5s ease; /* Apply transition effect */
+
         h1 {
           margin-bottom: 2rem;
         }
+
         h2 {
           margin-bottom: 3rem;
         }

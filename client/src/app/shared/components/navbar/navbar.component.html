@@ -73,8 +73,11 @@
             </div>
         </div>
         <div id="right-nav">
+            <div *ngIf="user.role === 'admin'">
+                <button class="admin-button" (click)="admin()">admin</button>
+            </div>
             <div class="store_pay" *ngIf="userForm.value.uid">
-                <mat-icon class="material-symbols-outlined">
+                <mat-icon (click)="payment()" class="material-symbols-outlined payment-icon">
                     payments
                 </mat-icon>
             </div>

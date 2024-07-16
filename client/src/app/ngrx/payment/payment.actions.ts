@@ -14,16 +14,16 @@ export const createFailure = createAction(
 );
 
 //getall
-export const getAll = createAction('[Payment] Get All');
+export const getAllPayments = createAction('[Payment] Get All Payments');
 
-export const getAllSuccess = createAction(
-  '[Payment] Create Failure',
-  props<{ paymentList: Payment[] }>(),
+export const getAllPaymentsSuccess = createAction(
+  '[Payment] Get All Payments Success',
+  props<{ payments: Payment[] }>(),
 );
 
-export const getAllFailure = createAction(
-  '[Payment] Get All Failure',
-  props<{ errorMessage: string }>(),
+export const getAllPaymentsFailure = createAction(
+  '[Payment] Get All Payments Failure',
+  props<{ error: string }>(),
 );
 
 export const getById = createAction(

@@ -7,6 +7,7 @@ export const initialState: PaymentState = {
   payment: <Payment>{},
   paymentList: [],
   errorMessage: null,
+  error: null,
   isLoading: false,
   isSuccessful: false,
   createErrorMessage: '',
@@ -27,14 +28,14 @@ export const initialState: PaymentState = {
 export const paymentReducer = createReducer(
   initialState,
 
-  on(PaymentActions.getAllSuccess, (state, { paymentList }) => ({
+  on(PaymentActions.getAllPaymentsSuccess, (state, { payments }) => ({
     ...state,
-    paymentList,
-    errorMessage: null,
+    paymentList: payments,
+    error: null,
   })),
-  on(PaymentActions.getAllFailure, (state, { errorMessage }) => ({
+  on(PaymentActions.getAllPaymentsFailure, (state, { error }) => ({
     ...state,
-    errorMessage,
+    error,
   })),
 
   // Create Payment

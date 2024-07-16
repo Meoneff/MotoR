@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Payment } from '../../model/payment.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Payment } from '../../model/payment.model';
 export class PaymentService {
   constructor(private httpClient: HttpClient) {}
 
-  getAll() {
+  getAll(): Observable<Payment[]> {
     return this.httpClient.get<Payment[]>('http://localhost:3000/payment/all');
   }
 

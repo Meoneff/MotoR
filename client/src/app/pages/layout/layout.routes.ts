@@ -41,21 +41,21 @@ export const LAYOUT_ROUTES: Routes = [
         // component: HomeComponent,
       },
       {
-        path: 'automatic/rental',
+        path: 'motorbike/automatic/rental',
         loadChildren: () =>
           import('./motorbike/automatic-bikes/automatic-bikes.routes').then(
             (m) => m.AUTOMATIC_BIKES_ROUTES,
           ),
       },
       {
-        path: 'semi-auto/rental',
+        path: 'motorbike/semi-auto/rental',
         loadChildren: () =>
           import('./motorbike/semi-auto-bikes/semi-auto-bikes.routes').then(
             (m) => m.SEMI_AUTO_BIKES_ROUTES,
           ),
       },
       {
-        path: 'manual/rental',
+        path: 'motorbike/manual/rental',
         loadChildren: () =>
           import('./motorbike/manual-bikes/manual-bikes.routes').then(
             (m) => m.MANUAL_BIKES_ROUTES,

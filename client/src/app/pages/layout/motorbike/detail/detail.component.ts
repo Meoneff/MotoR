@@ -90,7 +90,9 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
   subcriptions: Subscription[] = [];
   @ViewChild('dateCheckin') dateCheckin!: ElementRef;
   @ViewChild('dateCheckout') dateCheckout!: ElementRef;
-  @ViewChild('paymentDialog') paymentDialog!: ElementRef;
+  @ViewChild('paymentDialog', { static: true })
+  paymentDialog!: ElementRef<HTMLDialogElement>;
+
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private cd: ChangeDetectorRef,
@@ -230,10 +232,10 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
       dialog.showModal();
     }
   }
-  closePaymentDialog() {
-    const dialog = this.paymentDialog.nativeElement as HTMLDialogElement;
-    dialog.close();
-  }
+  // closePaymentDialog() {
+  //   const dialog = this.paymentDialog.nativeElement as HTMLDialogElement;
+  //   dialog.close();
+  // }
   // khai báo gần như ngOnInit
   ngAfterViewInit(): void {
     this.setupDatePickers();
@@ -276,7 +278,7 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    //date-pikcer
+    //date-picker
     const dateContainers = document.querySelectorAll('.input-container');
     dateContainers.forEach((dateContainer) => {
       const dateInput = dateContainer.querySelector(
@@ -288,6 +290,7 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     });
+
     const dateCheckin = document.getElementById(
       'date-checkin',
     ) as HTMLInputElement;
@@ -300,11 +303,11 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
     dateCheckin.valueAsDate = today;
     dateCheckout.valueAsDate = tomorrow;
 
-    // Không cho phép chọn ngày trước ngày hiện tại
     dateCheckin.min = today.toISOString().split('T')[0];
     const minDateCheckout = new Date(today);
     minDateCheckout.setDate(today.getDate() + 1);
     dateCheckout.min = minDateCheckout.toISOString().split('T')[0];
+
     dateCheckin.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(dateCheckin.value);
@@ -314,10 +317,10 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
         newCheckoutDate.setDate(newCheckoutDate.getDate() + 1);
         dateCheckout.valueAsDate = newCheckoutDate;
       }
-      // Tính toán tổng số ngày
       const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
       this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     });
+
     dateCheckout.addEventListener('input', () => {
       this.updateTotalDays();
       const checkinDate = new Date(dateCheckin.value);
@@ -327,12 +330,24 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
         newCheckinDate.setDate(newCheckinDate.getDate() - 1);
         dateCheckin.valueAsDate = newCheckinDate;
       }
-      // Tính toán tổng số ngày
       const timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
       this.selectedDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     });
-    //date-pikcer
+
+    this.isCreateReservationSuccess$.subscribe((val) => {
+      if (val) {
+        this.closePaymentDialog();
+        console.log('successReser');
+      }
+    });
   }
+
+  closePaymentDialog() {
+    const dialog = this.paymentDialog.nativeElement as HTMLDialogElement;
+    dialog.close();
+    this.cd.detectChanges(); // Force change detection
+  }
+
   reservationData = {
     reservationId: '',
     motorId: '',
@@ -407,13 +422,6 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openPaymentDialog();
   }
   onSubmit(item: Motor): void {
-    if (this.motorcycleForm.invalid) {
-      // Hiển thị cảnh báo cho người dùng biết các trường còn trống
-      this.alerts
-        .open('Please fill in all required fields.', { label: 'Warning!' })
-        .subscribe();
-      return;
-    }
     const dateCheckin = document.getElementById(
       'date-checkin',
     ) as HTMLInputElement;
@@ -430,12 +438,10 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
     const numberOfMotorcycles = this.motorcycleForm.get(
       'numberOfMotorcycles',
     )?.value;
-    const rentalPricePerDay = item.price; // Assuming item.price is the rental price per day
+    const rentalPricePerDay = item.price;
     const rentalTotal = rentalPricePerDay * totalDays * numberOfMotorcycles;
-    // Fixed fees
     const serviceFee = 5;
     const insuranceFee = 5;
-    // Calculate total cost including rental, service, and insurance fees
     const totalPrice = rentalTotal + serviceFee + insuranceFee;
 
     if (checkinDate && checkoutDate) {
@@ -459,11 +465,11 @@ export class DetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(
         ReservationActions.create({ reservation: this.reservationData }),
       );
-      this.closePaymentDialog();
     } else {
       console.log('Ngày không hợp lệ');
     }
   }
+
   formatPrice(price: number) {
     // Chuyển đổi số thành chuỗi và ngược lại
     let priceString = price.toString();

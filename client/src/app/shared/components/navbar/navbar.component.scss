@@ -6,12 +6,9 @@
     width: 100%;
     height: 100%;
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
     padding: 1.5rem;
-
     .logo_nav {
       height: 2rem;
       width: auto;
@@ -32,7 +29,6 @@
         opacity 0.2s ease,
         visibility 0.2s ease;
     }
-
     tui-hosted-dropdown:hover:not(.tui-hosted-dropdown--open) {
       opacity: 0.8;
       visibility: visible;
@@ -48,13 +44,10 @@
     }
   }
   #right-nav {
-    .store-pay {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 2rem;
-      flex-direction: row;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .store-pay,
     .login {
       display: flex;
       align-items: center;
@@ -62,8 +55,6 @@
       margin-right: 2rem;
       flex-direction: row;
     }
-    display: flex;
-    flex-direction: row;
     #ic-login {
       margin-right: 2rem;
     }
@@ -75,9 +66,65 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
-
       &:hover {
         background-color: #3e8e41;
+      }
+    }
+    .admin-button {
+      background-color: #3abac3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+      margin-right: 1.5rem;
+      &:hover {
+        background-color: #2a8a91;
+        transform: scale(1.05);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+      &:active {
+        background-color: #1e666b;
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+    .payment-icon {
+      font-size: 24px;
+      color: #3abac3;
+      cursor: pointer;
+      transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+      &:hover {
+        color: #2a8a91;
+        transform: scale(1.2);
+      }
+      &:active {
+        color: #1e666b;
+        transform: scale(1.1);
+      }
+    }
+    .profile_menu {
+      .material-symbols-outlined {
+        cursor: pointer;
+        transition:
+          color 0.3s ease,
+          transform 0.3s ease;
+        &:hover {
+          color: #3abac3;
+          transform: scale(1.2);
+        }
+        &:active {
+          color: #2a8a91;
+          transform: scale(1.1);
+        }
       }
     }
   }

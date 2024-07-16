@@ -24,7 +24,7 @@ import { MotorService } from '../../../../service/motor/motor.service';
   standalone: true,
   imports: [ShareModule, TaigaModule],
   templateUrl: './automatic-bikes.component.html',
-  styleUrl: './automatic-bikes.component.scss',
+  styleUrls: ['./automatic-bikes.component.scss'],
 })
 export class AutomaticBikesComponent implements OnInit, OnDestroy {
   index = 0;
@@ -72,7 +72,8 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
       this.automatic$.subscribe((automaticCategories) => {
         if (automaticCategories.length > 0) {
           console.log(automaticCategories);
-          this.motorList = automaticCategories;
+          //coppy lại để sử dụng array
+          this.motorList = [...automaticCategories];
         }
       }),
     );
@@ -86,5 +87,20 @@ export class AutomaticBikesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  sortMotorList(event: any) {
+    const sortBy = event.target.value;
+    this.motorList = [...this.motorList]; // Create a copy of the array before sorting
+    this.motorList.sort((a, b) => {
+      switch (sortBy) {
+        case 'priceHigh':
+          return b.price - a.price;
+        case 'priceLow':
+          return a.price - b.price;
+        default:
+          return 0;
+      }
+    });
   }
 }

@@ -26,17 +26,19 @@ import { TuiAlertService } from '@taiga-ui/core';
   styleUrl: './motor-admin.component.scss',
 })
 export class MotorAdminComponent {
+  motorList: Motor[] = [];
   motor$ = this.store.select('motor', 'motorList');
   isCreateMotor$ = this.store.select('motor', 'isCreateSuccess');
   isRemoveMotor$ = this.store.select('motor', 'isDeleteSuccess');
   isUpdateMotor$ = this.store.select('motor', 'isUpdateSuccess');
+
   isCreateImage$ = this.store.select('storage', 'isCreateSuccess');
 
   isChangeFile: boolean = false;
   updateMotor: boolean = false;
   motoDataToUpdate: any = {};
-  motorList: Motor[] = [];
 
+  currentMotor: Motor | null = null;
   categories = <Category[]>[];
 
   manufacturers = <Manufacturer[]>[];
@@ -46,6 +48,7 @@ export class MotorAdminComponent {
   selectedImage: string | ArrayBuffer | null = null;
 
   fileName: string = '';
+  fileNameToUpdate: string = '';
 
   motorForm = new FormGroup({
     motorId: new FormControl('', Validators.required),
@@ -56,6 +59,7 @@ export class MotorAdminComponent {
     quantity: new FormControl('', [Validators.required, Validators.min(0)]),
     price: new FormControl('', [Validators.required, Validators.min(0)]),
     description: new FormControl('', Validators.required),
+    image: new FormControl('', Validators.required),
   });
 
   addMotorData: any = {
@@ -101,8 +105,33 @@ export class MotorAdminComponent {
           this.motorList = val.motorList;
         }
       }),
+      this.store.select('storage').subscribe((val) => {
+        if (val?.isGetSuccess) {
+          console.log(val);
+          if (this.updateMotor) {
+            this.motoDataToUpdate = {
+              ...this.motoDataToUpdate,
+              image: val?.storage._id,
+            };
+            console.log(this.motoDataToUpdate);
+            this.store.dispatch(
+              MotorAction.updateMotor({ motor: this.motoDataToUpdate }),
+            );
+          } else {
+            this.addMotorData = {
+              ...this.addMotorData,
+              image: val?.storage._id,
+            };
+            this.store.dispatch(
+              MotorAction.createMotor({ motor: this.addMotorData }),
+            );
+          }
+        }
+      }),
       this.isCreateImage$.subscribe((val) => {
+        console.log(val);
         if (val) {
+          console.log(val);
           this.store.dispatch(
             StorageAction.get({
               fileName: this.fileName,
@@ -112,30 +141,60 @@ export class MotorAdminComponent {
       }),
       this.store.select('storage').subscribe((val) => {
         if (val?.isGetSuccess) {
+          console.log(val);
           if (this.updateMotor) {
             this.motoDataToUpdate.image = val?.storage._id;
+            console.log(this.motoDataToUpdate);
             this.store.dispatch(
               MotorAction.updateMotor({ motor: this.motoDataToUpdate }),
+            );
+          } else {
+            this.addMotorData.image = val?.storage._id;
+            this.store.dispatch(
+              MotorAction.createMotor({ motor: this.addMotorData }),
             );
           }
         }
       }),
-      this.isCreateMotor$.subscribe((create) => {
-        if (create) {
+      this.isCreateMotor$.subscribe((val) => {
+        if (val) {
           this.alerts
             .open('Motor created successfully', { label: 'Success' })
             .subscribe();
-          this.resetForm();
+          this.addMotorData = {
+            motorId: '',
+            name: '',
+            model: '',
+            description: '',
+            category: '',
+            manufacturer: '',
+            quantity: 0,
+            price: '',
+            status: false,
+            image: '',
+          };
+          this.motorForm.reset();
           this.store.dispatch(MotorAction.get({ isConfirmed: true }));
-          this.updateMotor = false;
         }
       }),
-      this.isUpdateMotor$.subscribe((update) => {
-        if (update) {
+      this.isUpdateMotor$.subscribe((val) => {
+        if (val) {
           this.alerts
             .open('Motor updated successfully', { label: 'Success' })
             .subscribe();
-          this.resetForm();
+          this.addMotorData = {
+            motorId: '',
+            name: '',
+            model: '',
+            description: '',
+            category: '',
+            manufacturer: '',
+            quantity: 0,
+            price: '',
+            status: false,
+            image: '',
+          };
+          this.motorForm.reset();
           this.store.dispatch(MotorAction.get({ isConfirmed: true }));
           this.updateMotor = false;
         }
@@ -155,6 +214,8 @@ export class MotorAdminComponent {
   file: any;
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  // Function to handle file selection
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.formData.append('image', file, file.name);
@@ -174,55 +235,114 @@ export class MotorAdminComponent {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  onEditMotor(motor: Motor) {
-    // this.motorForm.patchValue({
-    //   motorId: motor.motorId,
-    //   name: motor.name,
-    //   model: motor.model,
-    //   categoryId: motor.categoryId._id,
-    //   manufacturerId: motor.manufacturerId._id,
-    //   quantity: motor.quantity,
-    //   price: motor.price,
-    //   description: motor.description,
-    // });
-    // this.selectedImage = motor.image.urls[0];
-    // this.updateMotor = true;
-    // this.motoDataToUpdate = motor;
+  onEditMotor(motorId: string) {
+    this.updateMotor = true;
+    const motor = this.motorList.find((motor) => motor.motorId === motorId);
+    this.currentMotor = motor ? motor : null;
+    if (this.currentMotor) {
+      this.motorForm.setValue({
+        motorId: this.currentMotor.motorId,
+        name: this.currentMotor.name,
+        model: this.currentMotor.model,
+        categoryId: this.currentMotor.categoryId._id,
+        manufacturerId: this.currentMotor.manufacturerId._id,
+        quantity: this.currentMotor.quantity
+          ? this.currentMotor.quantity.toString()
+          : '0',
+        price: this.currentMotor.price.toString(),
+        description: this.currentMotor.description,
+        image: this.currentMotor.image._id.toString(),
+      });
+    }
   }
 
   onDeleteMotor(motorId: string) {
-    this.store.dispatch(MotorAction.deleteMotor({ motorId }));
-  }
-
-  resetForm() {
-    this.motorForm.reset();
-    this.selectedImage = null;
-    this.updateMotor = false;
-    this.motoDataToUpdate = {};
+    const confirmDelete = confirm('Delete this ?');
+    if (confirmDelete) {
+      this.store.dispatch(MotorAction.deleteMotor({ motorId }));
+    }
   }
 
   createMotor() {
-    // if (this.motorForm.valid) {
-    //   if (this.isChangeFile) {
-    //     this.fileName = `${this.motorForm.value.motorId}-${Date.now()}`;
-    //     this.formData.append('fileName', this.fileName);
-    //     this.store.dispatch(StorageAction.upload({ formData: this.formData }));
-    //   } else {
-    //     this.store.dispatch(MotorAction.createMotor({ motor: this.motorForm.value }));
-    //   }
-    // }
+    const selectedCategory = this.categories.find(
+      (category) => category._id === this.motorForm.value.categoryId,
+    );
+    if (!selectedCategory) {
+      this.alerts.open('Category not found', { label: 'Error' }).subscribe();
+      console.error('No category found');
+      return;
+    }
+    const selectedManufacturer = this.manufacturers.find(
+      (manufacturer) =>
+        manufacturer._id === this.motorForm.value.manufacturerId,
+    );
+    if (!selectedManufacturer) {
+      this.alerts
+        .open('Manufacturer not found', { label: 'Error' })
+        .subscribe();
+      console.error('No manufacturer found');
+      return;
+    }
+    this.addMotorData = {
+      motorId: this.motorForm.value.motorId,
+      name: this.motorForm.value.name,
+      model: this.motorForm.value.model,
+      categoryId: selectedCategory,
+      manufacturerId: selectedManufacturer,
+      description: this.motorForm.value.description,
+      quantity: this.motorForm.value.quantity,
+      price: this.motorForm.value.price,
+      status: true,
+      image: '',
+    };
+    console.log('add motor success', this.addMotorData);
+
+    this.fileName =
+      this.motorForm.value.motorId + '_' + this.motorForm.value.name;
+    if (this.file) {
+      this.store.dispatch(
+        StorageAction.create({ file: this.file, fileName: this.fileName }),
+      );
+    } else {
+      // Handle case where no file is selected
+      console.error('No file selected');
+    }
   }
 
   onUpdateMotor() {
-    // if (this.motorForm.valid && this.updateMotor) {
-    //   this.motoDataToUpdate = { ...this.motoDataToUpdate, ...this.motorForm.value };
-    //   if (this.isChangeFile) {
-    //     this.fileName = `${this.motorForm.value.motorId}-${Date.now()}`;
-    //     this.formData.append('fileName', this.fileName);
-    //     this.store.dispatch(StorageAction.upload({ formData: this.formData }));
-    //   } else {
-    //     this.store.dispatch(MotorAction.updateMotor({ motor: this.motoDataToUpdate }));
-    //   }
-    // }
+    const motorData = {
+      motorId: this.motorForm.value.motorId,
+      name: this.motorForm.value.name,
+      model: this.motorForm.value.model,
+      categoryId: this.motorForm.value.categoryId,
+      manufacturerId: this.motorForm.value.manufacturerId,
+      quantity: this.motorForm.value.quantity,
+      status: false,
+      price: this.motorForm.value.price,
+      description: this.motorForm.value.description,
+      image: this.motorForm.value.image,
+    };
+    this.motoDataToUpdate = motorData;
+    //neu click
+    if (!this.isChangeFile) {
+      console.log('No file change');
+      this.store.dispatch(
+        MotorAction.updateMotor({ motor: this.motoDataToUpdate }),
+      );
+    } else {
+      this.fileName =
+        this.motorForm.value.motorId + '_' + this.motorForm.value.name;
+      if (this.file) {
+        this.store.dispatch(
+          StorageAction.create({ file: this.file, fileName: this.fileName }),
+        );
+        this.fileNameToUpdate = this.fileName;
+        this.updateMotor = true;
+        console.log('File changed');
+      } else {
+        // Handle case where no file is selected
+        console.error('No file selected');
+      }
+    }
   }
 }

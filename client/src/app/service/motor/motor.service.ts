@@ -35,7 +35,7 @@ export class MotorService {
   }
   updateMotor(motor: any) {
     return this.httpClient.put<Motor | any>(
-      'http://localhost:3000/motor/update',
+      `http://localhost:3000/motor/update?id=${motor.motorId}`,
       motor,
     );
   }
@@ -76,6 +76,7 @@ export class MotorService {
       description: motorDetail.description,
       image: motorDetail.image,
       status: motorDetail.status,
+      quantity: motorDetail.quantity,
     };
     this.saveMotorDetailToMotorStorage();
   }

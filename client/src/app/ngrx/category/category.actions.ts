@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { Category } from '../../model/category.model';
-import { idToken } from '@angular/fire/auth';
 
 export const get = createAction('[category] Get');
 

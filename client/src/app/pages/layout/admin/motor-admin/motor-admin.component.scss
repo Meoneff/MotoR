@@ -77,7 +77,6 @@
       .im-upload {
         width: 45%;
         .card {
-          background-color: #f9f9f9;
           padding: 1em;
           border-radius: 8px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -104,12 +103,58 @@
             }
           }
         }
+
+        .btn-createupdate {
+          display: flex;
+          justify-content: space-between;
+
+          button {
+            width: 48%;
+            padding: 0.75em 1.5em;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition:
+              background-color 0.3s,
+              transform 0.3s;
+
+            &:hover {
+              background-color: #0056b3;
+              transform: scale(1.05);
+            }
+
+            &:focus {
+              outline: none;
+            }
+
+            &:active {
+              background-color: #004080;
+            }
+
+            &:nth-child(2) {
+              background-color: #28a745;
+
+              &:hover {
+                background-color: #218838;
+              }
+
+              &:active {
+                background-color: #1e7e34;
+              }
+            }
+          }
+        }
       }
     }
   }
 
   #motor-list {
     padding: 2em;
+
     h2 {
       margin-bottom: 1em;
       text-align: center;
@@ -143,7 +188,6 @@
         height: auto;
         border-radius: 4px;
         background-color: transparent;
-        /* Optional: Apply blend mode */
         mix-blend-mode: multiply;
       }
 
@@ -152,11 +196,9 @@
         max-width: 500px;
       }
 
-      .btn-click {
-      }
-
       td.actions {
         width: 150px;
+
         button {
           margin: 0 0.25em;
           padding: 0.5em;

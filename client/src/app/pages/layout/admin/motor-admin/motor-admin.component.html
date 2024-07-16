@@ -30,7 +30,6 @@
                                 </tui-input>
                             </div>
                         </div>
-
                         <div class="model-content">
                             <label for="quantity">Quantity</label>
                             <div class="content-control">
@@ -60,7 +59,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="model-content">
                         <label for="price">Price</label>
                         <div class="content-control">
@@ -84,13 +82,17 @@
                     <h2>Upload Image</h2>
                     <div class="drop_box">
                         <input type="file" accept="image/*" style="display: none" (change)="onFileSelected($event)"
-                            #fileInput formControlName="image" />
+                            #fileInput />
                         <button class="btn" (click)="fileInput.click()">Choose File</button>
-                        <div class="img-file" *ngIf="file">
+                        <div class="img-file" *ngIf="selectedImage">
                             <img [src]="selectedImage" alt="Selected Image"
                                 style="width: 120px;height: 120px; margin-top: 1rem;" />
                         </div>
                     </div>
+                </div>
+                <div class="btn-createupdate">
+                    <button (click)="createMotor()">Create Motor</button>
+                    <button (click)="onUpdateMotor()">Update Motor</button>
                 </div>
             </div>
         </form>
@@ -103,6 +105,7 @@
                     <th>STT</th>
                     <th>Image</th>
                     <th>Name</th>
+                    <th>Price</th>
                     <th>Category</th>
                     <th>Manufacturer</th>
                     <th>Description</th>
@@ -119,14 +122,15 @@
                         </div>
                     </td>
                     <td>{{ motor.name }}</td>
+                    <td>{{ motor.price }}</td>
                     <td>{{ motor.categoryId.name }}</td>
                     <td>{{ motor.manufacturerId.name }}</td>
                     <td class="description">{{ motor.description }}</td>
                     <td class="actions">
-                        <button tuiButton appearance="icon" (click)="onEditMotor(motor)">
+                        <button tuiButton appearance="icon" (click)="onEditMotor(motor.motorId)">
                             <tui-svg src="tuiIconEdit"></tui-svg> Edit
                         </button>
-                        <button tuiButton appearance="icon" (click)="onDeleteMotor(motor._id)">
+                        <button tuiButton appearance="icon" (click)="onDeleteMotor(motor.motorId)">
                             <tui-svg src="tuiIconTrash"></tui-svg> Delete
                         </button>
                     </td>

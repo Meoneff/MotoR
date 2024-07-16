@@ -9,5 +9,6 @@ export class CreateMotorDto {
     public description: string,
     public image: string,
     public status: boolean,
+    public quantity: number,
   ) {}
 }

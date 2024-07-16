@@ -3,8 +3,13 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
+        <!-- <th>ID</th> -->
         <th>Customer Name</th>
+        <th>Payment ID</th>
+        <th>Reservation IDs</th>
+        <th>Is Paid</th>
+        <th>Status</th>
+        <th>Payment Method</th>
         <th>Amount</th>
         <th>Date</th>
         <th>Actions</th>
@@ -12,19 +17,32 @@
     </thead>
     <tbody>
       <tr *ngFor="let payment of payments">
-        <td>{{ payment.customerId }}</td>
+        <td>{{ payment.customerId.name }}</td>
         <td>{{ payment.paymentId }}</td>
-        <td>{{ payment.reservationIds }}</td>
-        <td>{{ payment.isPaid }}</td>
-        <td>{{ payment.status }}</td>
-        <td>{{ payment.paymentMethod }}</td>
-        <td>{{ payment.amount }}</td>
-        <td>{{ payment.dayPayment }}</td>
-
+        <td>{{ payment.reservationIdsString }}</td>
+        <td>{{ payment.isPaid ? 'Yes' : 'No' }}</td>
+        <td>{{ payment.status ? 'Active' : 'Inactive' }}</td>
+        <td>{{ payment.paymentMethod.name }}</td>
+        <td>{{ payment.amount | currency }}</td>
+        <td>{{ payment.dayPayment | date }}</td>
         <td>
           <button (click)="deletePayment(payment.paymentId)">Delete</button>
+          <button *ngIf="!payment.isPaid" class="pay-button" (click)="openPayModal(payment)">Pay</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Pay Modal -->
+  <div *ngIf="selectedPayment" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closePayModal()">&times;</span>
+      <h2>Enter Payment Amount</h2>
+      <form [formGroup]="payForm" (ngSubmit)="submitPayment()">
+        <label for="amount">Amount:</label>
+        <input type="number" formControlName="amount" required />
+        <button type="submit">Submit Payment</button>
+      </form>
+    </div>
+  </div>
 </div>

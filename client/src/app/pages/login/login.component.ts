@@ -18,12 +18,14 @@ import * as AuthActions from '../../ngrx/auth/auth.actions';
   standalone: true,
   imports: [ShareModule, TaigaModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   isLoginWithGoogle = false;
+  isLoginWithAccount = false;
+
   user$ = this.store.select('user', 'user');
-  userFirebase: userFirebase = <userFirebase>{};
+  userFirebase: userFirebase = {} as userFirebase;
   userFirebase$ = this.store.select('auth', 'userFirebase');
   isGetSuccessUser = false;
 
@@ -60,39 +62,32 @@ export class LoginComponent {
     this.user$.subscribe((user) => {
       if (user && user.email) {
         this.isGetSuccessUser = true;
-        console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-        this.router.navigate(['/register']);
-        if (this.accountData.password != '' && this.accountData.email != '') {
-          console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-          if (user.password == this.accountData.password) {
-            const userAsJson = JSON.stringify(user);
-            sessionStorage.setItem('user', userAsJson);
-            console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
+
+        if (
+          this.accountData.password &&
+          this.accountData.email &&
+          !this.isLoginWithGoogle
+        ) {
+          if (user.password === this.accountData.password) {
+            sessionStorage.setItem('user', JSON.stringify(user));
             this.router.navigate(['/base/home']);
-            this.isGetSuccessUser = false;
-            console.log('login with account');
-            this.accountData = {
-              email: '',
-              password: '',
-            };
+            this.resetForm();
           }
-        } else {
-          if (this.isLoginWithGoogle && this.userFirebase.email == user.email) {
-            console.log('isGetSuccessUser: ' + this.isGetSuccessUser);
-            const userAsJsonGG = JSON.stringify(user);
-            sessionStorage.setItem('user', userAsJsonGG);
-            console.log(sessionStorage);
-            this.router.navigate(['/base/home']);
-            console.log('login with Google');
-            this.isGetSuccessUser = false;
-          }
+        } else if (
+          this.isLoginWithGoogle &&
+          this.userFirebase.email === user.email
+        ) {
+          sessionStorage.setItem('user', JSON.stringify(user));
+          this.router.navigate(['/base/home']);
+          this.isGetSuccessUser = false;
         }
-      } else if (
+      }
+
+      if (
         this.isGetSuccessUser &&
-        user.email == '404 user not found' &&
+        user.email === '404 user not found' &&
         this.isLoginWithGoogle
       ) {
-        console.log(this.userFirebase);
         this.router.navigate(['/register']);
       }
     });
@@ -106,7 +101,6 @@ export class LoginComponent {
     this.store.dispatch(
       UserActions.getByEmail({ email: this.accountData.email }),
     );
-    console.log(UserActions.getByEmail);
   }
 
   loginWithGoogle() {
@@ -117,5 +111,11 @@ export class LoginComponent {
   register() {
     this.isLoginWithGoogle = false;
     this.router.navigate(['/register']);
+  }
+
+  private resetForm() {
+    this.accountData = { email: '', password: '' };
+    this.accountForm.reset();
+    this.isGetSuccessUser = false;
   }
 }

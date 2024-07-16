@@ -17,7 +17,7 @@
                     <p>Total: <span>$ {{reservation.total}} </span></p>
                 </div>
                 <div class="btn-reser">
-                    <div class="reser-ic">
+                    <div class="reser-ic" (click)="removeReservation(reservation._id)">
                         <tui-svg src="tuiIconCloseLarge"></tui-svg>
                     </div>
                 </div>

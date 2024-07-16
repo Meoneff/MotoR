@@ -96,17 +96,26 @@ export class MotorController {
     }
   }
 
+  // @Put('update')
+  // async update(
+  //   @Query('id') id: string,
+  //   @Body() updateMotorDto: UpdateMotorDto,
+  // ) {
+  //   try {
+  //     const updatedMotor = await this.motorService.update(id, updateMotorDto);
+  //     return updatedMotor;
+  //   } catch (e) {
+  //     console.log(e);
+  //     return e;
+  //   }
+  // }
   @Put('update')
-  async update(
-    @Query('id') id: string,
-    @Body() updateMotorDto: UpdateMotorDto,
-  ) {
+  async update(@Query('id') id: string, @Body() updateDishDto: UpdateMotorDto) {
     try {
-      const updatedMotor = await this.motorService.update(id, updateMotorDto);
+      const updatedMotor = await this.motorService.update(id, updateDishDto);
       return updatedMotor;
-    } catch (e) {
-      console.log(e);
-      return e;
+    } catch (error) {
+      throw error;
     }
   }
 

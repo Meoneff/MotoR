@@ -38,6 +38,7 @@
     "@taiga-ui/layout": "^3.69.0",
     "@taiga-ui/styles": "^3.69.0",
     "@tinkoff/ng-dompurify": "^4.0.0",
+    "countup.js": "^2.8.0",
     "dompurify": "3.0.6",
     "firebase": "^10.10.0",
     "firebase-tools": "^13.6.0",

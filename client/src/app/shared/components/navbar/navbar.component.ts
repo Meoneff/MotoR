@@ -128,21 +128,21 @@ export class NavbarComponent {
     this.openAuto = false;
   }
   autonaviClick() {
-    this.router.navigate(['/automatic/rental']);
+    this.router.navigate(['/motorbike/automatic/rental']);
   }
 
   semiClick(): void {
     this.openSemi = false;
   }
   seminaviClick() {
-    this.router.navigate(['/semi-auto/rental']);
+    this.router.navigate(['/motorbike/semi-auto/rental']);
   }
 
   manualClick(): void {
     this.openManual = false;
   }
   manualnaviClick() {
-    this.router.navigate(['/manual/rental']);
+    this.router.navigate(['/motorbike/manual/rental']);
   }
 
   infoList = [
@@ -221,5 +221,11 @@ export class NavbarComponent {
   }
   home() {
     this.router.navigate(['/home']);
+  }
+  admin() {
+    this.router.navigate(['/admin']);
+  }
+  payment() {
+    this.router.navigate(['/payment']);
   }
 }

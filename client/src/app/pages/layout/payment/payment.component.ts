@@ -9,16 +9,13 @@ import { PaymentState } from '../../../ngrx/payment/payment.state';
 import * as ReservationActions from '../../../ngrx/reservation/reservation.actions';
 import * as UserActions from '../../../ngrx/user/user.actions';
 import * as PaymentActions from '../../../ngrx/payment/payment.actions';
-import { Motor } from '../../../model/motor.model';
-import { Storage } from '../../../model/storage.model';
-import { ShareModule } from '../../../shared/share.module';
-import { TaigaModule } from '../../../shared/taiga.module';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
 import { robotoRegular } from '../../../shared/roboto-regular';
 import { ReservationService } from '../../../service/reservation/reservation.service';
+import { TaigaModule } from '../../../shared/taiga.module';
+import { ShareModule } from '../../../shared/share.module';
 
 @Component({
   selector: 'app-payment',
@@ -157,7 +154,7 @@ export class PaymentComponent implements OnDestroy, OnInit {
       reservationIds: reservationIds,
       customerId: this.user._id,
       status: true,
-      isPaid: true,
+      isPaid: paymentMethodValue !== 'Direct Cash',
       amount: this.totalAmount,
       paymentMethod: paymentMethodValue,
     };
@@ -167,19 +164,42 @@ export class PaymentComponent implements OnDestroy, OnInit {
     // Dispatch create payment action
     this.store.dispatch(PaymentActions.create({ payment: this.paymentData }));
 
+    this.generatePDF();
+
+    this.clearReservations();
+  }
+
+  generatePDF(): void {
     const doc = new jsPDF();
     doc.addFileToVFS('Roboto-Regular.ttf', robotoRegular);
     doc.addFont('Roboto-Regular.ttf', 'RobotoRegular', 'normal');
     doc.setFont('RobotoRegular');
 
-    doc.setFontSize(16);
-    doc.text('Reservation Details', 10, 10);
+    // Add title
+    doc.setFontSize(20);
+    doc.text('Reservation Details - MotoR', 10, 10);
     doc.setFontSize(12);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 20);
+
+    // Add user information
+    doc.setFontSize(14);
+    doc.text('Customer Information', 10, 30);
+    doc.setFontSize(12);
+    doc.text(`Name: ${this.user.name}`, 10, 35);
+    doc.text(`Email: ${this.user.email}`, 10, 40);
+
+    // Add a line break
+    doc.setLineWidth(0.5);
+    doc.line(10, 45, 200, 45);
+
+    // Add reservation details
+    doc.setFontSize(14);
+    doc.text('Reservation Details', 10, 55);
 
     const tableData = this.reservations.map((reservation) => [
       reservation.motorId.name,
       reservation.city,
-      reservation.quantity,
+      reservation.quantity.toString(),
       this.formatDateWithComma(reservation.startDate),
       this.formatDateWithComma(reservation.endDate),
       `$${reservation.total}`,
@@ -195,25 +215,23 @@ export class PaymentComponent implements OnDestroy, OnInit {
     ];
 
     (doc as any).autoTable({
-      startY: 20,
+      startY: 60,
       head: [tableColumns],
       body: tableData,
+      styles: { font: 'RobotoRegular' },
     });
 
     const finalY = (doc as any).lastAutoTable.finalY + 10;
 
-    doc.setFontSize(16);
+    // Add summary
+    doc.setFontSize(14);
     doc.text('Summary', 10, finalY);
     doc.setFontSize(12);
     doc.text(`Total Amount: $${this.totalAmount}`, 10, finalY + 10);
     doc.text(`Payment Method: ${this.payMethods.name}`, 10, finalY + 20);
-    console.log('Payment Method Name:', this.payMethods); // Log the payment method name
-    const currentDateFormatted = new Date().toLocaleDateString();
-    doc.text(`Date: ${currentDateFormatted}`, 10, finalY + 30);
 
+    // Save the PDF
     doc.save('reservation-details.pdf');
-
-    this.clearReservations();
   }
 
   clearReservations(): void {
@@ -251,5 +269,18 @@ export class PaymentComponent implements OnDestroy, OnInit {
       day: 'numeric',
     };
     return date.toLocaleDateString('en-US', options).replace(/,/, ',');
+  }
+  removeReservation(reservationId: string): void {
+    this.reservationService.deleteReservationById(reservationId).subscribe(
+      () => {
+        this.reservations = this.reservations.filter(
+          (reservation) => reservation._id !== reservationId,
+        );
+        this.calculateTotalAmount();
+      },
+      (error) => {
+        console.error('Error deleting reservation:', error);
+      },
+    );
   }
 }

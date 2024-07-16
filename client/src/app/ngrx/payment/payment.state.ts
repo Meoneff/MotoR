@@ -4,6 +4,7 @@ export interface PaymentState {
   payment: Payment;
   paymentList: Payment[];
   errorMessage: string | null;
+  error: string | null;
   isLoading: boolean;
   isSuccessful: boolean;
   createErrorMessage: string;

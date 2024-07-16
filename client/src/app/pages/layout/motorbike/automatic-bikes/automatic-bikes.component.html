@@ -1,20 +1,35 @@
 <div id="automatic-container">
     <div id="bg-motor">
-        <div class="bg-container">
-            <div class="f-inner">
-                <div class="f-left">
-                    <!-- <span>MotoR Bike Rentals</span> -->
+        <div class="bg-overlay">
+            <h1>MotoR Rentals</h1>
+            <div class="features">
+                <div class="feature-item">
+                    <h3>Fully-Featured</h3>
+                    <p>Long and short-term rentals; optional guides and damage waivers; One-Way rentals; shops in Hanoi,
+                        Danang and HCMC</p>
                 </div>
-                <div class="f-right"></div>
-            </div>
-            <div class="s-inner">
-
+                <div class="feature-item">
+                    <h3>Massive Selection of Motorcycles</h3>
+                    <p>Late-model Honda, BMW, Yamaha and Royal Enfield tourers, scooters, naked bikes and dual-sports
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <h3>Save Money</h3>
+                    <p>Get 10% off your first rental when you book online!</p>
+                    <p>Long-term rentals available at discounted rates.</p>
+                    <p>Special weekend rates for city tours and adventures.</p>
+                </div>
             </div>
         </div>
     </div>
     <div id="contain-motor">
         <div class="l-contan">
             <h2>Sort</h2>
+            <select (change)="sortMotorList($event)" class="sort-dropdown">
+                <option value="">Sort bikes...</option>
+                <option value="priceHigh">Price (high to low)</option>
+                <option value="priceLow">Price (low to high)</option>
+            </select>
         </div>
         <div class="r-contan">
             <div class="rental" *ngFor="let motor of motorList">
@@ -25,13 +40,12 @@
                 <img class="image" *ngFor="let img of motor.image.urls" [src]="img" alt="">
                 <div class=""></div>
                 <div class="bt-motor">
-                    <button id="bt-dt" style="width: 100%" tuiButton type="button" appearance="secondary"
+                    <button id="bt-dt" tuiButton type="button" appearance="secondary"
                         class="tui-space_right-3 tui-space_bottom-3" (click)="detail(motor,motor._id)">
                         Book Now
                     </button>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

@@ -7,7 +7,7 @@ export const initualState: StorageState = {
   storage: <Storage>{},
   isCreating: false,
   isCreateSuccess: false,
-  createErrorMessage: '',
+  isCreateFailure: '',
   isGetting: false,
   isGetSuccess: false,
   getErrorMessage: '',
@@ -20,7 +20,7 @@ export const storageReducer = createReducer(
       ...state,
       isCreating: true,
       isCreateSuccess: false,
-      createErrorMessage: '',
+      isCreateFailure: '',
     };
   }),
   on(StorageAction.createSuccess, (state, action) => {
@@ -29,7 +29,7 @@ export const storageReducer = createReducer(
       ...state,
       isCreating: false,
       isCreateSuccess: true,
-      createErrorMessage: '',
+      isCreateFailure: '',
     };
   }),
   on(StorageAction.createFailure, (state, { type, errorMessage }) => {
@@ -39,7 +39,7 @@ export const storageReducer = createReducer(
       ...state,
       isCreating: false,
       isCreateSuccess: false,
-      createErrorMessage: errorMessage,
+      isCreateFailure: errorMessage,
     };
   }),
   on(StorageAction.get, (state, action) => {

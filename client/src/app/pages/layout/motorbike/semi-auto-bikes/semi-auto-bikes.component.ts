@@ -33,7 +33,7 @@ export class SemiAutoBikesComponent implements OnInit, OnDestroy {
   user$ = this.store.select('user', 'user');
   user: User = <User>{};
 
-  automatic$ = this.store.select('motor', 'motorGetByCategoryId');
+  semi$ = this.store.select('motor', 'motorGetByCategoryId');
 
   motor$ = this.store.select('motor', 'motorList');
 
@@ -42,7 +42,7 @@ export class SemiAutoBikesComponent implements OnInit, OnDestroy {
   manufacturer$ = this.store.select('manufacturer', 'manufacturers');
   motorList: Motor[] = [];
   categories: Category[] = [];
-  automaticCategories: Category[] = [];
+  semiCategories: Category[] = [];
   manufacturers: Manufacturer[] = [];
   subscriptions: Subscription[] = [];
 
@@ -69,10 +69,11 @@ export class SemiAutoBikesComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.subscriptions.push(
-      this.automatic$.subscribe((automaticCategories) => {
-        if (automaticCategories.length > 0) {
-          console.log(automaticCategories);
-          this.motorList = automaticCategories;
+      this.semi$.subscribe((semiCategories) => {
+        if (semiCategories.length > 0) {
+          console.log(semiCategories);
+          //coppy lại sử dụng array sort
+          this.motorList = [...semiCategories];
         }
       }),
     );
@@ -86,5 +87,19 @@ export class SemiAutoBikesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+  sortMotorList(event: any) {
+    const sortBy = event.target.value;
+    this.motorList = [...this.motorList]; // Create a copy of the array before sorting
+    this.motorList.sort((a, b) => {
+      switch (sortBy) {
+        case 'priceHigh':
+          return b.price - a.price;
+        case 'priceLow':
+          return a.price - b.price;
+        default:
+          return 0;
+      }
+    });
   }
 }

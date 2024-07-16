@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import * as StorageAction from './storage.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StorageService } from '../../service/storage/storage.service';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
+import * as StorageAction from './storage.actions';
 
 @Injectable()
 export class StorageEffects {
@@ -10,6 +10,7 @@ export class StorageEffects {
     private action$: Actions,
     private storageService: StorageService,
   ) {}
+
   create$ = createEffect(() =>
     this.action$.pipe(
       ofType(StorageAction.create),

@@ -13,4 +13,5 @@ export interface Motor {
   description: string;
   image: Storage;
   status: boolean;
+  quantity: number;
 }
